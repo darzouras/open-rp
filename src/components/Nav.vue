@@ -53,10 +53,6 @@
                     {
                         name: 'Dashboard',
                         link: '/dashboard'
-                    },
-                    {
-                        name: 'Components',
-                        link: '/components'
                     }
                 ]
             }
