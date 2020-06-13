@@ -7,7 +7,7 @@
     </BigMessage>
 
     <p>
-      As this project kicks off feel free to <a href="https://forms.gle/i17wyD3WCiAghkhz6">respond to my survey</a> and let me know what it you're looking for in your rp experience.
+      As this project kicks off feel free to <a href="https://forms.gle/i17wyD3WCiAghkhz6">respond to my survey</a> and let me know what you're looking for in your rp experience.
     </p>
   </div>
 </template>
