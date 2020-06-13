@@ -6,7 +6,6 @@ import store from './store'
 import router from './routes'
 import VueFirestore from 'vue-firestore';
 
-
 Vue.use(VueFirestore)
 
 Vue.config.productionTip = false
@@ -22,16 +21,17 @@ var firebaseConfig = {
   measurementId: "G-J6YKYRKYWY"
 };
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-
-// const db = firebaseConfig.firestore();
+var firebaseApp = firebase.initializeApp(firebaseConfig);
 
 firebase.auth().onAuthStateChanged(user => {
   store.dispatch("fetchUser", user);
 });
 
+export const db = firebaseApp.firestore();
+
 new Vue({
   render: h => h(App),
   router,
-  store
+  store,
+  db
 }).$mount('#app')
