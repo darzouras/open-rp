@@ -6,6 +6,16 @@
         </article>
 
         <article>
+            <BigMessage>
+                This is a big message.
+            </BigMessage>
+
+            <BigMessage alert="alert">
+                This is a big message that also should get some attention.
+            </BigMessage>
+        </article>
+
+        <article>
             <Logo />
             <Logo reverse="reverse" />
         </article>
@@ -24,6 +34,7 @@
 
 <script>
 import Title from '@/components/Title.vue'
+import BigMessage from '@/components/BigMessage.vue'
 import Input from '@/components/Input.vue'
 import Logo from '@/components/Logo.vue'
 
@@ -31,6 +42,7 @@ export default {
     name: 'Components',
     components: {
         Title,
+        BigMessage,
         Input,
         Logo
     }

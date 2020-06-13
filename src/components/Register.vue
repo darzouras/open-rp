@@ -2,10 +2,12 @@
     <div class="register-wrapper">
         <Title type="h1" title="Register" />
 
-        <div v-if="success" role="alert">
+        <BigMessage v-if="success" >
             Your account has been created, go to the <router-link to='/login'>login page</router-link> and use the email and password you entered to access your dashboard.
-        </div>
-        <div v-if="error" class="error" role="alert">{{ error }}</div>
+        </BigMessage>
+        <BigMessage v-if="error" alert="alert" >
+            {{ error }}
+        </BigMessage>
         <form action="#" @submit.prevent="submit">
             <Input label="Display name" type="name" name="name" placeholder="This will be the name other people see" required="required" autofocus="autofocus" v-model="form.name" />
 
@@ -30,12 +32,14 @@
 import firebase from 'firebase'
 
 import Title from '@/components/Title.vue'
+import BigMessage from '@/components/BigMessage.vue'
 import Input from '@/components/Input.vue'
 
 export default {
     name: 'Register',
     components: {
         Title,
+        BigMessage,
         Input
     },
     data() {
@@ -60,6 +64,7 @@ export default {
                         displayName: this.form.name
                     })
                     .then(() => {
+                        this.error = null
                         this.success = true
                     });
                 })

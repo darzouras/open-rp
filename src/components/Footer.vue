@@ -11,7 +11,13 @@
                         <router-link to="/">Home</router-link>
                     </li>
                     <li>
+                        <a href="https://forms.gle/i17wyD3WCiAghkhz6">Survey</a>
+                    </li>
+                    <li>
                         <router-link to="/components">Components</router-link>
+                    </li>
+                    <li>
+                        <router-link to="/roadmap">Roadmap</router-link>
                     </li>
                     <li>
                         <a href="https://github.com/darzouras/open-rp">Github</a>
