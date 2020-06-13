@@ -1,28 +1,115 @@
 <template>
     <nav>
-        <ul id="nav-links" v-if='user.loggedIn'>
-            <li v-for="link in links" :key="link.name">
-                <router-link :to="link.link">{{link.name}}</router-link>
-            </li>
-            <li>
-                <a @click="signOut">Logout</a>
-            </li>
-        </ul>
-        <ul v-else>
-            <li>
-                <router-link to="/login">Login</router-link>
-            </li>
-            <li>
-                <router-link to="/register">Register</router-link>
-            </li>
-        </ul>
+        <div v-if="user.loggedIn">
+            <button id="nav-dropdown" @click="navActive = !navActive" v-bind:class="{ active : navActive }" aria-label="Display navigation">
+                <span></span>
+            </button>
+
+            <ul id="nav-links" v-if='user.loggedIn' v-bind:class="{ active : navActive }" @click="closeDropdown">
+                <li v-for="link in links" :key="link.name">
+                    <router-link :to="link.link">{{link.name}}</router-link>
+                </li>
+                <li>
+                    <a @click="signOut">Logout</a>
+                </li>
+            </ul>
+        </div>
+        <div v-else>
+            <ul>
+                <li>
+                    <router-link to="/login">Login</router-link>
+                </li>
+                <li>
+                    <router-link to="/register">Register</router-link>
+                </li>
+            </ul>
+        </div>
     </nav>
 </template>
 
 <style lang="scss" scoped>
+    @import "../../public/scss/global.scss";
+
     nav {
         display: flex;
         align-items: center;
+        font-weight: 250;
+
+        > div {
+            display: flex;
+            align-items: center;
+
+            #nav-dropdown {
+                position: relative;
+                background: transparent;
+                border: 0;
+                height: 25px;
+                width: 25px;
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                padding: 0;
+
+                span {
+                    height: 2px;
+                    width: 25px;
+                    background: $green;
+                    display: block;
+                }
+
+                &::after{
+                    content: '';
+                    height: 2px;
+                    width: 25px;
+                    transform: rotate(90deg);
+                    background: $green;
+                    display: block;
+                    position: absolute;
+                    transition: .5s all ease-in-out;
+                }
+
+                &.active {
+                    &::after {
+                        transform: rotate(540deg);
+                    }
+                }
+            }
+
+            @media (max-width: 767px) {
+                #nav-links {
+                    display: none;
+                    position: fixed;
+                    bottom: $nav-height;
+                    right: 0;
+                    left: 0;
+                    background: white;
+                    text-align: right;
+                    margin: 0;
+                    box-shadow: 0px -5px 5px $shadow;
+
+                    li {
+                        width: 90%;
+                        margin: 1rem auto;
+                        font-size: 1.2rem;
+                    }
+
+                    &.active {
+                        display: block;
+                    }
+                }
+            }
+
+            @media (min-width: 768px) {
+                #nav-dropdown {
+                    display: none;
+                }
+
+                #nav-links {
+                    display: flex;
+                    position: relative;
+                }
+            }
+        }
 
         ul {
             list-style: none;
@@ -35,6 +122,9 @@
                 
                 a {
                     cursor: pointer;
+                    text-decoration: none;
+                    color: $darkblue;
+                    text-transform: lowercase;
                 }
             }
         }
@@ -54,7 +144,8 @@
                         name: 'Dashboard',
                         link: '/dashboard'
                     }
-                ]
+                ],
+                navActive: false
             }
         },
         computed: {
@@ -72,6 +163,9 @@
                             name: 'login'
                         })
                     })
+            },
+            closeDropdown() {
+                if (this.navActive) this.navActive = false
             }
         }
     }

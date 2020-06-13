@@ -27,7 +27,7 @@
 
     footer {
         margin: 5rem 0 0;
-        padding: 3rem 5%;
+        padding: 3rem 5% 7rem;
         width: 90%;
         background: $green;
         color: white;

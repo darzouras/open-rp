@@ -13,12 +13,23 @@
     @import "../../public/scss/global.scss";
 
     header {
-        box-shadow: 0px 5px 10px $shadow;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        box-shadow: 0px -5px 5px $shadow;
         display: flex;
         align-items: center;
         justify-content: space-between;
         padding: 10px 5%;
         width: 90%;
+        background: white;
+    }
+
+    @media (min-width: 768px) {
+        header {
+            position: relative;
+            box-shadow: 0px 5px 10px $shadow;
+        }
     }
 </style>
 
