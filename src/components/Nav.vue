@@ -10,7 +10,7 @@
                     <router-link :to="link.link">{{link.name}}</router-link>
                 </li>
                 <li>
-                    <a @click="signOut">Logout</a>
+                    <a href="#" @click="signOut" tabindex="0">Logout</a>
                 </li>
             </ul>
         </div>
