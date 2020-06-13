@@ -1,6 +1,5 @@
 <template>
-  <h1>Hi
-    </h1>
+  <h1>Open RP</h1>
 </template>
 
 <script>
