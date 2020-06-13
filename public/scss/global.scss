@@ -4,9 +4,23 @@ $yellow: #ffd166;
 $green: #06d6a0;
 $lightblue: #118ab2;
 $darkblue: #073b4c;
+$shadow: rgba(0,0,0,.3);
+
+@font-face {
+    font-family: 'MPlus';
+    src: url(/public/fonts/variable_fonts/Mplus1pGX.ttf);
+    font-weight: 400;
+}
 
 body {
-    font-family: 'Roboto Slab', serif;
+    font-family: 'MPlus', sans-serif;
     background: white;
     color: $darkblue;
+    padding: 0;
+    margin: 0;
+
+    a {
+        color: $green;
+        text-decoration: underline;
+    }
 }
