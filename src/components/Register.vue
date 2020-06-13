@@ -2,9 +2,12 @@
     <div class="register-wrapper">
         <Title type="h1" title="Register" />
 
-        <div v-if="error" class="error">{{ error }}</div>
+        <div v-if="success" role="alert">
+            Your account has been created, go to the <router-link to='/login'>login page</router-link> and use the email and password you entered to access your dashboard.
+        </div>
+        <div v-if="error" class="error" role="alert">{{ error }}</div>
         <form action="#" @submit.prevent="submit">
-            <Input label="Display name" type="name" name="name" placeholder="" required="required" autofocus="autofocus" v-model="form.name" />
+            <Input label="Display name" type="name" name="name" placeholder="This will be the name other people see" required="required" autofocus="autofocus" v-model="form.name" />
 
             <Input label="Email" type="email" name="email" placeholder="whoever@whatever.com" required="required" v-model="form.email" />
 
@@ -38,6 +41,7 @@ export default {
     data() {
         return {
             error: null,
+            success: null,
             form: {
                 name: '',
                 email: '',
@@ -56,7 +60,7 @@ export default {
                         displayName: this.form.name
                     })
                     .then(() => {
-                        
+                        this.success = true
                     });
                 })
                 .catch(err => {

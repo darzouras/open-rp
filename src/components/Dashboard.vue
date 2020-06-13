@@ -2,7 +2,7 @@
     <div class="dashboard-wrapper">
         <Title type="h1" title="Your Dashboard" />
 
-        <p v-if="user">You are logged in!</p>
+        <p v-if="user.loggedIn">{{user.data.displayName}} logged in!</p>
     </div>
 </template>
 

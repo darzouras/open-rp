@@ -1,6 +1,6 @@
 <template>
     <div class="login-wrapper">
-        <Title type="h1" title="Register" />
+        <Title type="h1" title="Login" />
 
         <div v-if="error" class="error">{{ error }}</div>
         <form action="#" @submit.prevent="submit">
@@ -45,7 +45,7 @@ export default {
                 .signInWithEmailAndPassword(this.form.email, this.form.password)
                 .then(data => {
                     data.user
-                    this.$router.replace({ name: "main" });
+                    this.$router.replace({ name: "dashboard" });
                 })
                 .catch(err => {
                     this.error = err.message
