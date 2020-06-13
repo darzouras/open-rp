@@ -2,7 +2,9 @@
   <div id="app">
     <Header />
 
-    <router-view></router-view>
+    <main>
+      <router-view></router-view>
+    </main>
   </div>
 </template>
 
@@ -19,7 +21,10 @@ export default {
 
 <style lang="scss">
   @import "../public/scss/global.scss";
-  #app {
-    
+  
+  main {
+      width: 90%;
+      max-width: 800px;
+      margin: auto;
   }
 </style>

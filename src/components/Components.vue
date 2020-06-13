@@ -1,19 +1,13 @@
 <template>
-    <main>
+    <div>
         <Title type="h1" title="Components" />
         <article>
             <Title type="h2" title="Big Title" />
         </article>
-    </main>
+    </div>
 </template>
 
 <style lang="scss" scoped>
-
-    main {
-        width: 90%;
-        max-width: 800px;
-        margin: auto;
-    }
     
 </style>
 

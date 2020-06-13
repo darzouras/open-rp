@@ -1,12 +1,14 @@
 <template>
-  <h1>Open RP</h1>
+  <Title type="h1" title="Open-RP" />
 </template>
 
 <script>
+import Title from '@/components/Title.vue'
+
 export default {
   name: 'Main',
-  props: {
-    msg: String
+  components: {
+    Title
   }
 }
 </script>
