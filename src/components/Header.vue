@@ -1,8 +1,9 @@
 <template>
     <header>
-        <router-link to="/"><div class="header-title">
-            Open-RP
-        </div></router-link>
+        <router-link to="/">
+            <Logo />
+        </router-link>
+        
 
         <Nav />
     </header>
@@ -18,29 +19,18 @@
         justify-content: space-between;
         padding: 10px 5%;
         width: 90%;
-
-        .header-title {
-            font-weight: 150;
-            text-transform: lowercase;
-            font-size: 1.5rem;
-            padding: .5rem 1rem;
-            background: $green;
-            color: white;
-
-            a {
-                color: white;
-                text-decoration: none;
-            }
-        }
     }
 </style>
 
 <script>
+import Logo from './Logo.vue'
 import Nav from './Nav.vue'
+
 export default {
     name: 'Header',
     components: {
-        Nav
+        Nav,
+        Logo
     }
 }
 </script>
