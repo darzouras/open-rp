@@ -1,13 +1,13 @@
 <template>
     <nav>
-        <a v-if="!authenticated" @click="login">Login</a>
+        <button v-if="!authenticated" @click="login">Login</button>
 
         <ul id="nav-links" v-if="authenticated">
             <li v-for="link in links" :key="link.name">
                 <router-link :to="link.link">{{link.name}}</router-link>
             </li>
             <li>
-                <a @click="logout">Logout</a>
+                <button @click="logout">Logout</button>
             </li>
         </ul>
     </nav>
