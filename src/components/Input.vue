@@ -1,7 +1,15 @@
 <template>
     <label v-bind:class="{ error: error }">
         {{ label }}
-        <input type="text" :name="name" :id="name" :placeholder="placeholder">
+        <input
+            :type="type"
+            :name="name"
+            :id="name"
+            :placeholder="placeholder"
+            :required="required"
+            :autofocus="autofocus"
+            :value="value"
+            @input="updateInput($event)" />
     </label>
 </template>
 
@@ -9,8 +17,10 @@
     @import "../../public/scss/global.scss";
 
     label {
+        display: block;
         font-size: .8rem;
         font-weight: 100;
+        margin-bottom: 1.5rem;
         
         input {
             display: block;
@@ -33,11 +43,26 @@
 
 <script>
 export default {
-  name: 'Input',
-  props: {
-    label: String,
-    name: String,
-    placeholder: String
-  }
+    name: 'Input',
+    props: {
+        label: String,
+        name: String,
+        placeholder: String,
+        type: String,
+        required: String,
+        autofocus: String,
+        link: String,
+        value: null,
+    },
+    data() {
+        return {
+            error: null,
+        }
+    },
+    methods: {
+        updateInput(event) {
+            this.$emit('input', event.target.value);
+        }
+    }
 }
 </script>

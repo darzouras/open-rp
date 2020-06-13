@@ -6,7 +6,7 @@
         </article>
 
         <article>
-            <Input label="This is the label" name="input-name" placeholder="Input placeholder"/>
+            <Input label="This is the label" name="input-name" placeholder="Input placeholder" type="text"/>
         </article>
     </div>
 </template>
