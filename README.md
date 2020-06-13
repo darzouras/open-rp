@@ -1,5 +1,11 @@
 # open-rp
 
+Test url at [open-rp.web.app](https://open-rp.web.app/).
+
+## TODO
+
+[ ] Update for email/password login and registration instead of Google? Follow [this](https://blog.logrocket.com/vue-firebase-authentication/) guide
+
 ## Project setup
 ```
 npm install
