@@ -64,7 +64,6 @@ export default {
     methods: {
         submit() {
             this.$firestore.users.doc(this.form.name).get().then(snapshot => {
-                console.log(snapshot.exists)
                 if (!snapshot.exists) {
                     firebase
                     .auth()
