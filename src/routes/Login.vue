@@ -8,7 +8,7 @@
 
             <Input label="Password" type="password" name="password" required="required" v-model="form.password" />
 
-            <button type="submit">Login</button>
+            <Button type="submit">Login</Button>
         </form>
     </div>
 </template>
@@ -22,12 +22,14 @@ import firebase from 'firebase'
 
 import Title from '@/components/Title.vue'
 import Input from '@/components/Input.vue'
+import Button from '@/components/Button.vue'
 
 export default {
     name: 'Login',
     components: {
         Title,
-        Input
+        Input,
+        Button
     },
     data() {
         return {
