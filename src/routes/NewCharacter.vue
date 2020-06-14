@@ -17,7 +17,7 @@
         </form>
 
         <p v-if="success">
-            Character has successfully been created
+            Character has successfully been created, redirecting to dashboard
         </p>
 
         <p v-if="error">{{ error }}</p>
@@ -80,6 +80,8 @@ export default {
                         ).then(() => {
                             this.success = true
                             this.error = null
+
+                            this.$router.replace({ name: "dashboard" });
                         })
                         .catch(err => {
                             this.error = err.message
