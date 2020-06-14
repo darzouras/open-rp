@@ -4,15 +4,14 @@
 
         <p v-if="user.loggedIn">{{user.data.displayName}} logged in!</p>
 
-        <form>
-            <Input label="Add character" type="text" name="character" v-model="newCharacter" />
+        <Input label="Add character" type="text" name="character" v-model="newCharacter" />
 
-            <button @click="addCharacter">Add Character</button>
-        </form>
+        <button @click="addCharacter">Add Character</button>
 
         <ul>
             <li v-for="character in characters" :key="character.name">
-                {{ character.name }}
+                <p>{{ character.name }}</p>
+                <button @click="deleteCharacter(character)">Remove</button>
             </li>
         </ul>
     </div>
@@ -50,6 +49,9 @@ export default {
                 }
             );
             this.newCharacter = ''
+        },
+        deleteCharacter: function(character) {
+            this.$firestore.characters.doc(character['.key']).delete();
         }
     },
     computed: {
