@@ -35,6 +35,10 @@
 
 <script>
 export default {
-    
+    name: 'Button',
+    props: {
+        type: String,
+        name: String
+    }
 }
 </script>

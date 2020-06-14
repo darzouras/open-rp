@@ -4,6 +4,8 @@
 
         <p v-if="user.loggedIn">{{user.data.displayName}} logged in!</p>
 
+        <router-link to="/new-character">Add a new character</router-link>
+
         <Input label="Add character" type="text" name="character" v-model="newCharacter" />
 
         <button @click="addCharacter">Add Character</button>
