@@ -1,32 +1,14 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
 import App from './App.vue'
 import * as firebase from 'firebase'
+import '@firebase/firestore'
 import store from './store'
+import router from './routes'
+import VueFirestore from 'vue-firestore';
 
-Vue.use(VueRouter)
+Vue.use(VueFirestore)
 
 Vue.config.productionTip = false
-
-import Main from './components/Main.vue';
-import Components from './components/Components.vue';
-import Login from './components/Login.vue';
-import Register from './components/Register.vue';
-import Dashboard from './components/Dashboard.vue';
-import Roadmap from './components/Roadmap.vue';
-
-const routes = [
-  { path: '/', name: 'main', component: Main },
-  { path: '/components', name: 'components', component: Components },
-  { path: '/login', name: 'login', component: Login},
-  { path: '/register', name: 'register', component: Register},
-  { path: '/dashboard', name: 'dashboard', component: Dashboard},
-  { path: '/roadmap', name: 'roadmap', component: Roadmap}
-]
-
-const router = new VueRouter({
-  routes
-})
 
 var firebaseConfig = {
   apiKey: "AIzaSyCGcVHjRiLlOU-bU3e7HQT-0K14fg321n8",
@@ -39,14 +21,17 @@ var firebaseConfig = {
   measurementId: "G-J6YKYRKYWY"
 };
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+var firebaseApp = firebase.initializeApp(firebaseConfig);
 
 firebase.auth().onAuthStateChanged(user => {
   store.dispatch("fetchUser", user);
 });
 
+export const db = firebaseApp.firestore();
+
 new Vue({
   render: h => h(App),
   router,
-  store
+  store,
+  db
 }).$mount('#app')

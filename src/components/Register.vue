@@ -9,7 +9,7 @@
             {{ error }}
         </BigMessage>
         <form action="#" @submit.prevent="submit">
-            <Input label="Display name" type="name" name="name" placeholder="This will be the name other people see" required="required" autofocus="autofocus" v-model="form.name" />
+            <Input label="Username" type="name" name="name" placeholder="This will be the name other people see" required="required" autofocus="autofocus" v-model="form.name" />
 
             <Input label="Email" type="email" name="email" placeholder="whoever@whatever.com" required="required" v-model="form.email" />
 
@@ -30,6 +30,7 @@
 
 <script>
 import firebase from 'firebase'
+import { db } from '../main'
 
 import Title from '@/components/Title.vue'
 import BigMessage from '@/components/BigMessage.vue'
@@ -53,24 +54,45 @@ export default {
             }
         }
     },
+    firestore() {
+        return {
+            users: db.collection('users')
+        }
+    }, 
     methods: {
         submit() {
-            firebase
-                .auth()
-                .createUserWithEmailAndPassword(this.form.email, this.form.password)
-                .then(data => {
-                    data.user
-                    .updateProfile({
-                        displayName: this.form.name
+            this.$firestore.users.doc(this.form.name).get().then(snapshot => {
+                console.log(snapshot.exists)
+                if (!snapshot.exists) {
+                    firebase
+                    .auth()
+                    .createUserWithEmailAndPassword(this.form.email, this.form.password)
+                    .then(data => {
+                        data.user
+                        .updateProfile({
+                            displayName: this.form.name
+                        })
+                        .then(() => {
+                            this.$firestore.users
+                                .doc(this.form.name)
+                                .set({
+                                    email: this.form.email,
+                                    created: new Date(),
+                                    new: true
+                                })
+                                .then(() => { })
+
+                            this.error = null
+                            this.success = true
+                        });
                     })
-                    .then(() => {
-                        this.error = null
-                        this.success = true
-                    });
-                })
-                .catch(err => {
-                    this.error = err.message
-                })
+                    .catch(err => {
+                        this.error = err.message
+                    })
+                } else {
+                    this.error = 'Sorry, that username is already being used.'
+                }
+            })
         }
     }
 }
