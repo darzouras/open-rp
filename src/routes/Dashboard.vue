@@ -4,16 +4,11 @@
 
         <p v-if="user.loggedIn">{{user.data.displayName}} logged in!</p>
 
-        <Input label="Add character" type="text" name="character" v-model="newCharacter" />
+        <Title type="h2" title="Your Characters" />
 
-        <button @click="addCharacter">Add Character</button>
+        <router-link to="/new-character">Add a new character</router-link>
 
-        <ul>
-            <li v-for="character in characters" :key="character.name">
-                <p>{{ character.name }}</p>
-                <button @click="deleteCharacter(character)">Remove</button>
-            </li>
-        </ul>
+        <CharacterList :data="characters" />
     </div>
 </template>
 
@@ -22,13 +17,13 @@ import { mapGetters } from 'vuex'
 import { db } from '../main'
 
 import Title from '@/components/Title.vue'
-import Input from '@/components/Input.vue'
+import CharacterList from '@/components/CharacterList.vue'
 
 export default {
     name: 'Dashboard',
     components: {
         Title,
-        Input
+        CharacterList
     },
     data() {
         return {
@@ -38,21 +33,8 @@ export default {
     },
     firestore() {
         return {
-            characters: db.collection('characters')
-        }
-    },
-    methods: {
-        addCharacter: function() {
-            this.$firestore.characters.add(
-                {
-                    name: this.newCharacter,
-                    timestamp: new Date()
-                }
-            );
-            this.newCharacter = ''
-        },
-        deleteCharacter: function(character) {
-            this.$firestore.characters.doc(character['.key']).delete();
+            characters: db.collection('characters').where('user', '==', this.user.data.displayName),
+            users: db.collection('users')
         }
     },
     computed: {

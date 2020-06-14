@@ -29,7 +29,7 @@
             border-radius: 5px;
             padding: .5rem;
             font-size: 1rem;
-            color: $darkblue;
+            color: $lightblue;
         }
 
         &.error {

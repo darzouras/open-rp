@@ -19,7 +19,7 @@
                 This application promises to not sell any piece of your personal info.
             </p>
 
-            <button type="submit">Register</button>
+            <Button type="submit">Register</Button>
         </form>
     </div>
 </template>
@@ -35,13 +35,15 @@ import { db } from '../main'
 import Title from '@/components/Title.vue'
 import BigMessage from '@/components/BigMessage.vue'
 import Input from '@/components/Input.vue'
+import Button from '@/components/Button.vue'
 
 export default {
     name: 'Register',
     components: {
         Title,
         BigMessage,
-        Input
+        Input,
+        Button
     },
     data() {
         return {
@@ -62,7 +64,6 @@ export default {
     methods: {
         submit() {
             this.$firestore.users.doc(this.form.name).get().then(snapshot => {
-                console.log(snapshot.exists)
                 if (!snapshot.exists) {
                     firebase
                     .auth()

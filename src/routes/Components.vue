@@ -23,6 +23,10 @@
         <article>
             <Input label="This is the label" name="input-name" placeholder="Input placeholder" type="text"/>
         </article>
+
+        <article>
+            <Button type="submit">This is a button</Button>
+        </article>
     </div>
 </template>
 
@@ -37,6 +41,7 @@ import Title from '@/components/Title.vue'
 import BigMessage from '@/components/BigMessage.vue'
 import Input from '@/components/Input.vue'
 import Logo from '@/components/Logo.vue'
+import Button from '@/components/Button.vue'
 
 export default {
     name: 'Components',
@@ -44,7 +49,8 @@ export default {
         Title,
         BigMessage,
         Input,
-        Logo
+        Logo,
+        Button
     }
 }
 </script>
