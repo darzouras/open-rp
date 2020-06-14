@@ -3,12 +3,12 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-import Main from './components/Main.vue';
-import Components from './components/Components.vue';
-import Login from './components/Login.vue';
-import Register from './components/Register.vue';
-import Dashboard from './components/Dashboard.vue';
-import Roadmap from './components/Roadmap.vue';
+import Main from './routes/Main.vue';
+import Components from './routes/Components.vue';
+import Login from './routes/Login.vue';
+import Register from './routes/Register.vue';
+import Dashboard from './routes/Dashboard.vue';
+import Roadmap from './routes/Roadmap.vue';
 
 const routes = [
   { path: '/', name: 'main', component: Main },

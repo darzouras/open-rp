@@ -19,9 +19,10 @@
 
 <script>
 import { mapGetters } from 'vuex' 
+import { db } from '../main'
+
 import Title from '@/components/Title.vue'
 import Input from '@/components/Input.vue'
-import { db } from '../main'
 
 export default {
     name: 'Dashboard',
