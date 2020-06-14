@@ -8,7 +8,7 @@
 
         <ul>
             <li v-for="character in characters" :key="character.name">
-                <p>{{ character['.key'] }}</p>
+                <p>{{ character.name }} || {{ character['.key'] }}</p>
                 <button @click="deleteCharacter(character)">Remove</button>
             </li>
         </ul>
