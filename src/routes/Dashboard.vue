@@ -6,13 +6,9 @@
 
         <router-link to="/new-character">Add a new character</router-link>
 
-        <Input label="Add character" type="text" name="character" v-model="newCharacter" />
-
-        <button @click="addCharacter">Add Character</button>
-
         <ul>
             <li v-for="character in characters" :key="character.name">
-                <p>{{ character.name }}</p>
+                <p>{{ character['.key'] }}</p>
                 <button @click="deleteCharacter(character)">Remove</button>
             </li>
         </ul>
@@ -22,15 +18,14 @@
 <script>
 import { mapGetters } from 'vuex' 
 import { db } from '../main'
+import * as firebase from 'firebase'
 
 import Title from '@/components/Title.vue'
-import Input from '@/components/Input.vue'
 
 export default {
     name: 'Dashboard',
     components: {
-        Title,
-        Input
+        Title
     },
     data() {
         return {
@@ -40,20 +35,17 @@ export default {
     },
     firestore() {
         return {
-            characters: db.collection('characters')
+            characters: db.collection('characters'),
+            users: db.collection('users')
         }
     },
     methods: {
-        addCharacter: function() {
-            this.$firestore.characters.add(
-                {
-                    name: this.newCharacter,
-                    timestamp: new Date()
-                }
-            );
-            this.newCharacter = ''
-        },
         deleteCharacter: function(character) {
+            this.$firestore.users.doc(this.user.data.displayName).update(
+                {
+                    characters: firebase.firestore.FieldValue.arrayRemove(this.$firestore.characters.doc(character['.key']))
+                }
+            )
             this.$firestore.characters.doc(character['.key']).delete();
         }
     },
