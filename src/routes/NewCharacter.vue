@@ -59,38 +59,44 @@ export default {
     },
     methods: {
         createCharacter: function() {
-            this.$firestore.characters
-                .doc(this.character.profilename)
-                .set({
-                    userRef: this.$firestore.users.doc(this.user.data.displayName),
-                    user: this.user.data.displayName,
-                    created: new Date(),
-                    name: this.character.name,
-                    charWiki: this.character.charWiki || '',
-                    fandom: this.character.fandom || '',
-                    fandomWiki: this.character.fandomWiki || ''
-                })
-                .then(() => {
-                    
-                    this.$firestore.users
-                        .doc(this.user.data.displayName)
-                        .update(
-                            {
-                                characters: firebase.firestore.FieldValue.arrayUnion(this.$firestore.characters.doc(this.character.profilename))
-                            }
-                        ).then(() => {
-                            this.success = true
-                            this.error = null
+            this.$firestore.characters.doc(this.character.profilename).get().then(snapshot => {
+                if (!snapshot.exists) {
+                    this.$firestore.characters
+                        .doc(this.character.profilename)
+                        .set({
+                            userRef: this.$firestore.users.doc(this.user.data.displayName),
+                            user: this.user.data.displayName,
+                            created: new Date(),
+                            name: this.character.name,
+                            charWiki: this.character.charWiki || '',
+                            fandom: this.character.fandom || '',
+                            fandomWiki: this.character.fandomWiki || ''
+                        })
+                        .then(() => {
+                            
+                            this.$firestore.users
+                                .doc(this.user.data.displayName)
+                                .update(
+                                    {
+                                        characters: firebase.firestore.FieldValue.arrayUnion(this.$firestore.characters.doc(this.character.profilename))
+                                    }
+                                ).then(() => {
+                                    this.success = true
+                                    this.error = null
 
-                            this.$router.replace({ name: "dashboard" });
+                                    this.$router.replace({ name: "dashboard" });
+                                })
+                                .catch(err => {
+                                    this.error = err.message
+                                })
                         })
                         .catch(err => {
                             this.error = err.message
                         })
-                })
-                .catch(err => {
-                    this.error = err.message
-                })
+                } else {
+                    this.error = 'Sorry, a character with that profile name already exists.'
+                }
+            })
         }
     },
     computed: {
