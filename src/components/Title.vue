@@ -5,7 +5,6 @@
 <style lang="scss" scoped>
     .title-large {
         font-size: 2.5rem;
-        letter-spacing: .1rem;
         font-weight: 900;
     }
 </style>
