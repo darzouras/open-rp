@@ -62,7 +62,8 @@ export default {
             this.$firestore.characters
                 .doc(this.character.profilename)
                 .set({
-                    user: this.$firestore.users.doc(this.user.data.displayName),
+                    userRef: this.$firestore.users.doc(this.user.data.displayName),
+                    user: this.user.data.displayName,
                     created: new Date(),
                     name: this.character.name,
                     charWiki: this.character.charWiki || '',

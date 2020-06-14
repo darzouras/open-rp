@@ -33,7 +33,7 @@ export default {
     },
     firestore() {
         return {
-            characters: db.collection('characters'),
+            characters: db.collection('characters').where('user', '==', this.user.data.displayName),
             users: db.collection('users')
         }
     },
