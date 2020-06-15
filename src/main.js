@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import App from './App.vue'
-import * as firebase from 'firebase'
-import '@firebase/firestore'
+import firebase from 'firebase'
+import 'firebase/auth'
+import 'firebase/firestore'
 import store from './store'
 import router from './routes'
 import VueFirestore from 'vue-firestore';
