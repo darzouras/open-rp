@@ -22,6 +22,7 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 var firebaseApp = firebase.initializeApp(firebaseConfig);
+firebase.analytics();
 
 firebase.auth().onAuthStateChanged(user => {
   store.dispatch("fetchUser", user);
