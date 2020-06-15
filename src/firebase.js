@@ -1,4 +1,4 @@
-import { firebase } from "@firebase/app";
+/* import { firebase } from "@firebase/app";
 import "@firebase/firestore";
 
 var firebaseApp = firebase.initializeApp({
@@ -12,4 +12,4 @@ var firebaseApp = firebase.initializeApp({
     measurementId: "G-J6YKYRKYWY"
 });
 
-export const db = firebaseApp.firestore();
+export const db = firebaseApp.firestore(); */

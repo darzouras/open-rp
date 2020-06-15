@@ -32,9 +32,8 @@ export default {
         }
     },
     firestore() {
-        return {
-            characters: db.collection('characters').where('user', '==', this.user.data.displayName),
-            users: db.collection('users')
+        return{
+            characters: db.collection('characters').where('user', '==', this.user.data.displayName)
         }
     },
     computed: {
