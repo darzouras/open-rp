@@ -1,6 +1,6 @@
 <template>
     <ul>
-        <li v-for="character in data" :key="character.name">
+        <li v-for="character in orderBy(data, 'name')" :key="character.name">
             <p>{{ character.name }} || {{ character['.key'] }}</p>
             <button @click="deleteCharacter(character)">Remove</button>
         </li>
@@ -11,6 +11,7 @@
 import { mapGetters } from 'vuex'
 import { db } from '../main'
 import firebase from 'firebase'
+import Vue2Filters from 'vue2-filters'
 
 export default {
     name: 'CharacterList',
@@ -37,6 +38,7 @@ export default {
         ...mapGetters({
             user: 'user'
         })
-    }
+    },
+    mixins: [Vue2Filters.mixin]
 }
 </script>
