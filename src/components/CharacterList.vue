@@ -10,7 +10,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { db } from '../main'
-import * as firebase from 'firebase'
+import firebase from 'firebase'
 
 export default {
     name: 'CharacterList',
