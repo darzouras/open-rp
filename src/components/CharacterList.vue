@@ -44,8 +44,8 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { db } from '../main'
-import firebase from 'firebase'
+import { db } from '../firebase'
+import firebase from '../firebase'
 import Vue2Filters from 'vue2-filters'
 import SmallTitle from '@/components/SmallTitle.vue'
 
