@@ -3,7 +3,7 @@
     <Title type="h1" title="Open-RP" />
 
     <BigMessage>
-      Thanks for visiting! This is an in-progress social platform that is being built specifically for online text-based roleplaying.
+      Thanks for visiting! This is an in-progress community platform that is being built specifically for online text-based roleplaying.
     </BigMessage>
 
     <p>
