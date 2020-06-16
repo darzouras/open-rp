@@ -8,6 +8,8 @@
     .title-small {
         margin: 0;
         padding: 0;
+        font-size: 1.2rem;
+        font-weight: 700;
     }
 </style>
 

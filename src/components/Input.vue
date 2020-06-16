@@ -25,8 +25,10 @@
         input {
             display: block;
             width: calc(100% - 1rem - 2px);
-            border: 1px solid $lightblue;
-            border-radius: 5px;
+            border-width: 2px;
+            border-style: solid;
+            border-color: $darkblue;
+            border-radius: 10px;
             padding: .5rem;
             font-size: 1rem;
             color: $lightblue;

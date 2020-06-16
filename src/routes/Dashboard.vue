@@ -13,7 +13,9 @@
                 There's nothing here, try making a character!
             </BigMessage>
 
-            <router-link to="/new-character">Add a new character</router-link>
+            <div class="center">
+                <RouteButton route="/new-character">Add a new character</RouteButton>
+            </div>
         </section>
     </div>
 </template>
@@ -25,13 +27,15 @@ import { db } from '../main'
 import Title from '@/components/Title.vue'
 import CharacterList from '@/components/CharacterList.vue'
 import BigMessage from '@/components/BigMessage.vue'
+import RouteButton from '@/components/RouteButton.vue'
 
 export default {
     name: 'Dashboard',
     components: {
         Title,
         CharacterList,
-        BigMessage
+        BigMessage,
+        RouteButton
     },
     data() {
         return {

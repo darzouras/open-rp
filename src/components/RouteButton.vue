@@ -1,18 +1,13 @@
 <template>
-    <button
-        :type="type"
-        :name="name"
-        :id="name"
-        class="roboto"
-    >
+    <router-link :to="route" class="cta-full roboto">
         <slot></slot>
-    </button>
+    </router-link>
 </template>
 
 <style lang="scss" scoped>
     @import "../../public/scss/global.scss";
 
-    button {
+    .cta-full {
         background: white;
         color: $darkblue;
         border: 2px solid $darkblue;
@@ -23,7 +18,6 @@
         font-weight: 400;
         font-size: 1.2rem;
         text-transform: lowercase;
-        cursor: pointer;
 
         &:hover {
             color: white;
@@ -35,10 +29,9 @@
 
 <script>
 export default {
-    name: 'Button',
+    name: 'RouteButton',
     props: {
-        type: String,
-        name: String
+        route: String
     }
 }
 </script>

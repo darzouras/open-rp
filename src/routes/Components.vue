@@ -16,6 +16,10 @@
         </article>
 
         <article>
+            <SmallTitle type="h2">This is a small title</SmallTitle>
+        </article>
+
+        <article>
             <Logo />
             <Logo reverse="reverse" />
         </article>
@@ -26,6 +30,10 @@
 
         <article>
             <Button type="submit">This is a button</Button>
+        </article>
+
+        <article>
+            <RouteButton route="/">This is a route button</RouteButton>
         </article>
     </div>
 </template>
@@ -38,19 +46,23 @@
 
 <script>
 import Title from '@/components/Title.vue'
+import SmallTitle from '@/components/SmallTitle.vue'
 import BigMessage from '@/components/BigMessage.vue'
 import Input from '@/components/Input.vue'
 import Logo from '@/components/Logo.vue'
 import Button from '@/components/Button.vue'
+import RouteButton from '@/components/RouteButton.vue'
 
 export default {
     name: 'Components',
     components: {
         Title,
+        SmallTitle,
         BigMessage,
         Input,
         Logo,
-        Button
+        Button,
+        RouteButton
     }
 }
 </script>
