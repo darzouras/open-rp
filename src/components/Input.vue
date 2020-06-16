@@ -1,5 +1,5 @@
 <template>
-    <label v-bind:class="{ error: error }">
+    <label v-bind:class="{ error: error }" class="roboto">
         {{ label }}
         <input
             :type="type"
@@ -18,7 +18,7 @@
 
     label {
         display: block;
-        font-size: .8rem;
+        font-size: 1rem;
         font-weight: 100;
         margin-bottom: 1.5rem;
         
@@ -30,6 +30,7 @@
             padding: .5rem;
             font-size: 1rem;
             color: $lightblue;
+            margin-top: .25rem;
         }
 
         &.error {

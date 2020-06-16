@@ -1,5 +1,5 @@
 <template>
-    <nav>
+    <nav class="roboto">
         <div v-if="user.loggedIn">
             <button id="nav-dropdown" @click="navActive = !navActive" v-bind:class="{ active : navActive }" aria-label="Display navigation">
                 <span></span>

@@ -1,14 +1,20 @@
 <template>
     <div class="dashboard-wrapper">
-        <Title type="h1" title="Your Dashboard" />
+        <Title type="h1" title="Dashboard" />
 
-        <p v-if="user.loggedIn">{{user.data.displayName}} logged in!</p>
+        <p v-if="user.loggedIn">{{user.data.displayName}} logged in</p>
 
-        <Title type="h2" title="Your Characters" />
+        <section>
+            <Title type="h2" title="Your Characters" />
 
-        <router-link to="/new-character">Add a new character</router-link>
+            <CharacterList v-if="characters.length > 0" :data="characters" />
 
-        <CharacterList :data="characters" />
+            <BigMessage v-else>
+                There's nothing here, try making a character!
+            </BigMessage>
+
+            <router-link to="/new-character">Add a new character</router-link>
+        </section>
     </div>
 </template>
 
@@ -18,12 +24,14 @@ import { db } from '../main'
 
 import Title from '@/components/Title.vue'
 import CharacterList from '@/components/CharacterList.vue'
+import BigMessage from '@/components/BigMessage.vue'
 
 export default {
     name: 'Dashboard',
     components: {
         Title,
-        CharacterList
+        CharacterList,
+        BigMessage
     },
     data() {
         return {

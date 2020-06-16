@@ -6,8 +6,10 @@ import 'firebase/firestore'
 import store from './store'
 import router from './routes'
 import VueFirestore from 'vue-firestore';
+import Vue2Filters from 'vue2-filters'
 
 Vue.use(VueFirestore)
+Vue.use(Vue2Filters)
 
 Vue.config.productionTip = false
 
