@@ -29,8 +29,8 @@
 </style>
 
 <script>
-import firebase from 'firebase'
-import { db } from '../main'
+import firebase from '../firebase'
+import { db } from '../firebase'
 
 import Title from '@/components/Title.vue'
 import BigMessage from '@/components/BigMessage.vue'

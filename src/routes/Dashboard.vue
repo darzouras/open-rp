@@ -22,7 +22,7 @@
 
 <script>
 import { mapGetters } from 'vuex' 
-import { db } from '../main'
+import { db } from '../firebase'
 
 import Title from '@/components/Title.vue'
 import CharacterList from '@/components/CharacterList.vue'
