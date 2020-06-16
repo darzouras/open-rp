@@ -1,5 +1,5 @@
 <template>
-    <ul>
+    <ul class="roboto">
         <li v-for="character in orderBy(data, 'name')" :key="character.name">
             <SmallTitle type="h3">{{ character.name }}</SmallTitle>
             <p>@{{ character['.key'] }}</p>

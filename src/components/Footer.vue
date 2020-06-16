@@ -1,5 +1,5 @@
 <template>
-    <footer>
+    <footer class="roboto">
         <div class="footer-col">
             <Logo reverse="reverse" />
         </div>

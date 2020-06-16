@@ -1,5 +1,5 @@
 <template>
-    <p v-bind:class="{ alert: alert }">
+    <p v-bind:class="{ alert: alert }" class="roboto">
         <slot></slot>
     </p>
 </template>

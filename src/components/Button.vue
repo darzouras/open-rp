@@ -3,6 +3,7 @@
         :type="type"
         :name="name"
         :id="name"
+        class="roboto"
     >
         <slot></slot>
     </button>

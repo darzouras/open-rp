@@ -1,5 +1,5 @@
 <template>
-    <component :is="type" class="title-small">
+    <component :is="type" class="title-small roboto">
         <slot></slot>
     </component>
 </template>

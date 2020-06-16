@@ -10,14 +10,10 @@ $nav-height: 64px;
 
 $breakpoint-tablet: 768px;
 
-@font-face {
-    font-family: 'MPlus';
-    src: url(/public/fonts/variable_fonts/Mplus1pGX.ttf);
-    font-weight: 400;
-}
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&family=Spectral&display=swap');
 
 body {
-    font-family: 'MPlus', sans-serif;
+    font-family: 'Spectral', serif;
     font-weight: 400;
     background: white;
     color: $darkblue;
@@ -30,6 +26,13 @@ body {
     }
 }
 
+.spectral {
+    font-family: 'Spectral', serif;
+}
+.roboto {
+    font-family: 'Roboto', sans-serif;
+}
+
 input, button {
-    font-family: 'MPlus', sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
