@@ -18,7 +18,7 @@
 </style>
 
 <script>
-import firebase from 'firebase' 
+import firebase from '../firebase'
 
 import Title from '@/components/Title.vue'
 import Input from '@/components/Input.vue'

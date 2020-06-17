@@ -1,11 +1,18 @@
 <template>
     <nav class="roboto">
         <div v-if="user.loggedIn">
+
             <button id="nav-dropdown" @click="navActive = !navActive" v-bind:class="{ active : navActive }" aria-label="Display navigation">
                 <span></span>
             </button>
 
             <ul id="nav-links" v-if='user.loggedIn' v-bind:class="{ active : navActive }" @click="closeDropdown">
+                <li>
+                    <i class="ri-user-smile-line"></i> {{ user.data.displayName }}
+                </li>
+                <li>
+                    <i class="ri-account-pin-box-line"></i> ACTIVECHAR
+                </li>
                 <li v-for="link in links" :key="link.name">
                     <router-link :to="link.link">{{link.name}}</router-link>
                 </li>
@@ -72,6 +79,17 @@
                     &::after {
                         transform: rotate(540deg);
                     }
+                }
+            }
+
+            #nav-links {
+                li {
+                    display: flex;
+                    align-items: center;
+                }
+                i {
+                    font-size: 1.2rem;
+                    margin-right: .25rem;
                 }
             }
 
