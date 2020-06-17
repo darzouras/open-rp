@@ -5,7 +5,7 @@ import db from './firebase'
 import store from './store'
 import router from './routes'
 import Vue2Filters from 'vue2-filters'
-import VueFirestore from 'vue-firestore';
+import VueFirestore from 'vue-firestore'
 
 Vue.use(VueFirestore)
 Vue.use(Vue2Filters)

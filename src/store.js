@@ -9,11 +9,15 @@ export default new Vuex.Store({
     user: {
       loggedIn: false,
       data: null
-    }
+    },
+    activeChar: String
   },
   getters: {
     user(state){
       return state.user
+    },
+    currentChar(state){
+      return state.activeChar
     }
   },
   mutations: {
@@ -22,6 +26,9 @@ export default new Vuex.Store({
     },
     SET_USER(state, data) {
       state.user.data = data;
+    },
+    setChar(state, data) {
+      state.activeChar = data
     }
   },
   actions: {
