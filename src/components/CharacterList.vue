@@ -1,7 +1,7 @@
 <template>
     <ul class="roboto">
-        <li v-for="character in orderBy(data, 'name')" :key="character.name">
-            <SmallTitle type="h3" v-bind:class="{ active : activeChar == character['.key'] }">{{ character.name }}</SmallTitle>
+        <li v-for="character in orderBy(data, 'name')" :key="character.name" v-bind:class="{ active : activeChar == character['.key'] }">
+            <SmallTitle type="h3">{{ character.name }}</SmallTitle>
             <p>@{{ character['.key'] }}</p>
             <p v-if="character.fandom">
                 {{character.fandom}}
@@ -26,8 +26,9 @@
             width: calc(100% - 2rem - 4pxe);
             margin: 1rem 0;
 
-            .active {
-                color: $red;
+            &.active {
+               border-color: $darkblue;
+               box-shadow: 4px 4px $darkblue;
             }
         }
     }
