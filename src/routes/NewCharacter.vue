@@ -78,7 +78,7 @@ export default {
                                 .doc(this.user.data.displayName)
                                 .update(
                                     {
-                                        characters: firebase.firestore.FieldValue.arrayUnion(this.$firestore.characters.doc(this.character.profilename))
+                                        characters: firebase.firestore.FieldValue.arrayUnion(this.character.profilename)
                                     }
                                 ).then(() => {
                                     this.success = true
