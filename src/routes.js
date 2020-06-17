@@ -16,9 +16,10 @@ import NewCharacter from './routes/NewCharacter.vue';
 const routes = [
   { path: '/', name: 'main', component: Main },
   { path: '/components', name: 'components', component: Components },
-  { path: '/login', name: 'login', component: Login},
-  { path: '/register', name: 'register', component: Register},
   { path: '/roadmap', name: 'roadmap', component: Roadmap},
+
+  { path: '/login', name: 'login', component: Login, meta: {noAuth: true}},
+  { path: '/register', name: 'register', component: Register, meta: {noAuth: true}},
 
   { path: '/dashboard', name: 'dashboard', component: Dashboard, meta: {requiresAuth: true}},
   { path: '/new-character', name: 'new-character', component: NewCharacter, meta: {requiresAuth: true}}
@@ -34,9 +35,13 @@ const router = new VueRouter({
 
 router.beforeEach(async (to, from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+  const noAuth = to.matched.some(record => record.meta.noAuth);
   if (requiresAuth && !await firebase.getCurrentUser()) {
     next('login')
-  }else {
+  } else if (noAuth && await firebase.getCurrentUser()) {
+    next('dashboard')
+  }
+  else {
     next()
   }
 })
