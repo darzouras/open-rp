@@ -1,7 +1,7 @@
 <template>
     <ul class="roboto">
         <li v-for="character in orderBy(data, 'name')" :key="character.name">
-            <SmallTitle type="h3">{{ character.name }}</SmallTitle>
+            <SmallTitle type="h3" v-bind:class="{ active : activeChar == character['.key'] }">{{ character.name }}</SmallTitle>
             <p>@{{ character['.key'] }}</p>
             <p v-if="character.fandom">
                 {{character.fandom}}
@@ -25,6 +25,10 @@
             padding: 1rem;
             width: calc(100% - 2rem - 4pxe);
             margin: 1rem 0;
+
+            .active {
+                color: $red;
+            }
         }
     }
 
@@ -75,7 +79,8 @@ export default {
     },
     computed: {
         ...mapGetters({
-            user: 'user'
+            user: 'user',
+            activeChar: 'activeChar'
         })
     },
     mixins: [Vue2Filters.mixin]

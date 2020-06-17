@@ -7,7 +7,7 @@
         <section>
             <Title type="h2" title="Your Characters" />
 
-            <CharacterList v-if="characters.length > 0" :data="characters" />
+            <CharacterList v-if="characters.length > 0" :data="characters" :activeChar="activeChar"/>
 
             <BigMessage v-else>
                 There's nothing here, try making a character!
@@ -50,7 +50,8 @@ export default {
     },
     computed: {
         ...mapGetters({
-            user: 'user'
+            user: 'user',
+            activeChar: 'activeChar'
         })
     }
 }

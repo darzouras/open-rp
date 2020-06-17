@@ -11,7 +11,7 @@
                     <i class="ri-user-smile-line"></i> {{ user.data.displayName }}
                 </li>
                 <li>
-                    <i class="ri-account-pin-box-line"></i> ACTIVECHAR
+                    <i class="ri-account-pin-box-line"></i> {{ activeChar }}
                 </li>
                 <li v-for="link in links" :key="link.name">
                     <router-link :to="link.link">{{link.name}}</router-link>
@@ -169,7 +169,8 @@
         },
         computed: {
             ...mapGetters({
-                user: 'user'
+                user: 'user',
+                activeChar: 'activeChar'
             })
         },
         methods: {
