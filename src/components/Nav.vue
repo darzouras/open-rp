@@ -86,6 +86,7 @@
                 li {
                     display: flex;
                     align-items: center;
+                    justify-content: flex-end;
                 }
                 i {
                     font-size: 1.2rem;
