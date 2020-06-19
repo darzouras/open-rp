@@ -7,6 +7,10 @@
                 {{character.fandom}}
             </p>
             <button @click="deleteCharacter(character)">Remove</button>
+
+            <button
+                v-if="character.user == user.data.displayName && activeChar !== character['.key']"
+                @click="setActive(character['.key'])">Set Active</button>
         </li>
     </ul>
 </template>
@@ -48,7 +52,7 @@
 </style>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import { db } from '../firebase'
 import firebase from '../firebase'
 import Vue2Filters from 'vue2-filters'
@@ -76,7 +80,24 @@ export default {
                 }
             )
             this.$firestore.characters.doc(character['.key']).delete();
-        }
+        },
+        setActive: function(character) {
+            console.log(character)
+            this.$firestore.users
+                .doc(this.user.data.displayName)
+                .update(
+                    {
+                        'activeChar': character
+                    }
+                ).then(() => {
+                    this.$store.commit('setChar', character)
+                }).catch(err => {
+                    console.log(err.message)
+                })
+        },
+        ...mapMutations([
+            'setChar'
+        ])
     },
     computed: {
         ...mapGetters({

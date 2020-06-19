@@ -86,7 +86,6 @@ export default {
                                     this.error = null
                                     
                                     this.$store.commit('setChar', this.character.profilename)
-                                    console.log(this.activeChar)
 
                                     this.$router.replace({ name: "dashboard" });
                                 })
