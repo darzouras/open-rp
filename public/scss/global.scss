@@ -10,10 +10,10 @@ $nav-height: 64px;
 
 $breakpoint-tablet: 768px;
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&family=Spectral&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&Open+Sans:ital,wght@0,400;0,700;1,400&display=swap');
 
 body {
-    font-family: 'Spectral', serif;
+    font-family: 'Open Sans', sans-serif;
     font-weight: 400;
     background: white;
     color: $darkblue;
@@ -27,7 +27,7 @@ body {
 }
 
 .spectral {
-    font-family: 'Spectral', serif;
+    font-family: 'Open Sans', serif;
 }
 .roboto {
     font-family: 'Roboto', sans-serif;
