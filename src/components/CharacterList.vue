@@ -9,7 +9,7 @@
             <button @click="deleteCharacter(character)">Remove</button>
 
             <button
-                v-if="character.user == user.data.displayName && activeChar !== character['.key']"
+                v-if="selectActive && activeChar !== character['.key']"
                 @click="setActive(character['.key'])">Set Active</button>
         </li>
     </ul>
@@ -64,7 +64,8 @@ export default {
         SmallTitle
     },
     props: {
-        data: Array
+        data: Array,
+        selectActive: Boolean || false
     },
     firestore() {
         return {
@@ -74,26 +75,30 @@ export default {
     },
     methods: {
         deleteCharacter: function(character) {
-            this.$firestore.users.doc(this.user.data.displayName).update(
-                {
-                    characters: firebase.firestore.FieldValue.arrayRemove(this.$firestore.characters.doc(character['.key']))
-                }
-            )
-            this.$firestore.characters.doc(character['.key']).delete();
-            this.$store.commit('setChar', null)
+            if (this.user.loggedIn) {
+                this.$firestore.users.doc(this.user.data.displayName).update(
+                    {
+                        characters: firebase.firestore.FieldValue.arrayRemove(this.$firestore.characters.doc(character['.key']))
+                    }
+                )
+                this.$firestore.characters.doc(character['.key']).delete();
+                this.$store.commit('setChar', null)
+            }
         },
         setActive: function(character) {
-            this.$firestore.users
-                .doc(this.user.data.displayName)
-                .update(
-                    {
-                        'activeChar': character
-                    }
-                ).then(() => {
-                    this.$store.commit('setChar', character)
-                }).catch(err => {
-                    console.log(err.message)
-                })
+            if (this.user.loggedIn) {
+                this.$firestore.users
+                    .doc(this.user.data.displayName)
+                    .update(
+                        {
+                            'activeChar': character
+                        }
+                    ).then(() => {
+                        this.$store.commit('setChar', character)
+                    }).catch(err => {
+                        console.log(err.message)
+                    })
+            }
         },
         ...mapMutations([
             'setChar'
