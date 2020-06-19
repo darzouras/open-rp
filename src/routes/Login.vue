@@ -3,7 +3,7 @@
         <Title type="h1" title="Login" />
 
         <div v-if="error" class="error">{{ error }}</div>
-        <form action="#" @submit.prevent="submit">
+        <form action="#" @submit.prevent="submit" autocomplete="on">
             <Input label="Email" type="email" name="email" required="required" autofocus="autofocus" v-model="form.email"/>
 
             <Input label="Password" type="password" name="password" required="required" v-model="form.password" />
@@ -19,6 +19,8 @@
 
 <script>
 import firebase from '../firebase'
+import { db } from '../firebase'
+import { mapMutations } from 'vuex'
 
 import Title from '@/components/Title.vue'
 import Input from '@/components/Input.vue'
@@ -40,6 +42,11 @@ export default {
             error: null
         }
     },
+    firestore() {
+        return {
+            users: db.collection('users')
+        }
+    },
     methods: {
         submit() {
             firebase
@@ -47,12 +54,22 @@ export default {
                 .signInWithEmailAndPassword(this.form.email, this.form.password)
                 .then(data => {
                     data.user
-                    this.$router.replace({ name: "dashboard" });
+                    if (data.user) {
+                        this.$firestore.users.doc(data.user.displayName).get().then(snapshot => {
+                            if (snapshot.data().activeChar) {
+                                this.$store.commit('setChar', snapshot.data().activeChar)
+                            }
+                        })
+                        this.$router.replace({ name: "dashboard" });
+                    }
                 })
                 .catch(err => {
                     this.error = err.message
                 })
-        }
+        },
+        ...mapMutations([
+            'setChar'
+        ])
     }
 }
 </script>

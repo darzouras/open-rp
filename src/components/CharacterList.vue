@@ -80,9 +80,9 @@ export default {
                 }
             )
             this.$firestore.characters.doc(character['.key']).delete();
+            this.$store.commit('setChar', null)
         },
         setActive: function(character) {
-            console.log(character)
             this.$firestore.users
                 .doc(this.user.data.displayName)
                 .update(
