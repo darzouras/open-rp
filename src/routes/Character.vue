@@ -3,7 +3,7 @@
         <Title type="h1">{{ $route.params.char }}</Title>
         <p v-if="player">Played by <router-link :to="{ path: '/user/' + player }">{{ player }}</router-link></p>
 
-        <Button v-if="user.data.displayName === player" @click="initRemove = true" alert=true>Delete Character</Button>
+        <Button v-if="user.loggedIn && user.data.displayName === player" @click="initRemove = true" alert=true>Delete Character</Button>
 
         <transition name="slide-fade">
             <div v-if="initRemove === true">
