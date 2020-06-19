@@ -10,7 +10,7 @@
                 <li>
                     <i class="ri-user-smile-line"></i> {{ user.data.displayName }}
                 </li>
-                <li>
+                <li v-if="activeChar">
                     <i class="ri-account-pin-box-line"></i> {{ activeChar }}
                 </li>
                 <li v-for="link in links" :key="link.name">
