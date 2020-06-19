@@ -11,7 +11,7 @@
                     <router-link :to="{ path: '/user/' + user.data.displayName}"><i class="ri-user-smile-line"></i> {{ user.data.displayName }}</router-link>
                 </li>
                 <li v-if="activeChar">
-                    <i class="ri-account-pin-box-line"></i> {{ activeChar }}
+                    <router-link :to="{ path: '/char/' + activeChar }"><i class="ri-account-pin-box-line"></i> {{ activeChar }}</router-link>
                 </li>
                 <li v-for="link in links" :key="link.name">
                     <router-link :to="link.link">{{link.name}}</router-link>

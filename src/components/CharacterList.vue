@@ -2,7 +2,7 @@
     <ul class="roboto">
         <li v-for="character in orderBy(data, 'name')" :key="character.name" v-bind:class="{ active : activeChar == character['.key'] }">
             <SmallTitle type="h3">{{ character.name }}</SmallTitle>
-            <p>@{{ character['.key'] }}</p>
+            <p><router-link :to="{ path: '/char/' + character['.key']}">@{{ character['.key'] }}</router-link></p>
             <p v-if="character.fandom">
                 {{character.fandom}}
             </p>

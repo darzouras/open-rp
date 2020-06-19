@@ -12,6 +12,7 @@ import Dashboard from './routes/Dashboard.vue';
 import Roadmap from './routes/Roadmap.vue';
 import User from './routes/User.vue';
 import NewCharacter from './routes/NewCharacter.vue';
+import Character from './routes/Character.vue';
 
 const routes = [
   { path: '/', name: 'main', component: Main },
@@ -19,6 +20,7 @@ const routes = [
   { path: '/roadmap', name: 'roadmap', component: Roadmap},
 
   { path: '/user/:user', name: 'User', component: User},
+  { path: '/char/:char', name: 'Character', component: Character},
 
   { path: '/login', name: 'login', component: Login, meta: {noAuth: true}},
   { path: '/register', name: 'register', component: Register, meta: {noAuth: true}},
