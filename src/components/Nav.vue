@@ -8,7 +8,7 @@
 
             <ul id="nav-links" v-if='user.loggedIn' v-bind:class="{ active : navActive }" @click="closeDropdown">
                 <li>
-                    <i class="ri-user-smile-line"></i> {{ user.data.displayName }}
+                    <router-link :to="{ path: 'user/' + user.data.displayName}"><i class="ri-user-smile-line"></i> {{ user.data.displayName }}</router-link>
                 </li>
                 <li v-if="activeChar">
                     <i class="ri-account-pin-box-line"></i> {{ activeChar }}
@@ -83,7 +83,7 @@
             }
 
             #nav-links {
-                li {
+                a {
                     display: flex;
                     align-items: center;
                     justify-content: flex-end;
