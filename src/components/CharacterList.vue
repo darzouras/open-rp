@@ -6,11 +6,14 @@
             <p v-if="character.fandom">
                 {{character.fandom}}
             </p>
-            <button @click="deleteCharacter(character)">Remove</button>
 
-            <button
+            <Button
                 v-if="selectActive && activeChar !== character['.key']"
-                @click="setActive(character['.key'])">Set Active</button>
+                @click="setActive(character['.key'])"
+                full=true>Set Active</Button>
+            <Button v-else-if="selectActive && activeChar === character['.key']"
+                full=true
+                inactive=true>Currently Active</Button>
         </li>
     </ul>
 </template>
@@ -57,11 +60,13 @@ import { db } from '../firebase'
 import firebase from '../firebase'
 import Vue2Filters from 'vue2-filters'
 import SmallTitle from '@/components/SmallTitle.vue'
+import Button from '@/components/Button.vue'
 
 export default {
     name: 'CharacterList',
     components: {
-        SmallTitle
+        SmallTitle,
+        Button
     },
     props: {
         data: Array,

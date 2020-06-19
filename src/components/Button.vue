@@ -4,7 +4,7 @@
         :id="name"
         class="roboto"
         v-on:click="$emit('click')"
-        v-bind:class="{ alert : alert }"
+        v-bind:class="{ alert : alert, full : full, inactive : inactive }"
     >
         <slot></slot>
     </button>
@@ -36,6 +36,19 @@
             }
         }
 
+        &.inactive {
+            cursor: initial;
+
+            &:hover {
+                background: none;
+                color: $darkblue;
+            }
+        }
+
+        &.full {
+            width: 100%;
+        }
+
         &:hover {
             color: white;
             background: $darkblue;
@@ -49,7 +62,9 @@ export default {
     name: 'Button',
     props: {
         name: String,
-        alert: null
+        alert: null,
+        full: null,
+        inactive: null
     }
 }
 </script>

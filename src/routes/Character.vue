@@ -3,15 +3,19 @@
         <Title type="h1">{{ $route.params.char }}</Title>
         <p v-if="player">Played by <router-link :to="{ path: '/user/' + player }">{{ player }}</router-link></p>
 
-        <Button v-if="user.data.displayName === player" @click="startRemove()" alert=true>Delete Character</Button>
+        <Button v-if="user.data.displayName === player" @click="initRemove = true" alert=true>Delete Character</Button>
 
-        <BigMessage v-if="initRemove === true" alert="true">
-            Deleting this character cannot be reversed. All history and data will be lost.<br />Do you want to proceed?
-        </BigMessage>
+        <transition name="slide-fade">
+            <div v-if="initRemove === true">
+                <BigMessage alert="true">
+                    Deleting this character cannot be reversed. All history and data will be lost.<br />Do you want to proceed?
+                </BigMessage>
 
-        <Button v-if="initRemove === true" alert="true" @click="deleteCharacter()">
-            Confirm Delete
-        </Button>
+                <Button alert="true" @click="deleteCharacter()">
+                    Confirm Delete
+                </Button>
+            </div>
+        </transition>
 
     </div>
 </template>
@@ -54,9 +58,6 @@ export default {
             this.$firestore.characters.doc(this.$route.params.char).get().then(snapshot =>{
                 this.player = snapshot.data().user
             })
-        },
-        startRemove: function() {
-            this.initRemove = true
         },
         deleteCharacter: function() {
             if (this.user.loggedIn) {
