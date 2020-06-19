@@ -27,16 +27,19 @@
         margin: 0 0 2rem;
 
         li {
-            border: 2px solid $green;
-            box-shadow: 4px 4px $green;
+            border: 2px solid $darkblue;
+            box-shadow: 4px 4px $darkblue;
             border-radius: 15px;
             padding: 1rem;
             width: calc(100% - 2rem - 4pxe);
             margin: 1rem 0;
 
             &.active {
-               border-color: $darkblue;
-               box-shadow: 4px 4px $darkblue;
+               background: $yellow;
+            }
+
+            a {
+                color: $darkblue;
             }
         }
     }

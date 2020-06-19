@@ -40,7 +40,7 @@
             cursor: initial;
 
             &:hover {
-                background: none;
+                background: white;
                 color: $darkblue;
             }
         }
