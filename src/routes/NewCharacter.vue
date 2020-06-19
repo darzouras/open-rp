@@ -29,7 +29,7 @@
 </style>
 
 <script>
-import { mapGetters } from 'vuex' 
+import { mapGetters, mapMutations } from 'vuex'
 import { db } from '../firebase'
 import firebase from '../firebase'
 
@@ -78,11 +78,14 @@ export default {
                                 .doc(this.user.data.displayName)
                                 .update(
                                     {
-                                        characters: firebase.firestore.FieldValue.arrayUnion(this.$firestore.characters.doc(this.character.profilename))
+                                        characters: firebase.firestore.FieldValue.arrayUnion(this.character.profilename),
+                                        'activeChar': this.character.profilename
                                     }
                                 ).then(() => {
                                     this.success = true
                                     this.error = null
+                                    
+                                    this.$store.commit('setChar', this.character.profilename)
 
                                     this.$router.replace({ name: "dashboard" });
                                 })
@@ -97,11 +100,15 @@ export default {
                     this.error = 'Sorry, a character with that profile name already exists.'
                 }
             })
-        }
+        },
+        ...mapMutations([
+            'setChar'
+        ])
     },
     computed: {
         ...mapGetters({
-            user: 'user'
+            user: 'user',
+            activeChar: 'activeChar'
         })
     }
 }

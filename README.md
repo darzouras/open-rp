@@ -2,6 +2,8 @@
 
 Test url at [open-rp.web.app](https://open-rp.web.app/).
 
+Icon font is [remixicon.com](https://remixicon.com).
+
 ## Project setup
 ```
 npm install
