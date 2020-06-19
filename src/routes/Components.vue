@@ -6,6 +6,10 @@
         </article>
 
         <article>
+            <TitleMed type="h2">Medium Title</TitleMed>
+        </article>
+
+        <article>
             <BigMessage>
                 This is a big message.
             </BigMessage>
@@ -46,6 +50,7 @@
 
 <script>
 import Title from '@/components/Title.vue'
+import TitleMed from '@/components/TitleMed.vue'
 import SmallTitle from '@/components/SmallTitle.vue'
 import BigMessage from '@/components/BigMessage.vue'
 import Input from '@/components/Input.vue'
@@ -57,6 +62,7 @@ export default {
     name: 'Components',
     components: {
         Title,
+        TitleMed,
         SmallTitle,
         BigMessage,
         Input,
