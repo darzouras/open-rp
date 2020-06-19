@@ -2,7 +2,7 @@
     <div class="dashboard-wrapper">
         <Title type="h1" title="Dashboard" />
 
-        <p v-if="user.loggedIn">{{user.data.displayName}} logged in</p>
+        <BigMessage v-if="user.loggedIn">You are currently logged in as {{user.data.displayName}}</BigMessage>
 
         <section>
             <TitleMed type="h2">Your Characters</TitleMed>
