@@ -13,7 +13,8 @@
                 full=true>Set Active</Button>
             <Button v-else-if="selectActive && activeChar === character['.key']"
                 full=true
-                inactive=true>Currently Active</Button>
+                inactive=true
+                tab-index='-1'>Currently Active</Button>
         </li>
     </ul>
 </template>
