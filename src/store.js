@@ -49,6 +49,7 @@ export default new Vuex.Store({
         });
       } else {
         commit("SET_USER", null);
+        commit("setChar", null)
       }
     }
   }
