@@ -1,24 +1,40 @@
 <template>
     <div class="char-wrapper">
         <Title type="h1">{{ $route.params.char }}</Title>
+
+        <transition name="fade">
+            <BigMessage v-if="character">
+                <a v-if="character.charWiki" :href="character.charWiki">{{ character.name }}</a><span v-else>{{ character.name }}</span> <span v-if="character.fandom">of <a v-if="character.fandomWiki" :href="character.fandomWiki">{{ character.fandom }}</a><span v-else>{{ character.fandom }}</span></span>
+            </BigMessage>
+        </transition>
+
         <p v-if="player">Played by <router-link :to="{ path: '/user/' + player }">{{ player }}</router-link></p>
 
-        <Button v-if="user.loggedIn && user.data.displayName === player" @click="initRemove = true" alert=true>Delete Character</Button>
+        <transition name="fade">
+            <div class="center" v-if="user.loggedIn">
+                <Button v-if="user.data.displayName === player" @click="initRemove = true" alert=true>Delete Character</Button>
 
-        <transition name="slide-fade">
-            <div v-if="initRemove === true">
-                <BigMessage alert="true">
-                    Deleting this character cannot be reversed. All history and data will be lost.<br />Do you want to proceed?
-                </BigMessage>
+                <transition name="slide-fade">
+                    <div v-if="initRemove === true">
+                        <BigMessage alert="true">
+                            Deleting this character cannot be reversed. All history and data will be lost.<br />Do you want to proceed?
+                        </BigMessage>
 
-                <Button alert="true" @click="deleteCharacter()">
-                    Confirm Delete
-                </Button>
+                        <Button alert="true" @click="deleteCharacter()">
+                            Confirm Delete
+                        </Button>
+                    </div>
+                </transition>
             </div>
         </transition>
 
     </div>
 </template>
+
+<style lang="scss" scoped>
+    @import '../../public/scss/global.scss';
+
+</style>
 
 <script>
 import { mapGetters } from 'vuex'
@@ -38,7 +54,8 @@ export default {
     data() {
         return {
             player: null,
-            initRemove: Boolean || false
+            initRemove: Boolean || false,
+            character: null
         }
     },
     firestore() {
@@ -54,6 +71,11 @@ export default {
         })
     },
     methods: {
+        getCharacter: function() {
+            this.$firestore.characters.doc(this.$route.params.char).get().then(snapshot => {
+                this.character = snapshot.data()
+            })
+        },
         getPlayer: function() {
             this.$firestore.characters.doc(this.$route.params.char).get().then(snapshot =>{
                 this.player = snapshot.data().user
@@ -74,6 +96,7 @@ export default {
         },
     },
     created() {
+        this.getCharacter()
         this.getPlayer()
     }
 }
