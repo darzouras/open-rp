@@ -9,6 +9,8 @@
             
             <PlayerInfo :data="playerData" />
 
+            <div class="info" v-if="playerData.extra" v-html="playerData.extra"></div>
+
             <div class="center">
                 <RouteButton route="/update-profile" full=true>Update Your Profile</RouteButton>
             </div>
@@ -29,6 +31,12 @@
         </section>
     </div>
 </template>
+
+<style lang="scss" scoped>
+    .info {
+        padding: 0 0 2rem;
+    }
+</style>
 
 <script>
 import { mapGetters } from 'vuex' 

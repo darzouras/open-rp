@@ -54,8 +54,6 @@
                 </td>
             </tr>
         </table>
-
-        <div class="info" v-html="data.extra"></div>
     </div>
 </template>
 
@@ -81,10 +79,6 @@
             th, td {
                 padding: .25rem 0;
             }
-        }
-
-        .info {
-            padding: 1rem 0 0;
         }
 
         @media (min-width: 768px) {

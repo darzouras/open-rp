@@ -6,6 +6,8 @@
             <TitleMed type="h2">Player Info</TitleMed>
 
             <PlayerInfo :data="playerData" />
+
+            <div class="info" v-if="playerData.extra" v-html="playerData.extra"></div>
         </section>
 
         <section>
@@ -16,6 +18,12 @@
         </section>
     </div>
 </template>
+
+<style lang="scss" scoped>
+    .info {
+        padding: 0 0 1rem;
+    }
+</style>
 
 <script>
 import { db } from '../firebase'
