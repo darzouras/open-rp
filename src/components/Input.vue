@@ -1,7 +1,17 @@
 <template>
     <label v-bind:class="{ error: error }" class="roboto">
-        {{ label }}
-        <input
+        <SmallTitle type="p">{{ label }}</SmallTitle>
+        <small v-if="note">{{ note }}</small>
+        <textarea v-if="type === 'textarea'"
+            :name="name"
+            :id="name"
+            :placeholder="placeholder"
+            :required="required"
+            :autofocus="autofocus"
+            :value="value"
+            @input="updateInput($event)"
+            rows="5" />
+        <input v-else
             :type="type"
             :name="name"
             :id="name"
@@ -22,7 +32,8 @@
         font-weight: 100;
         margin-bottom: 1.5rem;
         
-        input {
+        input,
+        textarea {
             display: block;
             width: calc(100% - 1rem - 2px);
             border-width: 2px;
@@ -45,8 +56,13 @@
 </style>
 
 <script>
+import SmallTitle from '@/components/SmallTitle.vue'
+
 export default {
     name: 'Input',
+    components: {
+        SmallTitle
+    },
     props: {
         label: String,
         name: String,
@@ -56,6 +72,7 @@ export default {
         autofocus: String,
         link: String,
         value: null,
+        note: null
     },
     data() {
         return {
