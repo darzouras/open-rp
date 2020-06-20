@@ -5,7 +5,7 @@
         <p>All fields are optional but all filled fields will appear on your user info page.</p>
 
         <form action="#" @submit.prevent="updateUserData">
-            <Input label="Name" type="name" name="name" v-model="userData.name" />
+            <Input label="Name" type="text" name="name" v-model="userData.name" />
 
             <Input label="Birthday" note="required if you want to participate in 18+ chats" type="date" name="birthday" v-model="userData.birthday" />
 
@@ -30,6 +30,7 @@
             <Button type="submit">Submit Update</Button>
         </form>
 
+        <p v-if="error">{{ error }}</p>
         <p v-if="success === true">Your profile has been successfully updated</p>
 
     </div>
@@ -94,6 +95,7 @@ export default {
                 extra: this.$sanitize(this.userData.extra) || ''
             }).then(() => {
                 this.success = true
+                this.$router.replace({ name: 'dashboard' })
             }).catch(err => {
                 this.error = err.message
             })
