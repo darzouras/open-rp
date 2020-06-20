@@ -62,7 +62,7 @@ export default {
             this.$firestore.characters.doc(this.character.profilename).get().then(snapshot => {
                 if (!snapshot.exists) {
                     this.$firestore.characters
-                        .doc(this.character.profilename)
+                        .doc(this.character.profilename.toLowerCase())
                         .set({
                             userRef: this.$firestore.users.doc(this.user.data.displayName),
                             user: this.user.data.displayName,
@@ -78,14 +78,14 @@ export default {
                                 .doc(this.user.data.displayName)
                                 .update(
                                     {
-                                        characters: firebase.firestore.FieldValue.arrayUnion(this.character.profilename),
-                                        'activeChar': this.character.profilename
+                                        characters: firebase.firestore.FieldValue.arrayUnion(this.character.profilename.toLowerCase()),
+                                        'activeChar': this.character.profilename.toLowerCase()
                                     }
                                 ).then(() => {
                                     this.success = true
                                     this.error = null
                                     
-                                    this.$store.commit('setChar', this.character.profilename)
+                                    this.$store.commit('setChar', this.character.profilename.toLowerCase())
 
                                     this.$router.replace({ name: "dashboard" });
                                 })

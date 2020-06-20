@@ -63,7 +63,7 @@ export default {
     }, 
     methods: {
         submit() {
-            this.$firestore.users.doc(this.form.name).get().then(snapshot => {
+            this.$firestore.users.doc(this.form.name.toLowerCase()).get().then(snapshot => {
                 if (!snapshot.exists) {
                     firebase
                     .auth()
@@ -71,11 +71,11 @@ export default {
                     .then(data => {
                         data.user
                         .updateProfile({
-                            displayName: this.form.name
+                            displayName: this.form.name.toLowerCase()
                         })
                         .then(() => {
                             this.$firestore.users
-                                .doc(this.form.name)
+                                .doc(this.form.name.toLowerCase())
                                 .set({
                                     email: this.form.email,
                                     created: new Date(),

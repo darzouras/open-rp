@@ -28,7 +28,7 @@ export default {
         return {
             characters: [],
             userChars: [],
-            player: this.$route.params.user
+            player: this.$route.params.user.toLowerCase()
         }
     },
     firestore() {
@@ -39,7 +39,7 @@ export default {
     },
     watch: {
         $route(to) {
-            this.player = to.params.user
+            this.player = to.params.user.toLowerCase()
 
             this.$firestore.characters.where('user', '==', this.player).get().then(snapshot => {
                 this.userChars = [];
