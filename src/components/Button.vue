@@ -46,7 +46,7 @@
         }
 
         &.full {
-            width: 100%;
+            width: calc(100% - 2rem);
         }
 
         &:hover {
