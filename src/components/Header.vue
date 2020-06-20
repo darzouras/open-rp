@@ -27,7 +27,8 @@
 
     @media (min-width: 768px) {
         header {
-            position: relative;
+            top: 0;
+            bottom: unset;
             box-shadow: 0px 5px 10px $shadow;
         }
     }

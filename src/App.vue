@@ -31,4 +31,9 @@ export default {
       max-width: 800px;
       margin: auto;
   }
+  @media (min-width: 768px) {
+    main {
+      padding-top: 75px;
+    }
+  }
 </style>
