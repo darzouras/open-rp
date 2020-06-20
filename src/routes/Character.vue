@@ -1,6 +1,6 @@
 <template>
     <div class="char-wrapper">
-        <Title type="h1">{{ $route.params.char }}</Title>
+        <Title type="h1">{{ charID }}</Title>
 
         <transition name="fade">
             <BigMessage v-if="character">
@@ -53,6 +53,7 @@ export default {
     },
     data() {
         return {
+            charID: this.$route.params.char,
             player: null,
             initRemove: Boolean || false,
             character: null
@@ -72,24 +73,23 @@ export default {
     },
     methods: {
         getCharacter: function() {
-            this.$firestore.characters.doc(this.$route.params.char).get().then(snapshot => {
+            this.$firestore.characters.doc(this.charID).get().then(snapshot => {
                 this.character = snapshot.data()
             })
         },
         getPlayer: function() {
-            this.$firestore.characters.doc(this.$route.params.char).get().then(snapshot =>{
+            this.$firestore.characters.doc(this.charID).get().then(snapshot =>{
                 this.player = snapshot.data().user
             })
         },
         deleteCharacter: function() {
             if (this.user.loggedIn) {
-                console.log(this.$route.params.char)
                 this.$firestore.users.doc(this.user.data.displayName).update(
                     {
-                        characters: firebase.firestore.FieldValue.arrayRemove(this.$route.params.char)
+                        characters: firebase.firestore.FieldValue.arrayRemove(this.charID)
                     }
                 )
-                this.$firestore.characters.doc(this.$route.params.char).delete();
+                this.$firestore.characters.doc(this.charID).delete();
                 this.$store.commit('setChar', null)
                 this.$router.replace({ name: "dashboard" });
             }
@@ -98,6 +98,13 @@ export default {
     created() {
         this.getCharacter()
         this.getPlayer()
+    },
+    watch: {
+        $route(to) {
+            this.charID = to.params.char
+            this.getCharacter()
+            this.getPlayer()
+        }
     }
 }
 </script>
