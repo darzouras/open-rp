@@ -2,7 +2,7 @@
     <ul class="roboto">
         <li v-for="character in orderBy(data, 'name')" :key="character.name" v-bind:class="{ active : activeChar == character['.key'] }">
             <SmallTitle type="h3">{{ character.name }}</SmallTitle>
-            <p><router-link :to="{ path: '/char/' + character['.key']}">@{{ character['.key'] }}</router-link></p>
+            <p><b><router-link :to="{ path: '/char/' + character['.key']}">@{{ character['.key'] }}</router-link></b></p>
             <p v-if="character.fandom">
                 {{character.fandom}}
             </p>
@@ -34,7 +34,7 @@
             width: calc(100% - 2rem - 4px);
             margin: 1rem 0;
 
-            &.active button {
+            &.active .inactive {
                background: $yellow;
 
                &:hover {
@@ -78,7 +78,7 @@ export default {
     name: 'CharacterList',
     components: {
         SmallTitle,
-        Button
+        Button,
     },
     props: {
         data: Array,

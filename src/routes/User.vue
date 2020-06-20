@@ -2,13 +2,15 @@
     <div class="user-wrapper">
         <Title type="h1" :title="player" />
 
-        <section>
-            <TitleMed type="h2">Player Info</TitleMed>
+        <transition name="slide-fade">
+            <section v-if="playerData">
+                <TitleMed type="h2">Player Info</TitleMed>
 
-            <PlayerInfo :data="playerData" />
+                <PlayerInfo :data="playerData" />
 
-            <div class="info" v-if="playerData.extra" v-html="playerData.extra"></div>
-        </section>
+                <div class="info" v-if="playerData.extra" v-html="playerData.extra"></div>
+            </section>
+        </transition>
 
         <section>
             <TitleMed type="h2">Characters</TitleMed>

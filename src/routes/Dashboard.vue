@@ -4,17 +4,19 @@
 
         <BigMessage v-if="user.loggedIn">You are currently logged in as {{user.data.displayName}}</BigMessage>
 
-        <section>
-            <TitleMed type="h2">Your Info</TitleMed>
-            
-            <PlayerInfo :data="playerData" />
+        <transition name="slide-fade">
+            <section v-if="playerData">
+                <TitleMed type="h2">Your Info</TitleMed>
+                
+                <PlayerInfo :data="playerData" />
 
-            <div class="info" v-if="playerData.extra" v-html="playerData.extra"></div>
+                <div class="info" v-if="playerData.extra" v-html="playerData.extra"></div>
 
-            <div class="center">
-                <RouteButton route="/update-profile" full=true>Update Your Profile</RouteButton>
-            </div>
-        </section>
+                <div class="center">
+                    <RouteButton route="/update-profile" full=true>Update Your Profile</RouteButton>
+                </div>
+            </section>
+        </transition>
 
         <section>
             <TitleMed type="h2">Your Characters</TitleMed>
