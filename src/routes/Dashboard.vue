@@ -2,12 +2,12 @@
     <div class="dashboard-wrapper">
         <Title type="h1" title="Dashboard" />
 
-        <p v-if="user.loggedIn">{{user.data.displayName}} logged in</p>
+        <BigMessage v-if="user.loggedIn">You are currently logged in as {{user.data.displayName}}</BigMessage>
 
         <section>
-            <Title type="h2" title="Your Characters" />
+            <TitleMed type="h2">Your Characters</TitleMed>
 
-            <CharacterList v-if="characters.length > 0" :data="characters" :activeChar="activeChar"/>
+            <CharacterList v-if="characters.length > 0" :data="characters" :activeChar="activeChar" :selectActive=true />
 
             <BigMessage v-else>
                 There's nothing here, try making a character!
@@ -25,6 +25,7 @@ import { mapGetters } from 'vuex'
 import { db } from '../firebase'
 
 import Title from '@/components/Title.vue'
+import TitleMed from '@/components/TitleMed.vue'
 import CharacterList from '@/components/CharacterList.vue'
 import BigMessage from '@/components/BigMessage.vue'
 import RouteButton from '@/components/RouteButton.vue'
@@ -33,6 +34,7 @@ export default {
     name: 'Dashboard',
     components: {
         Title,
+        TitleMed,
         CharacterList,
         BigMessage,
         RouteButton

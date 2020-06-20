@@ -1,9 +1,10 @@
 <template>
     <button
-        :type="type"
         :name="name"
         :id="name"
         class="roboto"
+        v-on:click="$emit('click')"
+        v-bind:class="{ alert : alert, full : full, inactive : inactive }"
     >
         <slot></slot>
     </button>
@@ -25,6 +26,29 @@
         text-transform: lowercase;
         cursor: pointer;
 
+        &.alert {
+            color: $red;
+            border-color: $red;
+
+            &:hover {
+                color: white;
+                background: $red;
+            }
+        }
+
+        &.inactive {
+            cursor: initial;
+
+            &:hover {
+                background: white;
+                color: $darkblue;
+            }
+        }
+
+        &.full {
+            width: 100%;
+        }
+
         &:hover {
             color: white;
             background: $darkblue;
@@ -37,8 +61,10 @@
 export default {
     name: 'Button',
     props: {
-        type: String,
-        name: String
+        name: String,
+        alert: null,
+        full: null,
+        inactive: null
     }
 }
 </script>

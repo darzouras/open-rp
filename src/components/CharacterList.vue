@@ -2,15 +2,19 @@
     <ul class="roboto">
         <li v-for="character in orderBy(data, 'name')" :key="character.name" v-bind:class="{ active : activeChar == character['.key'] }">
             <SmallTitle type="h3">{{ character.name }}</SmallTitle>
-            <p>@{{ character['.key'] }}</p>
+            <p><router-link :to="{ path: '/char/' + character['.key']}">@{{ character['.key'] }}</router-link></p>
             <p v-if="character.fandom">
                 {{character.fandom}}
             </p>
-            <button @click="deleteCharacter(character)">Remove</button>
 
-            <button
-                v-if="character.user == user.data.displayName && activeChar !== character['.key']"
-                @click="setActive(character['.key'])">Set Active</button>
+            <Button
+                v-if="selectActive && activeChar !== character['.key']"
+                @click="setActive(character['.key'])"
+                full=true>Set Active</Button>
+            <Button v-else-if="selectActive && activeChar === character['.key']"
+                full=true
+                inactive=true
+                tab-index='-1'>Currently Active</Button>
         </li>
     </ul>
 </template>
@@ -23,16 +27,19 @@
         margin: 0 0 2rem;
 
         li {
-            border: 2px solid $green;
-            box-shadow: 4px 4px $green;
+            border: 2px solid $darkblue;
+            box-shadow: 4px 4px $darkblue;
             border-radius: 15px;
             padding: 1rem;
-            width: calc(100% - 2rem - 4pxe);
+            width: calc(100% - 2rem - 4px);
             margin: 1rem 0;
 
             &.active {
-               border-color: $darkblue;
-               box-shadow: 4px 4px $darkblue;
+               background: $yellow;
+            }
+
+            a {
+                color: $darkblue;
             }
         }
     }
@@ -57,14 +64,17 @@ import { db } from '../firebase'
 import firebase from '../firebase'
 import Vue2Filters from 'vue2-filters'
 import SmallTitle from '@/components/SmallTitle.vue'
+import Button from '@/components/Button.vue'
 
 export default {
     name: 'CharacterList',
     components: {
-        SmallTitle
+        SmallTitle,
+        Button
     },
     props: {
-        data: Array
+        data: Array,
+        selectActive: Boolean || false
     },
     firestore() {
         return {
@@ -74,26 +84,30 @@ export default {
     },
     methods: {
         deleteCharacter: function(character) {
-            this.$firestore.users.doc(this.user.data.displayName).update(
-                {
-                    characters: firebase.firestore.FieldValue.arrayRemove(this.$firestore.characters.doc(character['.key']))
-                }
-            )
-            this.$firestore.characters.doc(character['.key']).delete();
-            this.$store.commit('setChar', null)
+            if (this.user.loggedIn) {
+                this.$firestore.users.doc(this.user.data.displayName).update(
+                    {
+                        characters: firebase.firestore.FieldValue.arrayRemove(this.$firestore.characters.doc(character['.key']))
+                    }
+                )
+                this.$firestore.characters.doc(character['.key']).delete();
+                this.$store.commit('setChar', null)
+            }
         },
         setActive: function(character) {
-            this.$firestore.users
-                .doc(this.user.data.displayName)
-                .update(
-                    {
-                        'activeChar': character
-                    }
-                ).then(() => {
-                    this.$store.commit('setChar', character)
-                }).catch(err => {
-                    console.log(err.message)
-                })
+            if (this.user.loggedIn) {
+                this.$firestore.users
+                    .doc(this.user.data.displayName)
+                    .update(
+                        {
+                            'activeChar': character
+                        }
+                    ).then(() => {
+                        this.$store.commit('setChar', character)
+                    }).catch(err => {
+                        console.log(err.message)
+                    })
+            }
         },
         ...mapMutations([
             'setChar'

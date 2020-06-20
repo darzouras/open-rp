@@ -1,5 +1,8 @@
 <template>
-  <component :is="type" class="title-large roboto">{{title}}</component>
+  <component :is="type" class="title-large roboto">
+    {{ title }}
+    <slot></slot>
+  </component>
 </template>
 
 <style lang="scss" scoped>
