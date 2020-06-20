@@ -4,7 +4,7 @@
 
         <BigMessage v-if="user.loggedIn">You are currently logged in as {{user.data.displayName}}</BigMessage>
 
-        <section>
+        <section v-if="playerData">
             <TitleMed type="h2">Your Info</TitleMed>
             
             <PlayerInfo :data="playerData" />

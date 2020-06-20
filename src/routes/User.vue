@@ -2,7 +2,7 @@
     <div class="user-wrapper">
         <Title type="h1" :title="player" />
 
-        <section>
+        <section v-if="playerData">
             <TitleMed type="h2">Player Info</TitleMed>
 
             <PlayerInfo :data="playerData" />
