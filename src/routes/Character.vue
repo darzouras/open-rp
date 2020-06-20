@@ -11,6 +11,16 @@
                 <p v-if="player">Played by <router-link :to="{ path: '/user/' + player }">{{ player }}</router-link></p>
 
                 <CharInfo :data="character" :key="character.name" />
+
+                <div class="info" v-if="character.background">
+                    <TitleMed type="h2">Background info</TitleMed>
+                    <div v-html="character.background"></div>
+                </div>
+
+                <div class="info" v-if="character.personality">
+                    <TitleMed type="h2">Personality info</TitleMed>
+                    <div v-html="character.personality"></div>
+                </div>
             </div>
         </transition>
 
@@ -63,6 +73,7 @@ import { mapGetters } from 'vuex'
 import { db } from '../firebase'
 import firebase from '../firebase'
 import Title from '@/components/Title.vue'
+import TitleMed from '@/components/TitleMed.vue'
 import Button from '@/components/Button.vue'
 import RouteButton from '@/components/RouteButton.vue'
 import BigMessage from '@/components/BigMessage.vue'
@@ -72,6 +83,7 @@ export default {
     name: 'Character',
     components: {
         Title,
+        TitleMed,
         Button,
         RouteButton,
         BigMessage,

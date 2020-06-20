@@ -24,6 +24,10 @@
 
             <Input label="Timeline info" type="text" name="timeline" v-model="charData.timeline" />
 
+            <Input label="Background Info" note="Basic html allowed here" type="textarea" name="background" v-model="charData.background" />
+
+            <Input label="Personality info" note="Basic html allowed here" type="textarea" name="personality" v-model="charData.personality" />
+
             <Button type="submit">Submit Update</Button>
         </form>
 
@@ -58,6 +62,8 @@ export default {
                 gender: '',
                 creature: '',
                 timeline: '',
+                background: '',
+                personality: '',
             },
             error: null,
             success: false,
@@ -86,7 +92,9 @@ export default {
                 age: this.charData.age || '',
                 gender: this.charData.gender || '',
                 creature: this.charData.creature || '',
-                timeline: this.charData.timeline || ''
+                timeline: this.charData.timeline || '',
+                background: this.charData.background || '',
+                personality: this.charData.personality || ''
             }).then(() => {
                 this.success = true
                 this.error = null
