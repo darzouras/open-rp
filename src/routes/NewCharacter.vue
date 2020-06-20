@@ -87,7 +87,7 @@ export default {
                                     
                                     this.$store.commit('setChar', this.character.profilename.toLowerCase())
 
-                                    this.$router.replace({ name: "dashboard" });
+                                    this.$router.replace({ path: "/char/" + this.character.profilename.toLowerCase() });
                                 })
                                 .catch(err => {
                                     this.error = err.message
