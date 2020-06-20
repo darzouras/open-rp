@@ -18,7 +18,7 @@
 
         &.reverse {
             background: white;
-            color: $green;
+            color: $darkblue;
         }
     }
 </style>

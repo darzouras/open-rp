@@ -53,7 +53,7 @@ export default {
     },
     data() {
         return {
-            charID: this.$route.params.char,
+            charID: this.$route.params.char.toLowerCase(),
             player: null,
             initRemove: Boolean || false,
             character: null
@@ -101,7 +101,7 @@ export default {
     },
     watch: {
         $route(to) {
-            this.charID = to.params.char
+            this.charID = to.params.char.toLowerCase()
             this.getCharacter()
             this.getPlayer()
         }
