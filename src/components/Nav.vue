@@ -6,7 +6,7 @@
                 <span></span>
             </button>
 
-            <ul id="nav-links" v-if='user.loggedIn' v-bind:class="{ active : navActive }" @click="closeDropdown">
+            <ul id="nav-links" v-bind:class="{ active : navActive }" @click="closeDropdown">
                 <li>
                     <router-link :to="{ path: '/user/' + user.data.displayName}"><i class="ri-user-smile-line"></i> {{ user.data.displayName }}</router-link>
                 </li>
@@ -151,7 +151,7 @@
 </style>
 
 <script>
-    import { mapGetters } from 'vuex'
+    import { mapGetters, mapMutations } from 'vuex'
     import firebase from 'firebase'
 
     export default {
@@ -179,6 +179,7 @@
                     .auth()
                     .signOut()
                     .then(() => {
+                        this.$store.commit('SET_USER', null)
                         this.$router.replace({
                             name: 'login'
                         })
@@ -186,7 +187,10 @@
             },
             closeDropdown() {
                 if (this.navActive) this.navActive = false
-            }
+            },
+            ...mapMutations([
+                'SET_USER'
+            ])
         }
     }
 </script>

@@ -5,6 +5,18 @@
         <BigMessage v-if="user.loggedIn">You are currently logged in as {{user.data.displayName}}</BigMessage>
 
         <section>
+            <TitleMed type="h2">Your Info</TitleMed>
+            
+            <PlayerInfo :data="playerData" />
+
+            <div class="info" v-if="playerData.extra" v-html="playerData.extra"></div>
+
+            <div class="center">
+                <RouteButton route="/update-profile" full=true>Update Your Profile</RouteButton>
+            </div>
+        </section>
+
+        <section>
             <TitleMed type="h2">Your Characters</TitleMed>
 
             <CharacterList v-if="characters.length > 0" :data="characters" :activeChar="activeChar" :selectActive=true />
@@ -14,11 +26,17 @@
             </BigMessage>
 
             <div class="center">
-                <RouteButton route="/new-character">Add a new character</RouteButton>
+                <RouteButton route="/new-character" full=true>Add a new character</RouteButton>
             </div>
         </section>
     </div>
 </template>
+
+<style lang="scss" scoped>
+    .info {
+        padding: 0 0 2rem;
+    }
+</style>
 
 <script>
 import { mapGetters } from 'vuex' 
@@ -29,6 +47,7 @@ import TitleMed from '@/components/TitleMed.vue'
 import CharacterList from '@/components/CharacterList.vue'
 import BigMessage from '@/components/BigMessage.vue'
 import RouteButton from '@/components/RouteButton.vue'
+import PlayerInfo from '@/components/PlayerInfo.vue'
 
 export default {
     name: 'Dashboard',
@@ -37,17 +56,20 @@ export default {
         TitleMed,
         CharacterList,
         BigMessage,
-        RouteButton
+        RouteButton,
+        PlayerInfo
     },
     data() {
         return {
             characters: [],
-            newCharacter: ''
+            newCharacter: '',
+            playerData: null
         }
     },
     firestore() {
         return{
-            characters: db.collection('characters').where('user', '==', this.user.data.displayName)
+            characters: db.collection('characters').where('user', '==', this.user.data.displayName),
+            users: db.collection('users')
         }
     },
     computed: {
@@ -55,6 +77,16 @@ export default {
             user: 'user',
             activeChar: 'activeChar'
         })
+    },
+    methods: {
+        getPlayerInfo: function() {
+            this.$firestore.users.doc(this.user.data.displayName).get().then(snapshot => {
+                this.playerData = snapshot.data()
+            })
+        }
+    },
+    created() {
+        this.getPlayerInfo()
     }
 }
 </script>

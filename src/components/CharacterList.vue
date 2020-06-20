@@ -34,13 +34,21 @@
             width: calc(100% - 2rem - 4px);
             margin: 1rem 0;
 
-            &.active {
+            &.active button {
                background: $yellow;
+
+               &:hover {
+                   background: $yellow;
+               }
             }
 
             a {
                 color: $darkblue;
             }
+
+            bottom: {
+                margin: auto;
+            };
         }
     }
 

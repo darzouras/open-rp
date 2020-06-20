@@ -9,6 +9,7 @@ import Components from './routes/Components.vue';
 import Login from './routes/Login.vue';
 import Register from './routes/Register.vue';
 import Dashboard from './routes/Dashboard.vue';
+import UpdateProfile from './routes/UpdateProfile.vue';
 import Roadmap from './routes/Roadmap.vue';
 import User from './routes/User.vue';
 import NewCharacter from './routes/NewCharacter.vue';
@@ -26,6 +27,7 @@ const routes = [
   { path: '/register', name: 'register', component: Register, meta: {noAuth: true}},
 
   { path: '/dashboard', name: 'dashboard', component: Dashboard, meta: {requiresAuth: true}},
+  { path: '/update-profile', name: 'update-profile', component: UpdateProfile, meta: {requiresAuth: true}},
   { path: '/new-character', name: 'new-character', component: NewCharacter, meta: {requiresAuth: true}}
 ]
 

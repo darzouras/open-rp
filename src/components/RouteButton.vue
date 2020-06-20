@@ -1,5 +1,9 @@
 <template>
-    <router-link :to="route" class="cta-full roboto">
+    <router-link
+        :to="route"
+        class="cta-full roboto"
+        v-bind:class="{ alert : alert, full : full }"
+    >
         <slot></slot>
     </router-link>
 </template>
@@ -19,6 +23,21 @@
         font-size: 1.2rem;
         text-transform: lowercase;
 
+        &.alert {
+            color: $red;
+            border-color: $red;
+
+            &:hover {
+                color: white;
+                background: $red;
+            }
+        }
+
+        &.full {
+            display: block;
+            width: calc(100% - 2rem);
+        }
+
         &:hover {
             color: white;
             background: $darkblue;
@@ -31,7 +50,9 @@
 export default {
     name: 'RouteButton',
     props: {
-        route: String
+        route: String,
+        alert: null,
+        full: null
     }
 }
 </script>
