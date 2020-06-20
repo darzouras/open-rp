@@ -4,25 +4,12 @@ Test url at [open-rp.web.app](https://open-rp.web.app/).
 
 Icon font is [remixicon.com](https://remixicon.com).
 
-## Project setup
-```
-npm install
-```
+## To run project
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+- Run `npm install` to install dependencies.
+- Run `npm run serve` to serve (will update automatically).
+- Before pushing make sure to run `npm run lint` and `npm run build` to make sure project builds successfully
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## Building
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+This repo builds to Firebase when the master branch is updated.
