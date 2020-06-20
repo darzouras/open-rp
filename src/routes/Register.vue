@@ -3,7 +3,7 @@
         <Title type="h1" title="Register" />
 
         <BigMessage v-if="success" >
-            Your account has been created, go to the <router-link to='/login'>login page</router-link> and use the email and password you entered to access your dashboard.
+            Your account has been created, you're being forwarded to your user dashboard.
         </BigMessage>
         <BigMessage v-if="error" alert="alert" >
             {{ error }}
@@ -31,6 +31,7 @@
 <script>
 import firebase from '../firebase'
 import { db } from '../firebase'
+import { mapMutations } from 'vuex'
 
 import Title from '@/components/Title.vue'
 import BigMessage from '@/components/BigMessage.vue'
@@ -85,6 +86,9 @@ export default {
 
                             this.error = null
                             this.success = true
+
+                            this.$store.commit('SET_USER', data.user)
+                            this.$router.replace({ name: "dashboard" });
                         });
                     })
                     .catch(err => {
@@ -94,7 +98,10 @@ export default {
                     this.error = 'Sorry, that username is already being used.'
                 }
             })
-        }
+        },
+        ...mapMutations([
+            'SET_USER'
+        ])
     }
 }
 </script>
