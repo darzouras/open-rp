@@ -3,6 +3,12 @@
         <Title type="h1" :title="player" />
 
         <section>
+            <TitleMed type="h2">Player Info</TitleMed>
+
+            <PlayerInfo :data="playerData" />
+        </section>
+
+        <section>
             <TitleMed type="h2">Characters</TitleMed>
 
             <CharacterList v-if="userChars.length > 0" :data="userChars" />
@@ -18,6 +24,7 @@ import Title from '@/components/Title.vue'
 import TitleMed from '@/components/TitleMed.vue'
 import CharacterList from '@/components/CharacterList.vue'
 import BigMessage from '@/components/BigMessage.vue'
+import PlayerInfo from '@/components/PlayerInfo.vue'
 
 export default {
     name: 'User',
@@ -25,24 +32,28 @@ export default {
         Title,
         TitleMed,
         CharacterList,
-        BigMessage
+        BigMessage,
+        PlayerInfo
     },
     data() {
         return {
             characters: [],
             userChars: [],
-            player: this.$route.params.user.toLowerCase()
+            player: this.$route.params.user.toLowerCase(),
+            playerData: null
         }
     },
     firestore() {
         return {
             userChars: db.collection('characters').where('user', '==', this.player),
-            characters: db.collection('characters')
+            characters: db.collection('characters'),
+            users: db.collection('users')
         }
     },
     watch: {
         $route(to) {
             this.player = to.params.user.toLowerCase()
+            this.getPlayerInfo()
 
             this.$firestore.characters.where('user', '==', this.player).get().then(snapshot => {
                 this.userChars = [];
@@ -57,6 +68,16 @@ export default {
                 console.log(err.message)
             })
         }
+    },
+    methods: {
+        getPlayerInfo: function() {
+            this.$firestore.users.doc(this.player).get().then(snapshot => {
+                this.playerData = snapshot.data()
+            })
+        }
+    },
+    created() {
+        this.getPlayerInfo()
     }
 }
 </script>
