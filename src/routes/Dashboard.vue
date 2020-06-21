@@ -1,8 +1,15 @@
 <template>
     <div class="dashboard-wrapper">
-        <Title type="h1" title="Dashboard" />
+        <div class="top-flex">
+            <div>
+                <Title type="h1" title="Dashboard" />
 
-        <BigMessage v-if="user.loggedIn">You are currently logged in as {{user.data.displayName}}</BigMessage>
+                <BigMessage v-if="user.loggedIn">You are currently logged in as {{user.data.displayName}}</BigMessage>
+            </div>
+            <div v-if="playerData" class="icon-wrapper">
+                <img :src="playerData.icon" />
+            </div>
+        </div>
 
         <transition name="slide-fade">
             <section v-if="playerData">
@@ -35,6 +42,14 @@
 </template>
 
 <style lang="scss" scoped>
+    .top-flex {
+        display: flex;
+        justify-content: space-between;
+
+        .icon-wrapper {
+            margin: 1rem 0;
+        }
+    }
     .info {
         padding: 0 0 2rem;
     }

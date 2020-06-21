@@ -19,6 +19,7 @@
             :required="required"
             :autofocus="autofocus"
             :value="value"
+            v-on:change="$emit('change', $event)"
             @input="updateInput($event)" />
     </label>
 </template>
@@ -32,7 +33,12 @@
         font-weight: 100;
         margin-bottom: 1.5rem;
         
-        input,
+        input[type='text'],
+        input[type='url'],
+        input[type='password'],
+        input[type='email'],
+        input[type='number'],
+        input[type='date'],
         textarea {
             display: block;
             width: calc(100% - 1rem - 2px);
@@ -43,7 +49,13 @@
             padding: .5rem;
             font-size: 1rem;
             color: $lightblue;
+            margin-top: .25rem; 
+        }
+
+        input[type='file'] {
+            display: block;
             margin-top: .25rem;
+            padding: .5rem 0;
         }
 
         &.error {

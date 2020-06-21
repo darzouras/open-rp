@@ -4,6 +4,15 @@
 
         <p>All fields are optional but all filled fields will appear on your user info page.</p>
 
+        <form action="#" @submit.prevent="uploadIcon" class="icon-upload">
+            <Input label="User Icon" note="Must be 100 x 100 pixels" name="icon" type="file" ref="icon"  v-on:change="fileChange"/>
+
+            <Button type="submit">Upload new icon</Button>
+
+            <p v-if="iconError">{{ error }}</p>
+            <p v-if="iconSuccess === true">Your icon has been successfully updated</p>
+        </form>
+
         <form action="#" @submit.prevent="updateUserData">
             <Input label="Name" type="text" name="name" v-model="userData.name" />
 
@@ -36,8 +45,22 @@
     </div>
 </template>
 
+<style lang="scss" scoped>
+    @import "../../public/scss/global.scss";
+
+    .icon-upload {
+        margin-bottom: 2rem;
+        padding: 1rem;
+        width: calc(100% - 2rem);
+        background: $lightblue;
+        color: white;
+        border-radius: 15px;
+    }
+</style>
+
 <script>
 import { db } from '../firebase'
+import firebase from '../firebase'
 import { mapGetters } from 'vuex'
 import Title from '@/components/Title.vue'
 import Button from '@/components/Button.vue'
@@ -63,10 +86,16 @@ export default {
                 tumblr: '',
                 livejournal: '',
                 dreamwidth: '',
-                extra: ''
+                extra: '',
+                icon: ''
             },
             error: null,
-            success: false
+            success: false,
+            iconError: null,
+            iconSuccess: false,
+            imageFile: '',
+            imageName: '',
+            imageUrl: ''
         }
     },
     firestore() {
@@ -78,6 +107,45 @@ export default {
         getUserData: function() {
             this.$firestore.users.doc(this.user.data.displayName).get().then(snapshot => {
                 this.userData = snapshot.data()
+            })
+        },
+        fileChange: function(event) {
+            const files = event.target.files;
+            if (files[0] !== undefined) {
+                this.imageName = this.user.data.displayName;
+
+                const fr = new FileReader();
+                fr.readAsDataURL(files[0])
+                fr.addEventListener('load', () => {
+                    this.imageUrl = fr.result;
+                    this.imageFile = files[0]
+                })
+            } else {
+                this.imageName = '';
+                this.imageFile = '';
+                this.imageUrl = '';
+            }
+        },
+        uploadIcon: function() {
+            var storageRef = firebase.storage().ref();
+            var mountainsRef = storageRef.child(`images/${this.imageName}`);
+            mountainsRef.put(this.imageFile).then(snapshot => {
+                if (snapshot.state === 'success') {
+                    console.log('upload successful')
+                    const bucketName = "open-rp.appspot.com"
+                    const filePath = this.imageName;
+                    this.$firestore.users.doc(this.user.data.displayName).update({
+                        icon: `https://firebasestorage.googleapis.com/v0/b/${bucketName}/o/images` + `%2F` + `${encodeURIComponent(filePath)}?alt=media`
+                    }).then(() => {
+                        this.iconSuccess = true
+                        this.iconError = null
+                    }).catch(err => {
+                        console.log('error updating db')
+                        this.iconError = err.message
+                    })
+                } else {
+                    this.iconError = "There was an error when uploading your icon, try refreshing the page and trying again."
+                }
             })
         },
         updateUserData: function() {

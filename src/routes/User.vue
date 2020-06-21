@@ -1,9 +1,15 @@
 <template>
     <div class="user-wrapper">
-        <Title type="h1" :title="player" />
+        <div class="top-flex">
+            <Title type="h1" :title="player" />
+            <div class="icon-wrapper" v-if="playerData">
+                <img :src="playerData.icon" :key="playerData.icon" />
+            </div>
+        </div>
 
         <transition name="slide-fade">
             <section v-if="playerData">
+
                 <TitleMed type="h2">Player Info</TitleMed>
 
                 <PlayerInfo :data="playerData" />
@@ -22,6 +28,14 @@
 </template>
 
 <style lang="scss" scoped>
+    .top-flex {
+        display: flex;
+        justify-content: space-between;
+
+        .icon-wrapper {
+            margin: 1rem 0;
+        }
+    }
     .info {
         padding: 0 0 1rem;
     }
