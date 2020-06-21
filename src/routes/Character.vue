@@ -24,8 +24,8 @@
             </div>
         </transition>
 
-        <transition name="fade">
-            <div class="center" v-if="user.loggedIn">
+        <transition name="fade-slide">
+            <div class="center" v-if="user">
                 <div class="button-row" v-if="user.data.displayName === player">
                     <RouteButton
                         :route="'/update-character/' + charID">Update Character Info</RouteButton>
@@ -60,10 +60,9 @@
             margin-top: 1.5rem;
         }
 
-        @media (min-width: 768px) {
-            a, .button-delete {
-                margin: 0 .5rem;
-            }
+        a, button {
+            margin-right: .25rem;
+            margin-left: .25rem;
         }
     }
 </style>
