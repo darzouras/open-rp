@@ -5,7 +5,7 @@
         <p>All fields are optional but all filled fields will appear on your user info page.</p>
 
         <form action="#" @submit.prevent="uploadIcon" class="icon-upload">
-            <Input label="User Icon" note="Must be 100 x 100 pixels" name="icon" type="file" ref="icon"  v-on:change="fileChange"/>
+            <Input label="User Icon" note="Images that are not 100 x 100 pixels will be automatically resized" name="icon" type="file" ref="icon"  v-on:change="fileChange"/>
 
             <Button type="submit">Upload new icon</Button>
 
@@ -135,7 +135,7 @@ export default {
                     const bucketName = "open-rp.appspot.com"
                     const filePath = this.imageName;
                     this.$firestore.users.doc(this.user.data.displayName).update({
-                        icon: `https://firebasestorage.googleapis.com/v0/b/${bucketName}/o/images` + `%2F` + `${encodeURIComponent(filePath)}?alt=media`
+                        icon: `https://firebasestorage.googleapis.com/v0/b/${bucketName}/o/images` + `%2F` + `${encodeURIComponent(filePath)}_100x100?alt=media`
                     }).then(() => {
                         this.iconSuccess = true
                         this.iconError = null
