@@ -1,13 +1,13 @@
 <template>
     <div class="dashboard-wrapper">
+        <Title type="h1" title="Dashboard" />
+
         <div class="top-flex">
             <div>
-                <Title type="h1" title="Dashboard" />
-
                 <BigMessage v-if="user.loggedIn">You are currently logged in as {{user.data.displayName}}</BigMessage>
             </div>
             <div v-if="playerData" class="icon-wrapper">
-                <img :src="playerData.icon" />
+                <img :src="playerData.icon" :key="playerData.icon" />
             </div>
         </div>
 
@@ -42,12 +42,17 @@
 </template>
 
 <style lang="scss" scoped>
-    .top-flex {
-        display: flex;
-        justify-content: space-between;
+    @media (min-width: 768px) {
+        .top-flex {
+            display: flex;
+            justify-content: space-between;
 
-        .icon-wrapper {
-            margin: 1rem 0;
+            .icon-wrapper {
+                margin: 1rem 0;
+                img {
+                    width: 100px;
+                }
+            }
         }
     }
     .info {

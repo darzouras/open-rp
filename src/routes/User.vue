@@ -28,12 +28,14 @@
 </template>
 
 <style lang="scss" scoped>
-    .top-flex {
-        display: flex;
-        justify-content: space-between;
+    @media (min-width: 768px) {
+        .top-flex {
+            display: flex;
+            justify-content: space-between;
 
-        .icon-wrapper {
-            margin: 1rem 0;
+            .icon-wrapper {
+                margin: 1rem 0;
+            }
         }
     }
     .info {
