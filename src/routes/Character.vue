@@ -10,6 +10,10 @@
 
                 <p v-if="player">Played by <router-link :to="{ path: '/user/' + player }">{{ player }}</router-link></p>
 
+                <div class="info" v-if="character.intro">
+                    <div v-html="character.intro"></div>
+                </div>
+
                 <CharInfo :data="character" :key="character.name" />
 
                 <div class="info" v-if="character.background">

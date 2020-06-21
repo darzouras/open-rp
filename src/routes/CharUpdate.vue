@@ -24,6 +24,8 @@
 
             <Input label="Timeline info" type="text" name="timeline" v-model="charData.timeline" />
 
+            <Input label="Intro" type="textarea" note="Basic html allowed here" name="intro" v-model="charData.intro" />
+
             <Input label="Background Info" note="Basic html allowed here" type="textarea" name="background" v-model="charData.background" />
 
             <Input label="Personality info" note="Basic html allowed here" type="textarea" name="personality" v-model="charData.personality" />
@@ -62,6 +64,7 @@ export default {
                 gender: '',
                 creature: '',
                 timeline: '',
+                intro: '',
                 background: '',
                 personality: '',
             },
@@ -93,6 +96,7 @@ export default {
                 gender: this.charData.gender || '',
                 creature: this.charData.creature || '',
                 timeline: this.charData.timeline || '',
+                intro: this.charData.intro || '',
                 background: this.charData.background || '',
                 personality: this.charData.personality || ''
             }).then(() => {
