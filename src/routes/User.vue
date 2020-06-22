@@ -1,16 +1,16 @@
 <template>
     <div class="user-wrapper">
-        <div class="top-flex">
-            <Title type="h1" :title="player" />
-            <div class="icon-wrapper" v-if="playerData">
-                <img :src="playerData.icon" :key="playerData.icon" />
-            </div>
-        </div>
+        <Title type="h1" :title="player" />
 
         <transition name="slide-fade">
             <section v-if="playerData">
+                <div class="top-flex">
+                    <TitleMed type="h2">Player Info</TitleMed>
 
-                <TitleMed type="h2">Player Info</TitleMed>
+                    <div class="icon-wrapper" v-if="playerData">
+                        <img :src="playerData.icon" :key="playerData.icon" />
+                    </div>
+                </div>
 
                 <PlayerInfo :data="playerData" />
 
@@ -28,16 +28,20 @@
 </template>
 
 <style lang="scss" scoped>
-    @media (min-width: 768px) {
-        .top-flex {
-            display: flex;
-            justify-content: space-between;
+    .top-flex {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
 
-            .icon-wrapper {
-                margin: 1rem 0;
-            }
+        .icon-wrapper {
+            width: 100px;
+        }
+
+        h2 {
+            margin: 0;
         }
     }
+
     .info {
         padding: 0 0 1rem;
     }

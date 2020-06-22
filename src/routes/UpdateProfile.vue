@@ -10,7 +10,7 @@
             <Button type="submit">Upload new icon</Button>
 
             <p v-if="iconError">{{ error }}</p>
-            <p v-if="iconSuccess === true">Your icon has been successfully updated</p>
+            <p v-if="iconSuccess === true">Your icon has been successfully updated. Next time you're on your user page or dashboard you might need to refresh the page to see the change.</p>
         </form>
 
         <form action="#" @submit.prevent="updateUserData">
