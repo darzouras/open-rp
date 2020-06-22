@@ -103,7 +103,7 @@ export default {
         addTopComment: function() {
             this.$firestore.characters.doc(this.charID)
             .collection('playtest')
-            .doc(this.activeChar + '?' + Date.now())
+            .doc(this.activeChar + Date.now())
             .set({
                 thread: [{
                     char: this.activeChar,
@@ -123,7 +123,9 @@ export default {
                 // console.log(snapshot.docs[0].data())
 
                 snapshot.docs.forEach(element => {
-                    this.threadTops.push(element.data().thread[0])
+                    var threadID = { 'path': element.id }
+                    var threadData = { ... threadID, ... element.data().thread[0]}
+                    this.threadTops.push(threadData)
                 })
             })
         }
