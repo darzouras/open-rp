@@ -37,7 +37,7 @@
         </transition>
 
         <transition name="fade-slide">
-            <div class="center" v-if="user">
+            <div class="center" v-if="user.loggedIn">
                 <div class="button-row" v-if="user.data.displayName === player">
                     <RouteButton
                         :route="'/update-character/' + charID">Update Character Info</RouteButton>
