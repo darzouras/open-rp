@@ -6,12 +6,12 @@
             <div v-if="playtestBody !== ''" v-html="playtestBody" class="playtest-body"></div>
 
             <div v-if="activeChar === charID">
-                <Button @click="bodyUpdate = true" v-if="bodyUpdate === false">Update playtest body</Button>
+                <Button @click="bodyUpdate = true" v-if="bodyUpdate === false" full="full">Update playtest body</Button>
 
                 <form v-if="bodyUpdate === true" v-on:submit.prevent="updateBody">
                     <Input label="Update your playtest post" note="Simple html allowed" type="textarea" v-model="playtestBody" />
 
-                    <Button>Update</Button>
+                    <Button full="full">Update</Button>
                 </form>
             </div>
         </section>
