@@ -10,7 +10,7 @@
 
         <p>
             <router-link :to="'/char/' + playtester + '/playtest/' + comment.char + '?' + comment.timestamp" >Go to thread</router-link>
-            <a class="delete-link" href="#" v-on:click.prevent="deleteThread" v-if="activeChar === playtester || activeChar === comment.char">Delete this thread</a>
+            <span class="delete-link" v-if="activeChar === playtester || activeChar === comment.char"><a href="#" v-on:click.prevent="deleteThread">Delete this thread</a></span>
         </p>
     </BoxShadow>
 </template>
