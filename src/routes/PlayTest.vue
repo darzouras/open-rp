@@ -17,7 +17,7 @@
         </section>
 
         <section>
-            <TitleMed type="h2">Comments</TitleMed>
+            <TitleMed type="h2">Threads</TitleMed>
 
             <ul v-if="threadTops[0]" class="comment-list">
                 <li v-for="thread in threadTops" :key="thread.post">
