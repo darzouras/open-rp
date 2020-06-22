@@ -3,7 +3,17 @@
         <Title type="h1">Playtesting: {{ charID}}</Title>
 
         <section>
-    
+            <div v-if="playtestBody !== ''" v-html="playtestBody" class="playtest-body"></div>
+
+            <div v-if="activeChar === charID">
+                <Button @click="bodyUpdate = true" v-if="bodyUpdate === false">Update playtest body</Button>
+
+                <form v-if="bodyUpdate === true" v-on:submit.prevent="updateBody">
+                    <Input label="Update your playtest post" note="Simple html allowed" type="textarea" v-model="playtestBody" />
+
+                    <Button>Update</Button>
+                </form>
+            </div>
         </section>
 
         <section>
@@ -27,6 +37,9 @@
 </template>
 
 <style lang="scss" scoped>
+    .playtest-body {
+        margin: 0 0 2rem;
+    }
     .comment-list {
         list-style: none;
         margin: 0;
@@ -59,7 +72,9 @@ export default {
         return {
             charID: this.$route.params.char.toLowerCase(),
             newThread: null,
-            threadTops: []
+            threadTops: [],
+            playtestBody: '',
+            bodyUpdate: false
         }
     },
     computed: {
@@ -73,6 +88,18 @@ export default {
         }
     },
     methods: {
+        updateBody: function() {
+            this.$firestore.characters.doc(this.charID).update({
+                'playtest': this.$sanitize(this.playtestBody)
+            }).then(() => {
+                this.bodyUpdate = false
+            })
+        },
+        getPlaytestBody: function() {
+            this.$firestore.characters.doc(this.charID).get().then(snapshot => {
+                this.playtestBody = snapshot.data().playtest
+            })
+        },
         addTopComment: function() {
             this.$firestore.characters.doc(this.charID)
             .collection('playtest')
@@ -102,6 +129,7 @@ export default {
         }
     },
     created() {
+        this.getPlaytestBody()
         this.getTopLevelThreads()
     }
 }
