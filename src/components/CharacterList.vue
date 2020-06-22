@@ -1,6 +1,8 @@
 <template>
     <ul class="roboto">
         <li v-for="character in orderBy(data, 'name')" :key="character.name" v-bind:class="{ active : activeChar == character['.key'] }">
+            <img :src="character.icon" alt="" class="char-icon"/>
+
             <SmallTitle type="h3">{{ character.name }}</SmallTitle>
             <p><b><router-link :to="{ path: '/char/' + character['.key']}">@{{ character['.key'] }}</router-link></b></p>
             <p v-if="character.fandom">
@@ -35,6 +37,10 @@
             margin: 1rem 0;
             background: white;
 
+            .char-icon {
+                float: right;
+            }
+
             &.active .inactive {
                background: white;
                border-color: $gray;
@@ -62,7 +68,7 @@
             justify-content: flex-start;
 
             li {
-                width: calc((100% / 3) - 3rem - 4px);
+                width: calc((100% / 2) - 3rem - 4px);
                 margin: .5rem;
             }
         }
