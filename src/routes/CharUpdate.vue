@@ -5,6 +5,15 @@
         <BigMessage>You are updating <strong>{{ char }}'s</strong> info.</BigMessage>
         <p>The name field is the only required field, all filled fields will be public on the character info page.</p>
 
+        <form action="#" @submit.prevent="uploadIcon" class="icon-upload">
+            <Input label="User Icon" note="Images that are not 100 x 100 pixels will be automatically resized" name="icon" type="file" ref="icon"  v-on:change="fileChange"/>
+
+            <Button type="submit">Upload new icon</Button>
+
+            <p v-if="iconError">{{ error }}</p>
+            <p v-if="iconSuccess === true">Your icon has been successfully updated. Next time you're on your user page or dashboard you might need to refresh the page to see the change.</p>
+        </form>
+
         <form action="#" @submit.prevent="updateCharData">
             <Input label="Name" type="text" name="name" v-model="charData.name" required="required" />
 
@@ -38,8 +47,22 @@
     </div>
 </template>
 
+<style lang="scss" scoped>
+    @import "../../public/scss/global.scss";
+
+    .icon-upload {
+        margin-bottom: 2rem;
+        padding: 1rem;
+        width: calc(100% - 2rem);
+        background: $lightblue;
+        color: white;
+        border-radius: 15px;
+    }
+</style>
+
 <script>
 import { db } from '../firebase'
+import firebase from '../firebase'
 import Title from '@/components/Title.vue'
 import BigMessage from '@/components/BigMessage.vue'
 import Button from '@/components/Button.vue'
@@ -70,7 +93,12 @@ export default {
             },
             error: null,
             success: false,
-            char: this.$route.params.char
+            char: this.$route.params.char,
+            iconError: null,
+            iconSuccess: false,
+            imageFile: '',
+            imageName: '',
+            imageUrl: ''
         }
     },
     firestore() {
@@ -83,6 +111,45 @@ export default {
             this.char = this.$route.params.char
             this.$firestore.characters.doc(this.char).get().then(snapshot => {
                 this.charData = snapshot.data()
+            })
+        },
+        fileChange: function(event) {
+            const files = event.target.files;
+            if (files[0] !== undefined) {
+                this.imageName = 'char_' + this.char;
+
+                const fr = new FileReader();
+                fr.readAsDataURL(files[0])
+                fr.addEventListener('load', () => {
+                    this.imageUrl = fr.result;
+                    this.imageFile = files[0]
+                })
+            } else {
+                this.imageName = '';
+                this.imageFile = '';
+                this.imageUrl = '';
+            }
+        },
+        uploadIcon: function() {
+            var storageRef = firebase.storage().ref();
+            var mountainsRef = storageRef.child(`images/${this.imageName}`);
+            mountainsRef.put(this.imageFile).then(snapshot => {
+                if (snapshot.state === 'success') {
+                    console.log('upload successful')
+                    const bucketName = "open-rp.appspot.com"
+                    const filePath = this.imageName;
+                    this.$firestore.characters.doc(this.char).update({
+                        icon: `https://firebasestorage.googleapis.com/v0/b/${bucketName}/o/images` + `%2F` + `${encodeURIComponent(filePath)}_100x100?alt=media`
+                    }).then(() => {
+                        this.iconSuccess = true
+                        this.iconError = null
+                    }).catch(err => {
+                        console.log('error updating db')
+                        this.iconError = err.message
+                    })
+                } else {
+                    this.iconError = "There was an error when uploading your icon, try refreshing the page and trying again."
+                }
             })
         },
         updateCharData: function() {

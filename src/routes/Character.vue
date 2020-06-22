@@ -4,13 +4,21 @@
 
         <transition name="fade-slide">
             <div v-if="character">
-                <BigMessage>
-                    <a v-if="character.charWiki" :href="character.charWiki">{{ character.name }}</a><span v-else>{{ character.name }}</span> <span v-if="character.fandom">of <a v-if="character.fandomWiki" :href="character.fandomWiki">{{ character.fandom }}</a><span v-else>{{ character.fandom }}</span></span>
-                </BigMessage>
+                <div class="top-flex">
+                    <div>
+                        <BigMessage>
+                            <a v-if="character.charWiki" :href="character.charWiki">{{ character.name }}</a><span v-else>{{ character.name }}</span> <span v-if="character.fandom">of <a v-if="character.fandomWiki" :href="character.fandomWiki">{{ character.fandom }}</a><span v-else>{{ character.fandom }}</span></span>
+                        </BigMessage>
 
-                <p v-if="player">Played by <router-link :to="{ path: '/user/' + player }">{{ player }}</router-link></p>
+                        <p v-if="player" class="playedby">Played by <router-link :to="{ path: '/user/' + player }">{{ player }}</router-link></p>
+                    </div>
 
-                <div class="info" v-if="character.intro">
+                    <div class="icon-wrapper" v-if="character">
+                        <img :src="character.icon" :key="character.icon" />
+                    </div>
+                </div>
+
+                <div class="info top-info" v-if="character.intro">
                     <div v-html="character.intro"></div>
                 </div>
 
@@ -56,6 +64,23 @@
 
 <style lang="scss" scoped>
     @import '../../public/scss/global.scss';
+    .top-flex {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+
+        .icon-wrapper {
+            width: 100px;
+        }
+
+        div:first-child {
+            width: calc(100% - 100px - 1rem);
+
+            .playedby {
+                margin-bottom: 0;
+            }
+        }
+    }
 
     .button-row {
         margin-top: 4rem;
@@ -68,6 +93,10 @@
             margin-right: .25rem;
             margin-left: .25rem;
         }
+    }
+
+    .top-info {
+        padding: 2rem 0 1rem;
     }
 </style>
 
