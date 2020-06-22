@@ -8,7 +8,7 @@
         
         <div v-html="comment.post" class="comment-body"></div>
 
-        <p>
+        <p v-if="top === 'top'">
             <router-link :to="'/char/' + playtester + '/playtest/' + comment.char + '?' + comment.timestamp" >Go to thread</router-link>
             <span class="delete-link" v-if="activeChar === playtester || activeChar === comment.char"><a href="#" v-on:click.prevent="deleteThread">Delete this thread</a></span>
         </p>
@@ -66,7 +66,8 @@ export default {
     },
     props: {
         comment: Object,
-        playtester: String
+        playtester: String,
+        top: null
     },
     firestore() {
         return {

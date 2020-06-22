@@ -21,7 +21,7 @@
 
             <ul v-if="threadTops[0]" class="comment-list">
                 <li v-for="thread in threadTops" :key="thread.post">
-                    <SingleComment :comment="thread" :playtester="charID" />
+                    <SingleComment :comment="thread" :playtester="charID" top="top" />
                 </li>
             </ul>
 
