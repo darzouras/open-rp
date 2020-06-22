@@ -162,9 +162,9 @@ export default {
                 gender: this.charData.gender || '',
                 creature: this.charData.creature || '',
                 timeline: this.charData.timeline || '',
-                intro: this.charData.intro || '',
-                background: this.charData.background || '',
-                personality: this.charData.personality || ''
+                intro: this.$sanitize(this.charData.intro) || '',
+                background: this.$sanitize(this.charData.background) || '',
+                personality: this.$sanitize(this.charData.personality) || ''
             }).then(() => {
                 this.success = true
                 this.error = null
