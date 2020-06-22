@@ -33,6 +33,7 @@
             padding: 1rem;
             width: calc(100% - 2rem - 4px);
             margin: 1rem 0;
+            background: white;
 
             &.active .inactive {
                background: $yellow;

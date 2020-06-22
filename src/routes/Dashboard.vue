@@ -2,11 +2,18 @@
     <div class="dashboard-wrapper">
         <Title type="h1" title="Dashboard" />
 
-        <BigMessage v-if="user.loggedIn">You are currently logged in as {{user.data.displayName}}</BigMessage>
-
         <transition name="slide-fade">
             <section v-if="playerData">
-                <TitleMed type="h2">Your Info</TitleMed>
+                <div class="top-flex">
+                    <div class="loggedin-as">
+                        <BigMessage v-if="user.loggedIn">You are currently logged in as {{user.data.displayName}}</BigMessage>
+
+                        <TitleMed type="h2">Your Info</TitleMed>
+                    </div>
+                    <div v-if="playerData" class="icon-wrapper">
+                        <img :src="playerData.icon" :key="playerData.icon" />
+                    </div>
+                </div>
                 
                 <PlayerInfo :data="playerData" />
 
@@ -35,6 +42,27 @@
 </template>
 
 <style lang="scss" scoped>
+    .top-flex {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+
+        .loggedin-as {
+            width: calc(100% - 110px);
+
+            h2{
+                margin-bottom: 0;
+            }
+        }
+
+        .icon-wrapper {
+            width: 100px;
+            img {
+                width: 100px;
+            }
+        }
+    }
+
     .info {
         padding: 0 0 2rem;
     }

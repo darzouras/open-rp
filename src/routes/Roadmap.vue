@@ -8,10 +8,10 @@
 
     <ul>
         <li>
-            <s>Character creation beneath a single user profile, ability to manage and switch between active characters</s> Completed 6/19/20!
+          <s>Character creation beneath a single user profile, ability to manage and switch between active characters</s> <br />Completed 6/19/20!
         </li>
         <li>
-          Public user and character pages where profile information, (public) post history can be shared
+          <s>Public user and character pages where profile information, (public) post history can be shared</s> <br />Completed 6/20/20!
         </li>
         <li>
             Public RP rooms where people can jump in with their characters and join a themed RP

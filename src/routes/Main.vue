@@ -13,6 +13,10 @@
     <p>
       I'm hard at work on this project, check the <router-link to="/roadmap">roadmap</router-link> to check on our progress. Also please <a href="https://forms.gle/i17wyD3WCiAghkhz6">respond to my survey</a> and let me know what you're looking for in your rp experience!
     </p>
+    
+    <p>
+      Please check out the sample user I made (<router-link to="/user/darizard">darizard</router-link>) as well as characters that are linked from that profile.
+    </p>
   </div>
 </template>
 

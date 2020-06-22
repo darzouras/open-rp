@@ -4,7 +4,13 @@
 
         <transition name="slide-fade">
             <section v-if="playerData">
-                <TitleMed type="h2">Player Info</TitleMed>
+                <div class="top-flex">
+                    <TitleMed type="h2">Player Info</TitleMed>
+
+                    <div class="icon-wrapper" v-if="playerData">
+                        <img :src="playerData.icon" :key="playerData.icon" />
+                    </div>
+                </div>
 
                 <PlayerInfo :data="playerData" />
 
@@ -22,6 +28,20 @@
 </template>
 
 <style lang="scss" scoped>
+    .top-flex {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+
+        .icon-wrapper {
+            width: 100px;
+        }
+
+        h2 {
+            margin: 0;
+        }
+    }
+
     .info {
         padding: 0 0 1rem;
     }
