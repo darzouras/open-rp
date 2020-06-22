@@ -24,12 +24,12 @@
 
                 <CharInfo :data="character" :key="character.name" />
 
-                <div class="info" v-if="character.background">
+                <div class="info readable" v-if="character.background">
                     <TitleMed type="h2">Background info</TitleMed>
                     <div v-html="character.background"></div>
                 </div>
 
-                <div class="info" v-if="character.personality">
+                <div class="info readable" v-if="character.personality">
                     <TitleMed type="h2">Personality info</TitleMed>
                     <div v-html="character.personality"></div>
                 </div>

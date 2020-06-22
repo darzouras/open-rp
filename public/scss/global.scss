@@ -20,7 +20,6 @@ body {
     color: $darkblue;
     padding: 0;
     margin: 0;
-    letter-spacing: 0.035em;
 
     a {
         color: $green;
@@ -31,6 +30,11 @@ body {
         display: block;
         max-width: 100%;
         height: auto;
+    }
+
+    .readable {
+        line-height: 1.7;
+        letter-spacing: 0.035em;
     }
 }
 
