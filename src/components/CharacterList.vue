@@ -27,8 +27,8 @@
         margin: 0 0 2rem;
 
         li {
-            border: 2px solid $darkblue;
-            box-shadow: 4px 4px $darkblue;
+            border: 2px solid $gray;
+            box-shadow: 4px 4px $gray;
             border-radius: 15px;
             padding: 1rem;
             width: calc(100% - 2rem - 4px);
@@ -36,10 +36,12 @@
             background: white;
 
             &.active .inactive {
-               background: $yellow;
+               background: white;
+               border-color: $gray;
 
                &:hover {
-                   background: $yellow;
+                   background: white;
+                   border-color: $gray;
                }
             }
 
