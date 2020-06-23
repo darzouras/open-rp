@@ -152,6 +152,7 @@ export default {
             })
         },
         updateCharData: function() {
+
             this.$firestore.characters.doc(this.char).update({
                 name: this.charData.name || '',
                 altNames: this.charData.altNames || '',
@@ -162,9 +163,9 @@ export default {
                 gender: this.charData.gender || '',
                 creature: this.charData.creature || '',
                 timeline: this.charData.timeline || '',
-                intro: this.$sanitize(this.charData.intro) || '',
-                background: this.$sanitize(this.charData.background) || '',
-                personality: this.$sanitize(this.charData.personality) || ''
+                intro: this.checkSanitized(this.charData.intro),
+                background: this.checkSanitized(this.charData.background),
+                personality: this.checkSanitized(this.charData.personality)
             }).then(() => {
                 this.success = true
                 this.error = null
