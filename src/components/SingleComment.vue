@@ -1,10 +1,11 @@
 <template>
     <BoxShadow class="comment-wrapper" ref="threadTop">
         <SmallTitle type="h3" class="comment-title">
-            <router-link :to="'/char/' + comment.char">{{ comment.char }}</router-link> posted at {{ getDateString(comment.timestamp) | formatDate }}
+            {{ charName }} <router-link :to="'/char/' + comment.char">({{ comment.char }})</router-link>
+            <br /><span>posted at {{ getDateString(comment.timestamp) | formatDate }}</span>
         </SmallTitle>
 
-        <img :src="charIcon" alt="" class="comment-icon"/>
+        <img v-if="charIcon" :src="charIcon" alt="" class="comment-icon"/>
         
         <pre v-html="comment.post" class="comment-body readable"></pre>
 
@@ -25,6 +26,10 @@
             margin: 0 0 1rem;
             display: inline-block;
             width: calc(100% - 110px);
+
+            span {
+                font-size: .8em;
+            }
         }
 
         .comment-icon {
@@ -56,7 +61,8 @@ export default {
     },
     data() {
         return {
-            charIcon: ''
+            charIcon: '',
+            charName: ''
         }
     },
     computed: {
@@ -80,9 +86,10 @@ export default {
             var date = new Date(timestamp)
             return date.toISOString()
         },
-        getCharIcon: function(char) {
+        getCharInfo: function(char) {
             this.$firestore.characters.doc(char).get().then(snapshot => {
-                this.charIcon = snapshot.data().icon
+                this.charIcon = snapshot.data().icon,
+                this.charName = snapshot.data().name
             })
         },
         deleteThread: function() {
@@ -98,7 +105,7 @@ export default {
         }
     },
     created() {
-        this.getCharIcon(this.comment.char)
+        this.getCharInfo(this.comment.char)
     }
 }
 </script>
