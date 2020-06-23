@@ -35,7 +35,8 @@
             </BigMessage>
 
             <div class="center">
-                <RouteButton route="/new-character" full=true>Add a new character</RouteButton>
+                <RouteButton route="/new-character" full=true v-if="characterCount < 4">Add a new character</RouteButton>
+                <p v-else>At this moment players are limited to four characters each. You will have to delete an old character if you would like to make a new one.</p>
             </div>
         </section>
     </div>
@@ -93,7 +94,8 @@ export default {
         return {
             characters: [],
             newCharacter: '',
-            playerData: null
+            playerData: null,
+            characterCount: this.characters.length
         }
     },
     firestore() {
