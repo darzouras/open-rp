@@ -44,7 +44,7 @@
             <tr v-if="data.livejournal">
                 <th scope="row">Livejournal</th>
                 <td>
-                    <a v-bind:ref="'https://' + data.livejournal + '.livejournal.com'">{{ data.livejournal }}</a>
+                    <a v-bind:href="'https://' + data.livejournal + '.livejournal.com'">{{ data.livejournal }}</a>
                 </td>
             </tr>
             <tr v-if="data.dreamwidth">
