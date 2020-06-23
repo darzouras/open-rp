@@ -2,7 +2,7 @@
 $red: #ef476f;
 $yellow: #ffd166;
 $green: #00cc99;
-$lightblue: #118ab2;
+$gray: #c4c3d0;
 $darkblue: #073b4c;
 $shadow: rgba(0,0,0,.1);
 $offwhite: #f2f3f4;
@@ -30,6 +30,11 @@ body {
         display: block;
         max-width: 100%;
         height: auto;
+    }
+
+    .readable {
+        line-height: 1.7;
+        letter-spacing: 0.035em;
     }
 }
 

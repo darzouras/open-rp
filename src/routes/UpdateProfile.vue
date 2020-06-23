@@ -52,8 +52,7 @@
         margin-bottom: 2rem;
         padding: 1rem;
         width: calc(100% - 2rem);
-        background: $lightblue;
-        color: white;
+        background: $gray;
         border-radius: 15px;
     }
 </style>

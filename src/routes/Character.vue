@@ -18,18 +18,28 @@
                     </div>
                 </div>
 
+                <BoxShadow>
+                    <nav class="char-nav roboto" aria-label="Character links">
+                        <ul>
+                            <li>
+                                <router-link :to="{ path: '/char/' + charID + '/playtest' }">Playtest</router-link>
+                            </li>
+                        </ul>
+                    </nav>
+                </BoxShadow>
+
                 <div class="info top-info" v-if="character.intro">
                     <div v-html="character.intro"></div>
                 </div>
 
                 <CharInfo :data="character" :key="character.name" />
 
-                <div class="info" v-if="character.background">
+                <div class="info readable" v-if="character.background">
                     <TitleMed type="h2">Background info</TitleMed>
                     <div v-html="character.background"></div>
                 </div>
 
-                <div class="info" v-if="character.personality">
+                <div class="info readable" v-if="character.personality">
                     <TitleMed type="h2">Personality info</TitleMed>
                     <div v-html="character.personality"></div>
                 </div>
@@ -98,6 +108,28 @@
     .top-info {
         padding: 2rem 0 1rem;
     }
+
+    .char-nav {
+
+        ul {
+            display: flex;
+            flex-wrap: wrap;
+            list-style: none;
+            justify-content: center;
+            margin: 0;
+            padding: 0;
+            text-transform: lowercase;
+
+            li {
+                margin: 0 .25em;
+                padding: 0;
+
+                a {
+                    color: $darkblue;
+                }
+            }
+        }
+    }
 </style>
 
 <script>
@@ -110,6 +142,7 @@ import Button from '@/components/Button.vue'
 import RouteButton from '@/components/RouteButton.vue'
 import BigMessage from '@/components/BigMessage.vue'
 import CharInfo from '@/components/CharInfo.vue'
+import BoxShadow from '@/components/BoxShadow.vue'
 
 export default {
     name: 'Character',
@@ -119,7 +152,8 @@ export default {
         Button,
         RouteButton,
         BigMessage,
-        CharInfo
+        CharInfo,
+        BoxShadow
     },
     data() {
         return {

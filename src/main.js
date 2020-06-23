@@ -8,6 +8,7 @@ import Vue2Filters from 'vue2-filters'
 import VueFirestore from 'vue-firestore'
 import 'remixicon/fonts/remixicon.css'
 import VueSanitize from 'vue-sanitize'
+import moment from 'moment'
 
 Vue.use(VueFirestore)
 Vue.use(Vue2Filters)
@@ -39,6 +40,12 @@ let defaults = {
 Vue.use(VueSanitize,defaults);
 
 Vue.config.productionTip = false
+
+Vue.filter('formatDate', function(value) {
+  if (value) {
+    return moment(String(value)).format('MM/DD/YYYY hh:mm A')
+  }
+})
 
 new Vue({
   render: h => h(App),

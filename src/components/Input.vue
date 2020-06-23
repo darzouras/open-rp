@@ -48,7 +48,7 @@
             border-radius: 10px;
             padding: .5rem;
             font-size: 1rem;
-            color: $lightblue;
+            color: $darkblue;
             margin-top: .25rem; 
         }
 

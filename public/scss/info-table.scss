@@ -1,8 +1,8 @@
 @import "../../public/scss/global.scss";
 
 .info-wrapper {
-    border: 2px solid $darkblue;
-    box-shadow: 4px 4px $darkblue;
+    border: 2px solid $gray;
+    box-shadow: 4px 4px $gray;
     border-radius: 15px;
     padding: 1rem;
     width: calc(100% - 2rem - 4px);
@@ -18,7 +18,7 @@
         }
 
         th, td {
-            padding: .25rem 0;
+            padding: .25rem;
             vertical-align: top;
         }
     }
