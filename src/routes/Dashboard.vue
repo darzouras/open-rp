@@ -95,7 +95,7 @@ export default {
             characters: [],
             newCharacter: '',
             playerData: null,
-            characterCount: this.characters.length
+            characterCount: Number
         }
     },
     firestore() {
