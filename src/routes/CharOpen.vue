@@ -32,6 +32,11 @@
             <form class="add-comment" v-on:submit.prevent="addTopComment" v-if="activeChar && activeChar !== charID">
                 <Input :label="'Start a new RP thread as ' + activeChar" type="textarea" note="basic HTML allowed" v-model="newThread"/>
 
+                <div class="add-comment-preview" v-if="newThread">
+                    <SmallTitle type="p">Preview:</SmallTitle>
+
+                    <div v-html="newThread"></div>
+                </div>
                 <Button>Start new thread</Button>
             </form>
         </section>
@@ -46,6 +51,14 @@
         list-style: none;
         margin: 0;
         padding: 0;
+    }
+    
+    .add-comment {
+        margin-bottom: 2rem;
+
+        .add-comment-preview {
+            margin-bottom: 1.5rem;
+        }
     }
 </style>
 
