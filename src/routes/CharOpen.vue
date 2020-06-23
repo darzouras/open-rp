@@ -35,7 +35,7 @@
                 <div class="add-comment-preview" v-if="newThread">
                     <SmallTitle type="p">Preview:</SmallTitle>
 
-                    <div v-html="newThread"></div>
+                    <pre v-html="newThread"></pre>
                 </div>
                 <Button v-bind:class="{ inactive : newThread === null || newThread === '' }">Start new thread</Button>
             </form>
@@ -128,6 +128,7 @@ export default {
             }).then(() => {
                 // redirect to the new thread page
                 this.threadTops = []
+                this.newThread = null
                 this.getTopLevelThreads()
             }).catch(err => {
                 console.log(err.message)
