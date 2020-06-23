@@ -30,7 +30,7 @@
             <form class="add-comment" v-on:submit.prevent="addTopComment" v-if="activeChar && activeChar !== charID">
                 <Input :label="'Start a new RP thread as ' + activeChar" type="textarea" note="basic HTML allowed" v-model="newThread"/>
 
-                <Button>Add comment</Button>
+                <Button>Start new thread</Button>
             </form>
         </section>
     </div>
@@ -121,10 +121,9 @@ export default {
         getTopLevelThreads: function() {
             this.$firestore.characters.doc(this.charID).collection('playtest').get().then(snapshot => {
                 // console.log(snapshot.docs[0].data())
-
                 snapshot.docs.forEach(element => {
-                    var threadID = { 'path': element.id }
-                    var threadData = { ... threadID, ... element.data().thread[0]}
+                    var threadExtras = { 'path': element.id, 'length': element.data().thread.length }
+                    var threadData = { ... threadExtras, ... element.data().thread[0]}
                     this.threadTops.push(threadData)
                 })
             })

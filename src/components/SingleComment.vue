@@ -9,7 +9,7 @@
         <div v-html="comment.post" class="comment-body"></div>
 
         <p v-if="top === 'top'">
-            <router-link :to="'/char/' + playtester + '/playtest/' + comment.char + comment.timestamp" >Go to thread</router-link>
+            <router-link :to="'/char/' + playtester + '/playtest/' + comment.char + comment.timestamp" >Go to thread ({{ comment.length }} comments)</router-link>
             <span class="delete-link" v-if="activeChar === playtester || activeChar === comment.char"><a href="#" v-on:click.prevent="deleteThread">Delete this thread</a></span>
         </p>
     </BoxShadow>
