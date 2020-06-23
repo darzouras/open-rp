@@ -17,11 +17,13 @@ import Character from './routes/Character.vue';
 import CharUpdate from './routes/CharUpdate.vue';
 import CharOpen from './routes/CharOpen.vue';
 import Thread from './routes/Thread.vue';
+import NotFound from './routes/404.vue';
 
 const routes = [
   { path: '/', name: 'main', component: Main },
   { path: '/components', name: 'components', component: Components },
   { path: '/roadmap', name: 'roadmap', component: Roadmap},
+  { path: '/404', name: '404', component: NotFound},
 
   { path: '/user/:user', name: 'user', component: User},
   { path: '/char/:char', name: 'character', component: Character},

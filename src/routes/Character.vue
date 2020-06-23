@@ -183,7 +183,9 @@ export default {
     methods: {
         getCharacter: function() {
             this.$firestore.characters.doc(this.charID).get().then(snapshot => {
-                this.character = snapshot.data()
+                if (snapshot.exists)
+                    this.character = snapshot.data()
+                else this.$router.replace('/404')
             })
         },
         getPlayer: function() {

@@ -102,7 +102,9 @@ export default {
     methods: {
         getPlayerInfo: function() {
             this.$firestore.users.doc(this.player).get().then(snapshot => {
-                this.playerData = snapshot.data()
+                if (snapshot.exists)
+                    this.playerData = snapshot.data()
+                else this.$router.replace('/404')
             })
         }
     },
