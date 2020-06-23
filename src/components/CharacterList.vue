@@ -1,7 +1,7 @@
 <template>
     <ul class="roboto">
         <li v-for="character in orderBy(data, 'name')" :key="character.name" v-bind:class="{ active : activeChar == character['.key'] }">
-            <img :src="character.icon" alt="" class="char-icon"/>
+            <router-link v-if="character.icon" :to="{ path: '/char/' + character['.key'] }"><img :src="character.icon" alt="" class="char-icon"/></router-link>
 
             <SmallTitle type="h3">{{ character.name }}</SmallTitle>
             <p><b><router-link :to="{ path: '/char/' + character['.key']}">@{{ character['.key'] }}</router-link></b></p>

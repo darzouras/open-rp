@@ -9,6 +9,7 @@ import VueFirestore from 'vue-firestore'
 import 'remixicon/fonts/remixicon.css'
 import VueSanitize from 'vue-sanitize'
 import moment from 'moment'
+import '@/mixins.js'
 
 Vue.use(VueFirestore)
 Vue.use(Vue2Filters)

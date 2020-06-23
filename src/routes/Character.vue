@@ -18,53 +18,60 @@
                     </div>
                 </div>
 
+                <transition name="fade-slide">
+                    <div class="center" v-if="user.loggedIn">
+                        <div class="button-row" v-if="user.data.displayName === player">
+                            <Button
+                                v-if="activeChar !== charID"
+                                @click="setActive(charID)">Set Active</Button>
+                            <Button v-else-if="activeChar === charID"
+                                inactive=true
+                                tab-index='-1'>Currently Active</Button>
+
+                            <RouteButton
+                                :route="'/update-character/' + charID">Update Character Info</RouteButton>
+
+                            <Button @click="initRemove = true" alert=true class="button-delete">Delete Character</Button>
+
+                            <transition name="slide-fade">
+                                <div v-if="initRemove === true">
+                                    <BigMessage alert="true">
+                                        Deleting this character cannot be reversed. All history and data will be lost.<br />Do you want to proceed?
+                                    </BigMessage>
+
+                                    <Button alert="true" @click="deleteCharacter()">
+                                        Confirm Delete
+                                    </Button>
+                                </div>
+                            </transition>
+                        </div>
+                    </div>
+                </transition>
+
                 <BoxShadow>
                     <nav class="char-nav roboto" aria-label="Character links">
                         <ul>
                             <li>
-                                <router-link :to="{ path: '/char/' + charID + '/playtest' }">Playtest</router-link>
+                                <router-link :to="{ path: '/char/' + charID + '/open' }">Open RP</router-link>
                             </li>
                         </ul>
                     </nav>
                 </BoxShadow>
 
                 <div class="info top-info" v-if="character.intro">
-                    <div v-html="character.intro"></div>
+                    <pre v-html="character.intro"></pre>
                 </div>
 
                 <CharInfo :data="character" :key="character.name" />
 
                 <div class="info readable" v-if="character.background">
                     <TitleMed type="h2">Background info</TitleMed>
-                    <div v-html="character.background"></div>
+                    <pre v-html="character.background"></pre>
                 </div>
 
                 <div class="info readable" v-if="character.personality">
                     <TitleMed type="h2">Personality info</TitleMed>
-                    <div v-html="character.personality"></div>
-                </div>
-            </div>
-        </transition>
-
-        <transition name="fade-slide">
-            <div class="center" v-if="user.loggedIn">
-                <div class="button-row" v-if="user.data.displayName === player">
-                    <RouteButton
-                        :route="'/update-character/' + charID">Update Character Info</RouteButton>
-
-                    <Button @click="initRemove = true" alert=true class="button-delete">Delete Character</Button>
-
-                    <transition name="slide-fade">
-                        <div v-if="initRemove === true">
-                            <BigMessage alert="true">
-                                Deleting this character cannot be reversed. All history and data will be lost.<br />Do you want to proceed?
-                            </BigMessage>
-
-                            <Button alert="true" @click="deleteCharacter()">
-                                Confirm Delete
-                            </Button>
-                        </div>
-                    </transition>
+                    <pre v-html="character.personality"></pre>
                 </div>
             </div>
         </transition>
@@ -93,8 +100,6 @@
     }
 
     .button-row {
-        margin-top: 4rem;
-
         .button-delete {
             margin-top: 1.5rem;
         }
@@ -178,13 +183,30 @@ export default {
     methods: {
         getCharacter: function() {
             this.$firestore.characters.doc(this.charID).get().then(snapshot => {
-                this.character = snapshot.data()
+                if (snapshot.exists)
+                    this.character = snapshot.data()
+                else this.$router.replace('/404')
             })
         },
         getPlayer: function() {
             this.$firestore.characters.doc(this.charID).get().then(snapshot =>{
                 this.player = snapshot.data().user
             })
+        },
+        setActive: function(character) {
+            if (this.user.loggedIn) {
+                this.$firestore.users
+                    .doc(this.user.data.displayName)
+                    .update(
+                        {
+                            'activeChar': character
+                        }
+                    ).then(() => {
+                        this.$store.commit('setChar', character)
+                    }).catch(err => {
+                        console.log(err.message)
+                    })
+            }
         },
         deleteCharacter: function() {
             if (this.user.loggedIn) {

@@ -17,7 +17,7 @@
                 
                 <PlayerInfo :data="playerData" />
 
-                <div class="info" v-if="playerData.extra" v-html="playerData.extra"></div>
+                <pre class="info" v-if="playerData.extra" v-html="playerData.extra"></pre>
 
                 <div class="center">
                     <RouteButton route="/update-profile" full=true>Update Your Profile</RouteButton>
@@ -35,7 +35,8 @@
             </BigMessage>
 
             <div class="center">
-                <RouteButton route="/new-character" full=true>Add a new character</RouteButton>
+                <RouteButton route="/new-character" full=true v-if="characters.length < 4">Add a new character</RouteButton>
+                <p v-else>At this moment players are limited to four characters each. You will have to delete an old character if you would like to make a new one.</p>
             </div>
         </section>
     </div>

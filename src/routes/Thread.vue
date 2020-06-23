@@ -1,7 +1,7 @@
 <template>
     <div class="thread-wrapper">
-        <div v-if="charID !== null" v-html="originalBody" class="original-post">
-        </div>
+        <pre v-if="charID !== null" v-html="originalBody" class="original-post readable">
+        </pre>
 
         <transition name="slide-fade">
             <section class="comments" v-if="threadComments">
@@ -20,13 +20,13 @@
             <div class="add-comment-preview" v-if="newComment">
                 <SmallTitle type="p">Preview:</SmallTitle>
 
-                <div v-html="newComment"></div>
+                <pre v-html="newComment"></pre>
             </div>
 
-            <Button>Add comment</Button>
+            <Button v-bind:class="{ inactive : newComment === null || newComment === '' }">Add comment</Button>
         </form>
 
-        <RouteButton :route="'/char/' + charID + '/playtest'" full="full">Back to post</RouteButton>
+        <RouteButton :route="'/char/' + charID + '/open'" full="full">Back to post</RouteButton>
     </div>
 </template>
 
@@ -99,19 +99,19 @@ export default {
     methods: {
         getOriginal: function() {
             this.$firestore.characters.doc(this.charID).get().then(snapshot => {
-                this.originalBody = snapshot.data().playtest
+                this.originalBody = snapshot.data().open
             })
         },
         getThread: function() {
             this.$firestore.characters
             .doc(this.charID)
-            .collection('playtest')
+            .collection('open')
             .doc(this.thread).get().then(snapshot => {
                 this.threadComments = snapshot.data().thread
             })
         },
         addToThread: function() {
-            this.$firestore.characters.doc(this.charID).collection('playtest').doc(this.thread).update({
+            this.$firestore.characters.doc(this.charID).collection('open').doc(this.thread).update({
                 thread: firebase.firestore.FieldValue.arrayUnion({
                     char: this.activeChar,
                     timestamp: Date.now(),

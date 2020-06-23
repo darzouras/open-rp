@@ -1,15 +1,17 @@
 <template>
     <div class="playtest-wrapper">
-        <Title type="h1">Playtesting: {{ charID}}</Title>
+        <Title type="h1">Open RP with <router-link :to="'/char/' + charID">{{ charID}}</router-link></Title>
+
+        <p v-if="activeChar === charID">Use this RP space for general RP! Get a feel for your character's voice here. If you want to use this space for particular kinds of RP or set rules you can update the post body and list them.</p>
 
         <section>
-            <div v-if="playtestBody !== ''" v-html="playtestBody" class="playtest-body"></div>
+            <div v-if="openBody !== ''" v-html="openBody" class="playtest-body"></div>
 
             <div v-if="activeChar === charID">
-                <Button @click="bodyUpdate = true" v-if="bodyUpdate === false" full="full">Update playtest body</Button>
+                <Button @click="bodyUpdate = true" v-if="bodyUpdate === false" full="full">Update post body</Button>
 
                 <form v-if="bodyUpdate === true" v-on:submit.prevent="updateBody">
-                    <Input label="Update your playtest post" note="Simple html allowed" type="textarea" v-model="playtestBody" />
+                    <Input label="Update your open RP post" note="Simple html allowed" type="textarea" v-model="openBody" />
 
                     <Button full="full">Update</Button>
                 </form>
@@ -30,7 +32,12 @@
             <form class="add-comment" v-on:submit.prevent="addTopComment" v-if="activeChar && activeChar !== charID">
                 <Input :label="'Start a new RP thread as ' + activeChar" type="textarea" note="basic HTML allowed" v-model="newThread"/>
 
-                <Button>Start new thread</Button>
+                <div class="add-comment-preview" v-if="newThread">
+                    <SmallTitle type="p">Preview:</SmallTitle>
+
+                    <pre v-html="newThread"></pre>
+                </div>
+                <Button v-bind:class="{ inactive : newThread === null || newThread === '' }">Start new thread</Button>
             </form>
         </section>
     </div>
@@ -44,6 +51,14 @@
         list-style: none;
         margin: 0;
         padding: 0;
+    }
+    
+    .add-comment {
+        margin-bottom: 2rem;
+
+        .add-comment-preview {
+            margin-bottom: 1.5rem;
+        }
     }
 </style>
 
@@ -59,7 +74,7 @@ import Button from '@/components/Button.vue'
 import SingleComment from '@/components/SingleComment.vue'
 
 export default {
-    name: 'Playtest',
+    name: 'CharOpen',
     components: {
         Title,
         TitleMed,
@@ -73,7 +88,7 @@ export default {
             charID: this.$route.params.char.toLowerCase(),
             newThread: null,
             threadTops: [],
-            playtestBody: '',
+            openBody: '',
             bodyUpdate: false
         }
     },
@@ -90,19 +105,19 @@ export default {
     methods: {
         updateBody: function() {
             this.$firestore.characters.doc(this.charID).update({
-                'playtest': this.$sanitize(this.playtestBody)
+                'open': this.$sanitize(this.openBody)
             }).then(() => {
                 this.bodyUpdate = false
             })
         },
-        getPlaytestBody: function() {
+        getOpenBody: function() {
             this.$firestore.characters.doc(this.charID).get().then(snapshot => {
-                this.playtestBody = snapshot.data().playtest
+                this.openBody = snapshot.data().open
             })
         },
         addTopComment: function() {
             this.$firestore.characters.doc(this.charID)
-            .collection('playtest')
+            .collection('open')
             .doc(this.activeChar + Date.now())
             .set({
                 thread: [{
@@ -113,13 +128,14 @@ export default {
             }).then(() => {
                 // redirect to the new thread page
                 this.threadTops = []
+                this.newThread = null
                 this.getTopLevelThreads()
             }).catch(err => {
                 console.log(err.message)
             })
         },
         getTopLevelThreads: function() {
-            this.$firestore.characters.doc(this.charID).collection('playtest').get().then(snapshot => {
+            this.$firestore.characters.doc(this.charID).collection('open').get().then(snapshot => {
                 // console.log(snapshot.docs[0].data())
                 snapshot.docs.forEach(element => {
                     var threadExtras = { 'path': element.id, 'length': element.data().thread.length }
@@ -130,7 +146,7 @@ export default {
         }
     },
     created() {
-        this.getPlaytestBody()
+        this.getOpenBody()
         this.getTopLevelThreads()
     }
 }

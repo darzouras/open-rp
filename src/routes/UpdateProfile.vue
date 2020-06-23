@@ -159,7 +159,7 @@ export default {
                 tumblr: this.userData.tumblr || '',
                 livejournal: this.userData.livejournal || '',
                 dreamwidth: this.userData.dreamwidth || '',
-                extra: this.$sanitize(this.userData.extra) || ''
+                extra: this.checkSanitized(this.userData.extra)
             }).then(() => {
                 this.success = true
                 this.$router.replace({ name: 'dashboard' })

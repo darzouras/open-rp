@@ -15,18 +15,20 @@ import User from './routes/User.vue';
 import NewCharacter from './routes/NewCharacter.vue';
 import Character from './routes/Character.vue';
 import CharUpdate from './routes/CharUpdate.vue';
-import PlayTest from './routes/PlayTest.vue';
+import CharOpen from './routes/CharOpen.vue';
 import Thread from './routes/Thread.vue';
+import NotFound from './routes/404.vue';
 
 const routes = [
   { path: '/', name: 'main', component: Main },
   { path: '/components', name: 'components', component: Components },
   { path: '/roadmap', name: 'roadmap', component: Roadmap},
+  { path: '/404', name: '404', component: NotFound},
 
   { path: '/user/:user', name: 'user', component: User},
   { path: '/char/:char', name: 'character', component: Character},
-  { path: '/char/:char/playtest', name: 'playtest', component: PlayTest},
-  { path: '/char/:char/playtest/:thread', name: 'thread', component: Thread},
+  { path: '/char/:char/open', name: 'open', component: CharOpen},
+  { path: '/char/:char/open/:thread', name: 'thread', component: Thread},
 
   { path: '/login', name: 'login', component: Login, meta: {noAuth: true}},
   { path: '/register', name: 'register', component: Register, meta: {noAuth: true}},

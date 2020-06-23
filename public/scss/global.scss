@@ -20,6 +20,11 @@ body {
     color: $darkblue;
     padding: 0;
     margin: 0;
+    letter-spacing: 0.025rem;
+
+    h1, h2, h3, h4 {
+        margin-bottom: .25rem;
+    }
 
     a {
         color: $green;
@@ -32,9 +37,16 @@ body {
         height: auto;
     }
 
-    .readable {
+    p, .readable {
         line-height: 1.7;
         letter-spacing: 0.035em;
+    }
+
+    pre {
+        font-family: 'Open Sans', sans-serif;
+        font-size: 1rem;
+        margin: 0;
+        white-space: pre-wrap;
     }
 }
 

@@ -1,15 +1,16 @@
 <template>
     <BoxShadow class="comment-wrapper" ref="threadTop">
         <SmallTitle type="h3" class="comment-title">
-            <router-link :to="'/char/' + comment.char">{{ comment.char }}</router-link> posted at {{ getDateString(comment.timestamp) | formatDate }}
+            {{ charName }} <router-link :to="'/char/' + comment.char">({{ comment.char }})</router-link>
+            <br /><span>posted at {{ getDateString(comment.timestamp) | formatDate }}</span>
         </SmallTitle>
 
-        <img :src="charIcon" alt="" class="comment-icon"/>
+        <img v-if="charIcon" :src="charIcon" alt="" class="comment-icon"/>
         
-        <div v-html="comment.post" class="comment-body"></div>
+        <pre v-html="comment.post" class="comment-body readable"></pre>
 
         <p v-if="top === 'top'">
-            <router-link :to="'/char/' + playtester + '/playtest/' + comment.char + comment.timestamp" >Go to thread ({{ comment.length }} comments)</router-link>
+            <router-link :to="'/char/' + playtester + '/open/' + comment.char + comment.timestamp" >Go to thread ({{ comment.length }} comments)</router-link>
             <span class="delete-link" v-if="activeChar === playtester || activeChar === comment.char"><a href="#" v-on:click.prevent="deleteThread">Delete this thread</a></span>
         </p>
     </BoxShadow>
@@ -25,6 +26,10 @@
             margin: 0 0 1rem;
             display: inline-block;
             width: calc(100% - 110px);
+
+            span {
+                font-size: .8em;
+            }
         }
 
         .comment-icon {
@@ -56,7 +61,8 @@ export default {
     },
     data() {
         return {
-            charIcon: ''
+            charIcon: '',
+            charName: ''
         }
     },
     computed: {
@@ -80,14 +86,15 @@ export default {
             var date = new Date(timestamp)
             return date.toISOString()
         },
-        getCharIcon: function(char) {
+        getCharInfo: function(char) {
             this.$firestore.characters.doc(char).get().then(snapshot => {
-                this.charIcon = snapshot.data().icon
+                this.charIcon = snapshot.data().icon,
+                this.charName = snapshot.data().name
             })
         },
         deleteThread: function() {
             this.$firestore.characters.doc(this.playtester)
-            .collection('playtest')
+            .collection('open')
             .doc(this.comment.path)
             .delete().then(() => {
                 this.$destroy
@@ -98,7 +105,7 @@ export default {
         }
     },
     created() {
-        this.getCharIcon(this.comment.char)
+        this.getCharInfo(this.comment.char)
     }
 }
 </script>
