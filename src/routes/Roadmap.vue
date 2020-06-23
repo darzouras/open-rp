@@ -14,7 +14,7 @@
           <s>Public user and character pages where profile information, (public) post history can be shared</s> <br />Completed 6/20/20!
         </li>
         <li>
-            Public RP rooms where people can jump in with their characters and join a themed RP
+          <s>Public RP rooms where people can jump in with their characters and join an RP</s> <br />Completed 6/23/20!
         </li>
         <li>
             Private rooms where specific user characters are invited to join a themed RP
