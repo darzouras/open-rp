@@ -17,7 +17,7 @@
                 
                 <PlayerInfo :data="playerData" />
 
-                <div class="info" v-if="playerData.extra" v-html="playerData.extra"></div>
+                <pre class="info" v-if="playerData.extra" v-html="playerData.extra"></pre>
 
                 <div class="center">
                     <RouteButton route="/update-profile" full=true>Update Your Profile</RouteButton>

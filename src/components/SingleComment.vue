@@ -6,7 +6,7 @@
 
         <img :src="charIcon" alt="" class="comment-icon"/>
         
-        <div v-html="comment.post" class="comment-body"></div>
+        <pre v-html="comment.post" class="comment-body readable"></pre>
 
         <p v-if="top === 'top'">
             <router-link :to="'/char/' + playtester + '/open/' + comment.char + comment.timestamp" >Go to thread ({{ comment.length }} comments)</router-link>

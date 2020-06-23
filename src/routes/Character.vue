@@ -59,19 +59,19 @@
                 </BoxShadow>
 
                 <div class="info top-info" v-if="character.intro">
-                    <div v-html="character.intro"></div>
+                    <pre v-html="character.intro"></pre>
                 </div>
 
                 <CharInfo :data="character" :key="character.name" />
 
                 <div class="info readable" v-if="character.background">
                     <TitleMed type="h2">Background info</TitleMed>
-                    <div v-html="character.background"></div>
+                    <pre v-html="character.background"></pre>
                 </div>
 
                 <div class="info readable" v-if="character.personality">
                     <TitleMed type="h2">Personality info</TitleMed>
-                    <div v-html="character.personality"></div>
+                    <pre v-html="character.personality"></pre>
                 </div>
             </div>
         </transition>

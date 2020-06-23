@@ -1,7 +1,7 @@
 <template>
     <div class="thread-wrapper">
-        <div v-if="charID !== null" v-html="originalBody" class="original-post">
-        </div>
+        <pre v-if="charID !== null" v-html="originalBody" class="original-post readable">
+        </pre>
 
         <transition name="slide-fade">
             <section class="comments" v-if="threadComments">
@@ -20,7 +20,7 @@
             <div class="add-comment-preview" v-if="newComment">
                 <SmallTitle type="p">Preview:</SmallTitle>
 
-                <div v-html="newComment"></div>
+                <pre v-html="newComment"></pre>
             </div>
 
             <Button v-bind:class="{ inactive : newComment === null || newComment === '' }">Add comment</Button>

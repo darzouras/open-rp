@@ -14,7 +14,7 @@
 
                 <PlayerInfo :data="playerData" />
 
-                <div class="info" v-if="playerData.extra" v-html="playerData.extra"></div>
+                <pre class="info" v-if="playerData.extra" v-html="playerData.extra"></pre>
             </section>
         </transition>
 

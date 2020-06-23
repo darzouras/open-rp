@@ -21,6 +21,10 @@ body {
     padding: 0;
     margin: 0;
 
+    h1, h2, h3, h4 {
+        margin-bottom: .25rem;
+    }
+
     a {
         color: $green;
         text-decoration: underline;
@@ -35,6 +39,13 @@ body {
     .readable {
         line-height: 1.7;
         letter-spacing: 0.035em;
+    }
+
+    pre {
+        font-family: 'Open Sans', sans-serif;
+        font-size: 1rem;
+        margin: 0;
+        white-space: pre-wrap;
     }
 }
 
