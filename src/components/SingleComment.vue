@@ -9,7 +9,7 @@
         <div v-html="comment.post" class="comment-body"></div>
 
         <p v-if="top === 'top'">
-            <router-link :to="'/char/' + playtester + '/playtest/' + comment.char + comment.timestamp" >Go to thread ({{ comment.length }} comments)</router-link>
+            <router-link :to="'/char/' + playtester + '/open/' + comment.char + comment.timestamp" >Go to thread ({{ comment.length }} comments)</router-link>
             <span class="delete-link" v-if="activeChar === playtester || activeChar === comment.char"><a href="#" v-on:click.prevent="deleteThread">Delete this thread</a></span>
         </p>
     </BoxShadow>
@@ -87,7 +87,7 @@ export default {
         },
         deleteThread: function() {
             this.$firestore.characters.doc(this.playtester)
-            .collection('playtest')
+            .collection('open')
             .doc(this.comment.path)
             .delete().then(() => {
                 this.$destroy

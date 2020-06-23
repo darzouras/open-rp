@@ -22,7 +22,7 @@
                     <nav class="char-nav roboto" aria-label="Character links">
                         <ul>
                             <li>
-                                <router-link :to="{ path: '/char/' + charID + '/playtest' }">Playtest</router-link>
+                                <router-link :to="{ path: '/char/' + charID + '/open' }">Open RP</router-link>
                             </li>
                         </ul>
                     </nav>
