@@ -38,10 +38,12 @@
 
         &.inactive {
             cursor: initial;
+            border-color: $gray;
+            color: $gray;
 
             &:hover {
                 background: white;
-                color: $darkblue;
+                color: $gray;
             }
         }
 
