@@ -38,6 +38,7 @@
 
         &.inactive {
             cursor: initial;
+            pointer-events: none;
             border-color: $gray;
             color: $gray;
 

@@ -23,7 +23,7 @@
                 <div v-html="newComment"></div>
             </div>
 
-            <Button>Add comment</Button>
+            <Button v-bind:class="{ inactive : newComment === null || newComment === '' }">Add comment</Button>
         </form>
 
         <RouteButton :route="'/char/' + charID + '/open'" full="full">Back to post</RouteButton>

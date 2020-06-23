@@ -37,7 +37,7 @@
 
                     <div v-html="newThread"></div>
                 </div>
-                <Button>Start new thread</Button>
+                <Button v-bind:class="{ inactive : newThread === null || newThread === '' }">Start new thread</Button>
             </form>
         </section>
     </div>
