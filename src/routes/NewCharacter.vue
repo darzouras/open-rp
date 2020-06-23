@@ -1,5 +1,5 @@
 <template>
-    <div class="newchar-wrapper">
+    <div class="newchar-wrapper" v-if="charCount < 4">
         <Title type="h1" title="Create a Character" />
 
         <form v-on:submit.prevent="createCharacter">
@@ -21,6 +21,10 @@
         </p>
 
         <p v-if="error">{{ error }}</p>
+    </div>
+    <div v-else>
+        <Title type="h1">Sorry-</Title>
+        <p>Right now you can only have four characters at a time.</p>
     </div>
 </template>
 
@@ -48,7 +52,8 @@ export default {
         return {
             character: [],
             error: null,
-            success: null
+            success: null,
+            charCount: Number
         }
     },
     firestore() {
@@ -101,6 +106,13 @@ export default {
                 }
             })
         },
+        checkCharCount: function() {
+            this.$firestore.users.doc(this.user.data.displayName).get().then(snapshot => {
+                if (snapshot.exists) {
+                    this.charCount = snapshot.data().characters.length
+                }
+            })
+        },
         ...mapMutations([
             'setChar'
         ])
@@ -110,6 +122,9 @@ export default {
             user: 'user',
             activeChar: 'activeChar'
         })
+    },
+    created() {
+        this.checkCharCount()
     }
 }
 </script>
