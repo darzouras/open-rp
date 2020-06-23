@@ -9,7 +9,7 @@
             {{ error }}
         </BigMessage>
         <form action="#" @submit.prevent="submit">
-            <Input label="Username" type="name" name="name" placeholder="This will be the name other people see" required="required" autofocus="autofocus" v-model="form.name" />
+            <Input label="Username" type="text" name="name" placeholder="This will be the name other people see" required="required" autofocus="autofocus" v-model="form.name" />
 
             <Input label="Email" type="email" name="email" placeholder="whoever@whatever.com" required="required" v-model="form.email" />
 
@@ -88,7 +88,7 @@ export default {
                             this.success = true
 
                             this.$store.commit('SET_USER', data.user)
-                            this.$router.replace({ name: "dashboard" });
+                            this.$router.replace({ name: "update-profile" });
                         });
                     })
                     .catch(err => {
