@@ -2,20 +2,20 @@
     <div class="playtest-wrapper">
         <Title type="h1">Open RP with <router-link :to="'/char/' + charID">{{ charID}}</router-link></Title>
 
-        <p v-if="activeChar === charID">Use this RP space for general RP! Get a feel for your character's voice here. If you want to use this space for particular kinds of RP or set rules you can update the post body and list them.</p>
+        <SmallMessage v-if="activeChar === charID">
+            <p>Use this RP space for general RP! Get a feel for your character's voice here. If you want to use this space for particular kinds of RP or set rules you can update the post body and list them.</p>
+
+            <Button @click="bodyUpdate = true" v-if="bodyUpdate === false" full="full">Update post body</Button>
+
+            <form v-if="bodyUpdate === true" v-on:submit.prevent="updateBody">
+                <Input label="Update your open RP post" note="Simple html allowed, you can check your changes below as you make them" type="textarea" v-model="openBody" />
+
+                <Button full="full">Update</Button>
+            </form>
+        </SmallMessage>
 
         <section>
             <div v-if="openBody !== ''" v-html="openBody" class="playtest-body"></div>
-
-            <div v-if="activeChar === charID">
-                <Button @click="bodyUpdate = true" v-if="bodyUpdate === false" full="full">Update post body</Button>
-
-                <form v-if="bodyUpdate === true" v-on:submit.prevent="updateBody">
-                    <Input label="Update your open RP post" note="Simple html allowed" type="textarea" v-model="openBody" />
-
-                    <Button full="full">Update</Button>
-                </form>
-            </div>
         </section>
 
         <section>
@@ -72,6 +72,7 @@ import TitleMed from '@/components/TitleMed.vue'
 import Input from '@/components/Input.vue'
 import Button from '@/components/Button.vue'
 import SingleComment from '@/components/SingleComment.vue'
+import SmallMessage from '@/components/SmallMessage.vue'
 
 export default {
     name: 'CharOpen',
@@ -81,7 +82,8 @@ export default {
         BigMessage,
         Input,
         Button,
-        SingleComment
+        SingleComment,
+        SmallMessage
     },
     data() {
         return {

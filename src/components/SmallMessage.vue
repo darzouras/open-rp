@@ -11,7 +11,7 @@
         background: $gray;
         padding: 1rem;
         width: calc(100% - 2rem);
-        margin: .5rem 0;
+        margin: 1rem 0;
         border-radius: 15px;
     }
 </style>
