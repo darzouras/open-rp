@@ -153,6 +153,7 @@ import Button from '@/components/Button.vue'
 import RouteButton from '@/components/RouteButton.vue'
 import CharInfo from '@/components/CharInfo.vue'
 import BoxShadow from '@/components/BoxShadow.vue'
+import BigMessage from '@/components/BigMessage.vue'
 import SmallMessage from '@/components/SmallMessage.vue'
 
 export default {
@@ -164,6 +165,7 @@ export default {
         RouteButton,
         CharInfo,
         BoxShadow,
+        BigMessage,
         SmallMessage
     },
     data() {
