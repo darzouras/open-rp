@@ -32,19 +32,19 @@
                                 :route="'/update-character/' + charID">Update Character Info</RouteButton>
 
                             <Button @click="initRemove = true" alert=true class="button-delete">Delete Character</Button>
-
-                            <transition name="slide-fade">
-                                <div v-if="initRemove === true">
-                                    <BigMessage alert="true">
-                                        Deleting this character cannot be reversed. All history and data will be lost.<br />Do you want to proceed?
-                                    </BigMessage>
-
-                                    <Button alert="true" @click="deleteCharacter()">
-                                        Confirm Delete
-                                    </Button>
-                                </div>
-                            </transition>
                         </div>
+
+                        <transition name="slide-fade">
+                            <div v-if="initRemove === true" class="delete-message">
+                                <BigMessage alert="true">
+                                    Deleting this character cannot be reversed. All history and data will be lost. Do you want to proceed?
+                                </BigMessage>
+
+                                <Button alert="true" @click="deleteCharacter()">
+                                    Confirm Delete
+                                </Button>
+                            </div>
+                        </transition>
                     </div>
                 </transition>
 
@@ -100,13 +100,19 @@
     }
 
     .button-row {
-        .button-delete {
-            margin-top: 1.5rem;
-        }
+        padding-top: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
 
         a, button {
-            margin-right: .25rem;
-            margin-left: .25rem;
+            margin: .25rem;
+            display: block;
+        }
+
+        @media (min-width: 768px) {
+            flex-direction: row;
         }
     }
 
