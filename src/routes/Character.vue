@@ -35,15 +35,15 @@
                         </div>
 
                         <transition name="slide-fade">
-                            <div v-if="initRemove === true" class="delete-message">
-                                <BigMessage alert="true">
+                            <SmallMessage v-if="initRemove === true" class="delete-message">
+                                <p>
                                     Deleting this character cannot be reversed. All history and data will be lost. Do you want to proceed?
-                                </BigMessage>
+                                </p>
 
                                 <Button alert="true" @click="deleteCharacter()">
                                     Confirm Delete
                                 </Button>
-                            </div>
+                            </SmallMessage>
                         </transition>
                     </div>
                 </transition>
@@ -151,9 +151,9 @@ import Title from '@/components/Title.vue'
 import TitleMed from '@/components/TitleMed.vue'
 import Button from '@/components/Button.vue'
 import RouteButton from '@/components/RouteButton.vue'
-import BigMessage from '@/components/BigMessage.vue'
 import CharInfo from '@/components/CharInfo.vue'
 import BoxShadow from '@/components/BoxShadow.vue'
+import SmallMessage from '@/components/SmallMessage.vue'
 
 export default {
     name: 'Character',
@@ -162,9 +162,9 @@ export default {
         TitleMed,
         Button,
         RouteButton,
-        BigMessage,
         CharInfo,
-        BoxShadow
+        BoxShadow,
+        SmallMessage
     },
     data() {
         return {
