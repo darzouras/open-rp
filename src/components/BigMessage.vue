@@ -10,6 +10,7 @@
     p {
         font-size: 1.5rem;
         font-weight: 150;
+        line-height: 1.25 !important;
 
         &.alert {
             color: $red;
