@@ -45,7 +45,7 @@
 
 <style lang="scss" scoped>
     .playtest-body {
-        margin: 0 0 2rem;
+        margin: 2rem 0;
     }
     .comment-list {
         list-style: none;
