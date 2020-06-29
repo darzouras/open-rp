@@ -32,19 +32,19 @@
                                 :route="'/update-character/' + charID">Update Character Info</RouteButton>
 
                             <Button @click="initRemove = true" alert=true class="button-delete">Delete Character</Button>
-
-                            <transition name="slide-fade">
-                                <div v-if="initRemove === true">
-                                    <BigMessage alert="true">
-                                        Deleting this character cannot be reversed. All history and data will be lost.<br />Do you want to proceed?
-                                    </BigMessage>
-
-                                    <Button alert="true" @click="deleteCharacter()">
-                                        Confirm Delete
-                                    </Button>
-                                </div>
-                            </transition>
                         </div>
+
+                        <transition name="slide-fade">
+                            <SmallMessage v-if="initRemove === true" class="delete-message">
+                                <p>
+                                    Deleting this character cannot be reversed. All history and data will be lost. Do you want to proceed?
+                                </p>
+
+                                <Button alert="true" @click="deleteCharacter()">
+                                    Confirm Delete
+                                </Button>
+                            </SmallMessage>
+                        </transition>
                     </div>
                 </transition>
 
@@ -100,13 +100,19 @@
     }
 
     .button-row {
-        .button-delete {
-            margin-top: 1.5rem;
-        }
+        padding-top: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
 
         a, button {
-            margin-right: .25rem;
-            margin-left: .25rem;
+            margin: .25rem;
+            display: block;
+        }
+
+        @media (min-width: 768px) {
+            flex-direction: row;
         }
     }
 
@@ -145,9 +151,9 @@ import Title from '@/components/Title.vue'
 import TitleMed from '@/components/TitleMed.vue'
 import Button from '@/components/Button.vue'
 import RouteButton from '@/components/RouteButton.vue'
-import BigMessage from '@/components/BigMessage.vue'
 import CharInfo from '@/components/CharInfo.vue'
 import BoxShadow from '@/components/BoxShadow.vue'
+import SmallMessage from '@/components/SmallMessage.vue'
 
 export default {
     name: 'Character',
@@ -156,9 +162,9 @@ export default {
         TitleMed,
         Button,
         RouteButton,
-        BigMessage,
         CharInfo,
-        BoxShadow
+        BoxShadow,
+        SmallMessage
     },
     data() {
         return {

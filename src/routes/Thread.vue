@@ -23,10 +23,10 @@
                 <pre v-html="newComment"></pre>
             </div>
 
-            <Button v-bind:class="{ inactive : newComment === null || newComment === '' }">Add comment</Button>
+            <Button v-bind:class="{ inactive : newComment === null || newComment === ''}" full="full">Add comment</Button>
         </form>
 
-        <RouteButton :route="'/char/' + charID + '/open'" full="full">Back to post</RouteButton>
+        <router-link :to="'/char/' + charID + '/open'" >Back to post</router-link>
     </div>
 </template>
 
@@ -62,7 +62,6 @@ import { mapGetters } from 'vuex'
 import SingleComment from '@/components/SingleComment.vue'
 import TitleMed from '@/components/TitleMed.vue'
 import SmallTitle from '@/components/SmallTitle.vue'
-import RouteButton from '@/components/RouteButton.vue'
 import Input from '@/components/Input.vue'
 import Button from '@/components/Button.vue'
 
@@ -72,7 +71,6 @@ export default {
         SingleComment,
         TitleMed,
         SmallTitle,
-        RouteButton,
         Input,
         Button
     },
