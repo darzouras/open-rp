@@ -6,6 +6,7 @@
             <section v-if="playerData">
                 <div class="center">
                     <router-link to="update-email">Update email address</router-link>
+                    <router-link to="update-password">Update password</router-link>
                     <RouteButton route="/update-profile" full=true>Update Your Profile</RouteButton>
                 </div>
 
