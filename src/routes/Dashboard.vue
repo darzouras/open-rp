@@ -4,6 +4,11 @@
 
         <transition name="slide-fade">
             <section v-if="playerData">
+                <div class="center">
+                    <router-link to="update-email">Update email address</router-link>
+                    <RouteButton route="/update-profile" full=true>Update Your Profile</RouteButton>
+                </div>
+
                 <div class="top-flex">
                     <div class="loggedin-as">
                         <BigMessage v-if="user.loggedIn">You are currently logged in as {{user.data.displayName}}</BigMessage>
@@ -18,10 +23,6 @@
                 <PlayerInfo :data="playerData" />
 
                 <pre class="info" v-if="playerData.extra" v-html="playerData.extra"></pre>
-
-                <div class="center">
-                    <RouteButton route="/update-profile" full=true>Update Your Profile</RouteButton>
-                </div>
             </section>
         </transition>
 
