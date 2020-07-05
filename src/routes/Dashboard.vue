@@ -5,9 +5,11 @@
         <transition name="slide-fade">
             <section v-if="playerData">
                 <div class="center">
-                    <router-link to="update-email">Update email address</router-link>
-                    <router-link to="update-password">Update password</router-link>
-                    <RouteButton route="/update-profile" full=true>Update Your Profile</RouteButton>
+                    <div class="button-row">
+                        <RouteButton route="/update-email">Update email address</RouteButton>
+                        <RouteButton route="/update-password">Update password</RouteButton>
+                        <RouteButton route="/update-profile">Update Your Profile</RouteButton>
+                    </div>
                 </div>
 
                 <div class="top-flex">
@@ -45,6 +47,23 @@
 </template>
 
 <style lang="scss" scoped>
+    .button-row {
+        padding-top: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
+
+        a {
+            margin: .25rem;
+            display: block;
+        }
+
+        @media (min-width: 768px) {
+            flex-direction: row;
+        }
+    }
+
     .top-flex {
         display: flex;
         justify-content: space-between;
