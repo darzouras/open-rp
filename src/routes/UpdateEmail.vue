@@ -63,9 +63,11 @@ export default {
         updateEmail() {
             // confirm that the emails match
             if (this.email.toLowerCase() !== this.emailConfirm.toLowerCase()) {
+                this.success = false
                 this.error = "Email addresses do not match."
             }
             else if (this.email.toLowerCase() == this.currentEmail) {
+                this.success = false
                 this.error = "This email matches your current email."
             }
             else {
@@ -82,9 +84,11 @@ export default {
                         this.email = null
                         this.emailConfirm = null
                     }).catch(err => {
+                        this.success = false
                         this.error = err
                     })
                 }).catch(err => {
+                    this.success = false
                     this.error = err;
                 })
             }
