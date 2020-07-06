@@ -9,12 +9,18 @@
             <Input label="Password" type="password" name="password" required="required" v-model="form.password" />
 
             <Button type="submit">Login</Button>
+
+            <div class="forgot-link">
+                <router-link to="/forgot-password">Forgot your password?</router-link>
+            </div>
         </form>
     </div>
 </template>
 
 <style lang="scss" scoped>
-
+    .forgot-link {
+        margin-top: .5em;
+    }
 </style>
 
 <script>

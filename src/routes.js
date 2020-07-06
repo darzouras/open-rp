@@ -8,6 +8,7 @@ import Main from './routes/Main.vue';
 import Components from './routes/Components.vue';
 import Login from './routes/Login.vue';
 import Register from './routes/Register.vue';
+import ForgotPassword from './routes/ForgotPassword.vue';
 import Dashboard from './routes/Dashboard.vue';
 import UpdateProfile from './routes/UpdateProfile.vue';
 import UpdatePassword from './routes/UpdatePassword.vue';
@@ -34,6 +35,7 @@ const routes = [
 
   { path: '/login', name: 'login', component: Login, meta: {noAuth: true}},
   { path: '/register', name: 'register', component: Register, meta: {noAuth: true}},
+  { path: '/forgot-password', name: 'forgot-password', component: ForgotPassword, meta: {noAuth: true}},
 
   { path: '/dashboard', name: 'dashboard', component: Dashboard, meta: {requiresAuth: true}},
   { path: '/update-profile', name: 'update-profile', component: UpdateProfile, meta: {requiresAuth: true}},
