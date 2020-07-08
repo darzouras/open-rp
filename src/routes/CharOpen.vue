@@ -1,6 +1,6 @@
 <template>
     <div class="playtest-wrapper">
-        <Title type="h1">Open RP with <router-link :to="'/char/' + charID">{{ charID}}</router-link></Title>
+        <Title type="h1">Open RP with <router-link :to="'/char/' + charID">{{ charID }}</router-link></Title>
 
         <SmallMessage v-if="activeChar === charID">
             <p>Use this RP space for general RP! Get a feel for your character's voice here. If you want to use this space for particular kinds of RP or set rules you can update the post body and list them.</p>
@@ -73,6 +73,7 @@ import Input from '@/components/Input.vue'
 import Button from '@/components/Button.vue'
 import SingleComment from '@/components/SingleComment.vue'
 import SmallMessage from '@/components/SmallMessage.vue'
+import SmallTitle from '@/components/SmallTitle.vue'
 
 export default {
     name: 'CharOpen',
@@ -83,7 +84,8 @@ export default {
         Input,
         Button,
         SingleComment,
-        SmallMessage
+        SmallMessage,
+        SmallTitle
     },
     data() {
         return {
@@ -91,6 +93,7 @@ export default {
             newThread: null,
             threadTops: [],
             openBody: '',
+            openUser: null,
             bodyUpdate: false
         }
     },
@@ -101,7 +104,9 @@ export default {
     },
     firestore() {
         return {
-            characters: db.collection('characters')
+            characters: db.collection('characters'),
+            users: db.collection('users'),
+            mail: db.collection('mail')
         }
     },
     methods: {
@@ -112,22 +117,37 @@ export default {
                 this.bodyUpdate = false
             })
         },
-        getOpenBody: function() {
+        getOpenInfo: function() {
             this.$firestore.characters.doc(this.charID).get().then(snapshot => {
                 this.openBody = snapshot.data().open
+                this.openUser = snapshot.data().user
             })
         },
         addTopComment: function() {
+            const timestamp = Date.now()
             this.$firestore.characters.doc(this.charID)
             .collection('open')
-            .doc(this.activeChar + Date.now())
+            .doc(this.activeChar + timestamp)
             .set({
                 thread: [{
                     char: this.activeChar,
-                    timestamp: Date.now(),
+                    timestamp: timestamp,
                     post: this.$sanitize(this.newThread)
                 }]
             }).then(() => {
+                // send notification
+                this.$firestore.users.doc(this.openUser).get().then(snapshot => {
+                    const email = snapshot.data().email
+                    this.sendEmail(
+                        email,
+                        `New comment from ${this.activeChar}`,
+                        `${this.activeChar} has started a new thread:
+https://open-rp.web.app/char/${this.charID}/open/${this.activeChar}${timestamp}`
+                    )
+                }).catch(err => {
+                    console.log('Error getting user' + err)
+                })
+                
                 // redirect to the new thread page
                 this.threadTops = []
                 this.newThread = null
@@ -145,10 +165,23 @@ export default {
                     this.threadTops.push(threadData)
                 })
             })
+        },
+        sendEmail: function(email, subject, message) {
+            this.$firestore.mail.doc(email + Date.now()).set({
+                to: email,
+                message: {
+                    subject: subject,
+                    text: message
+                }
+            }).then(() => {
+                console.log('notification triggered')
+            }).catch(err => {
+                console.log('notification error: ' + err)
+            })
         }
     },
     created() {
-        this.getOpenBody()
+        this.getOpenInfo()
         this.getTopLevelThreads()
     }
 }
