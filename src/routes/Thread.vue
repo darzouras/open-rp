@@ -80,12 +80,15 @@ export default {
             thread: this.$route.params.thread,
             threadComments: null,
             originalBody: String,
-            newComment: null
+            newComment: null,
+            ogUser: null
         }
     },
     firestore() {
         return {
-            characters: db.collection('characters')
+            characters: db.collection('characters'),
+            users: db.collection('users'),
+            mail: db.collection('mail')
         }
     },
     computed: {
@@ -98,6 +101,7 @@ export default {
         getOriginal: function() {
             this.$firestore.characters.doc(this.charID).get().then(snapshot => {
                 this.originalBody = snapshot.data().open
+                this.ogUser = snapshot.data().user
             })
         },
         getThread: function() {
@@ -116,10 +120,39 @@ export default {
                     post: this.$sanitize(this.newComment)
                 })
             }).then(() => {
+                console.log(this.user.data.displayName)
+                // send notification
+                if (this.ogUser !== this.user.data.displayName) {
+                    this.$firestore.users.doc(this.ogUser).get().then(snapshot => {
+                        const email = snapshot.data().email
+                        this.sendEmail(
+                            email,
+                            `New comment from ${this.activeChar}`,
+                            `${this.activeChar} has posted a new reply to a thread:
+        https://open-rp.web.app/char/${this.charID}/open/${this.thread}`
+                        )
+                    }).catch(err => {
+                        console.log('Error getting user' + err)
+                    })
+                }
+
                 this.getThread()
                 this.newComment = null
             }).catch(err => {
                 console.log(err.message)
+            })
+        },
+        sendEmail: function(email, subject, message) {
+            this.$firestore.mail.doc(email + Date.now()).set({
+                to: email,
+                message: {
+                    subject: subject,
+                    text: message
+                }
+            }).then(() => {
+                console.log('notification triggered')
+            }).catch(err => {
+                console.log('notification error: ' + err)
             })
         }
     },

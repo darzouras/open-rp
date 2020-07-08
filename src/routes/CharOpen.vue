@@ -99,7 +99,8 @@ export default {
     },
     computed: {
         ...mapGetters({
-            activeChar: 'activeChar'
+            activeChar: 'activeChar',
+            user: 'user'
         })
     },
     firestore() {
@@ -136,17 +137,19 @@ export default {
                 }]
             }).then(() => {
                 // send notification
-                this.$firestore.users.doc(this.openUser).get().then(snapshot => {
-                    const email = snapshot.data().email
-                    this.sendEmail(
-                        email,
-                        `New comment from ${this.activeChar}`,
-                        `${this.activeChar} has started a new thread:
-https://open-rp.web.app/char/${this.charID}/open/${this.activeChar}${timestamp}`
-                    )
-                }).catch(err => {
-                    console.log('Error getting user' + err)
-                })
+                if (this.openUser !== this.user.data.displayName) {
+                    this.$firestore.users.doc(this.openUser).get().then(snapshot => {
+                        const email = snapshot.data().email
+                        this.sendEmail(
+                            email,
+                            `New comment from ${this.activeChar}`,
+                            `${this.activeChar} has started a new thread:
+    https://open-rp.web.app/char/${this.charID}/open/${this.activeChar}${timestamp}`
+                        )
+                    }).catch(err => {
+                        console.log('Error getting user' + err)
+                    })
+                }
                 
                 // redirect to the new thread page
                 this.threadTops = []
