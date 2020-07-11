@@ -1,18 +1,29 @@
 <template>
-    <BoxShadow class="comment-wrapper" ref="threadTop">
-        <SmallTitle type="h3" class="comment-title">
-            {{ charName }} <router-link :to="'/char/' + comment.char">({{ comment.char }})</router-link>
-            <br /><span>posted at {{ getDateString(comment.timestamp) | formatDate }}</span>
-        </SmallTitle>
+    <BoxShadow v-if="comment" class="comment-wrapper" ref="threadTop" v-bind:class="{deleted : comment.post === null}">
+        <span v-if="comment.post !== null">
+            <SmallTitle type="h3" class="comment-title">
+                {{ charName }} <router-link :to="'/char/' + comment.char">({{ comment.char }})</router-link>
+                <br /><span>posted at {{ getDateString(comment.timestamp) | formatDate }}</span>
+            </SmallTitle>
 
-        <img v-if="charIcon" :src="charIcon" alt="" class="comment-icon"/>
-        
-        <pre v-html="comment.post" class="comment-body readable"></pre>
+            <img v-if="charIcon" :src="charIcon" alt="" class="comment-icon"/>
+            
+            <pre v-html="comment.post" class="comment-body readable"></pre>
+        </span>
 
-        <p v-if="top === 'top'">
+        <span v-else class="comment-deleted">
+            <p>This comment has been deleted.</p>
+        </span>
+
+        <p v-if="top === 'top'" class="comment-actions">
             <router-link :to="'/char/' + playtester + '/open/' + comment.char + comment.timestamp" >Go to thread ({{ comment.length }} comments)</router-link>
             <span class="delete-link" v-if="activeChar === playtester || activeChar === comment.char"><a href="#" v-on:click.prevent="deleteThread">Delete this thread</a></span>
         </p>
+        <p v-else class="comment-actions">
+            <span class="delete-comment" v-if="(activeChar === playtester || activeChar === comment.char) && comment.post !== null"><a href="#" v-on:click.prevent="deleteComment">Delete this comment</a></span>
+        </p>
+
+        
     </BoxShadow>
 </template>
 
@@ -21,6 +32,10 @@
 
     .comment-wrapper {
         overflow: auto;
+
+        &.deleted {
+            opacity: .6;
+        }
 
         .comment-title {
             margin: 0 0 1rem;
@@ -37,18 +52,35 @@
             margin: 0 0 .5rem .5rem;
         }
 
-        .delete-link {
-            &::before {
-                content: '//';
-                margin: 0 .5rem;
-                color: $darkblue;
+        .comment-actions {
+            margin-bottom: 0;
+            text-align: center;
+            clear: both;
+
+            .delete-link {
+                &::before {
+                    content: '//';
+                    margin: 0 .5rem;
+                    color: $darkblue;
+                }
+
+                a {
+                    color: $red;
+                }
+            }
+
+            .delete-comment {
+                a {
+                    color: $red;
+                }
             }
         }
     }
 </style>
 
 <script>
-import { db } from '../firebase' 
+import { db } from '../firebase'
+// import firebase from '../firebase'
 import { mapGetters } from 'vuex'
 import BoxShadow from '@/components/BoxShadow.vue'
 import SmallTitle from '@/components/SmallTitle.vue'
@@ -62,7 +94,9 @@ export default {
     data() {
         return {
             charIcon: '',
-            charName: ''
+            charName: '',
+            thread: this.$route.params.thread,
+            mapMod: null
         }
     },
     computed: {
@@ -71,10 +105,11 @@ export default {
         })
     },
     props: {
-        comment: Object,
-        playtester: String,
+        comment: null,
+        playtester: null,
         top: null,
-        id: String
+        id: null,
+        index: null,
     },
     firestore() {
         return {
@@ -102,6 +137,34 @@ export default {
             }).catch(err => {
                 console.log(err.message)
             })
+        },
+        deleteComment: function() {
+            // Make a copy of the thread and modify it
+            this.$firestore.characters.doc(this.playtester)
+            .collection('open')
+            .doc(this.thread)
+            .get().then(snapshot => {
+                this.mapMod = snapshot.data().thread
+
+                this.mapMod[this.index].post = null
+                // console.log(this.mapMod[this.index])
+
+                this.$firestore.characters.doc(this.playtester)
+                .collection('open')
+                .doc(this.thread)
+                .update(
+                    {
+                        thread: this.mapMod
+                    }
+                ).then(() => {
+                    console.log('comment deleted?')
+                    this.comment.post = null;
+                }).catch(err => {
+                    console.log(err)
+                })
+            })
+
+            
         }
     },
     created() {

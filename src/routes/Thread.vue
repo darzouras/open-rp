@@ -7,8 +7,8 @@
             <section class="comments" v-if="threadComments">
                 <TitleMed type="h2">Thread started by <router-link :to="'/char/' + threadComments[0].char">{{ threadComments[0].char }}</router-link></TitleMed>
                 <ul>
-                    <li v-for="comment in threadComments" :key="comment.timestamp">
-                        <SingleComment :comment="comment" :playtester="charID" />
+                    <li v-for="(comment, index) in threadComments" :key="comment.timestamp">
+                        <SingleComment :comment="comment" :playtester="charID" :index="index" />
                     </li>
                 </ul>
             </section>

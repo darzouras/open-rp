@@ -13,3 +13,7 @@ Icon font is [remixicon.com](https://remixicon.com).
 ## Building
 
 This repo builds to Firebase when the master branch is updated.
+
+#### Note to self
+
+To run on a certain port use `npm run serve -- --port 0000`
