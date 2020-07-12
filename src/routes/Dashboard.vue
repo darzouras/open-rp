@@ -16,6 +16,8 @@
                     <div class="loggedin-as">
                         <BigMessage v-if="user.loggedIn">You are currently logged in as {{user.data.displayName}}</BigMessage>
 
+                        <p><router-link :to="{ path: '/user/' + user.data.displayName }">See your public profile</router-link></p>
+
                         <TitleMed type="h2">Your Info</TitleMed>
                     </div>
                     <div v-if="playerData" class="icon-wrapper">

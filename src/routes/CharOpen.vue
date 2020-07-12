@@ -32,12 +32,20 @@
             <form class="add-comment" v-on:submit.prevent="addTopComment" v-if="activeChar && activeChar !== charID">
                 <Input :label="'Start a new RP thread as ' + activeChar" type="textarea" note="basic HTML allowed" v-model="newThread"/>
 
+                <Button class="button-ooc" type="button" v-on:click="showOOC = !showOOC">Add OOC notes</Button>
+            
+                <transition name="slide-fade">
+                    <Input v-if="showOOC === true" label="OOC notes (optional):" note="Optional, basic HTML allowed" type="textarea" v-model="oocMessage" />
+                </transition>
+                
                 <div class="add-comment-preview" v-if="newThread">
                     <SmallTitle type="p">Preview:</SmallTitle>
 
                     <pre v-html="newThread"></pre>
+
+                    <SmallMessage v-if="oocMessage"><strong>OOC:</strong><pre v-html="oocMessage"></pre></SmallMessage>
                 </div>
-                <Button v-bind:class="{ inactive : newThread === null || newThread === '' }">Start new thread</Button>
+                <Button v-bind:class="{ inactive : newThread === null || newThread === '' }" full="full">Start new thread</Button>
             </form>
         </section>
     </div>
@@ -51,13 +59,22 @@
         list-style: none;
         margin: 0;
         padding: 0;
+
+        li:last-child {
+            margin-bottom: 3rem;
+        }
     }
     
     .add-comment {
         margin-bottom: 2rem;
 
+        .button-ooc {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
         .add-comment-preview {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
     }
 </style>
@@ -91,6 +108,8 @@ export default {
         return {
             charID: this.$route.params.char.toLowerCase(),
             newThread: null,
+            oocMessage: null,
+            showOOC: false,
             threadTops: [],
             openBody: '',
             openUser: null,
@@ -133,7 +152,8 @@ export default {
                 thread: [{
                     char: this.activeChar,
                     timestamp: timestamp,
-                    post: this.$sanitize(this.newThread)
+                    post: this.checkSanitized(this.newThread),
+                    ooc: this.checkSanitized(this.oocMessage)
                 }]
             }).then(() => {
                 // send notification
@@ -154,6 +174,8 @@ export default {
                 // redirect to the new thread page
                 this.threadTops = []
                 this.newThread = null
+                this.showOOC = false
+                this.oocMessage = null
                 this.getTopLevelThreads()
             }).catch(err => {
                 console.log(err.message)
