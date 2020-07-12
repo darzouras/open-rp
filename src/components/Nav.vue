@@ -8,7 +8,7 @@
 
             <ul id="nav-links" v-bind:class="{ active : navActive }" @click="closeDropdown">
                 <li>
-                    <router-link :to="{ path: '/user/' + user.data.displayName}"><i class="ri-user-smile-line"></i> {{ user.data.displayName }}</router-link>
+                    <router-link :to="{path: '/dashboard'}"><i class="ri-user-smile-line"></i> {{ user.data.displayName }}</router-link>
                 </li>
                 <li v-if="activeChar">
                     <router-link :to="{ path: '/char/' + activeChar }"><i class="ri-account-pin-box-line"></i> {{ activeChar }}</router-link>
@@ -159,10 +159,10 @@
         data() {
             return {
                 links: [
-                    {
+                    /* {
                         name: 'Dashboard',
                         link: '/dashboard'
-                    }
+                    } */
                 ],
                 navActive: false
             }
