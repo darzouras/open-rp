@@ -17,10 +17,18 @@
         <form v-if="user.loggedIn" class="add-comment" v-on:submit.prevent="addToThread">
             <Input :label="'Respond to thread as ' + activeChar" note="basic HTML allowed" type="textarea" v-model="newComment" />
 
+            <Button class="button-ooc" type="button" v-on:click="showOOC = !showOOC">Add OOC notes</Button>
+            
+            <transition name="slide-fade">
+                <Input v-if="showOOC === true" label="OOC notes (optional):" note="Optional, basic HTML allowed" type="textarea" v-model="oocMessage" />
+            </transition>
+
             <div class="add-comment-preview" v-if="newComment">
                 <SmallTitle type="p">Preview:</SmallTitle>
 
                 <pre v-html="newComment"></pre>
+
+                <SmallMessage v-if="oocMessage"><strong>OOC:</strong><pre v-html="oocMessage"></pre></SmallMessage>
             </div>
 
             <Button v-bind:class="{ inactive : newComment === null || newComment === ''}" full="full">Add comment</Button>
@@ -48,8 +56,13 @@
     .add-comment {
         margin-bottom: 2rem;
 
+        .button-ooc {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
         .add-comment-preview {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
     }
 </style>
@@ -62,6 +75,7 @@ import { mapGetters } from 'vuex'
 import SingleComment from '@/components/SingleComment.vue'
 import TitleMed from '@/components/TitleMed.vue'
 import SmallTitle from '@/components/SmallTitle.vue'
+import SmallMessage from '@/components/SmallMessage.vue'
 import Input from '@/components/Input.vue'
 import Button from '@/components/Button.vue'
 
@@ -71,6 +85,7 @@ export default {
         SingleComment,
         TitleMed,
         SmallTitle,
+        SmallMessage,
         Input,
         Button
     },
@@ -81,7 +96,9 @@ export default {
             threadComments: null,
             originalBody: String,
             newComment: null,
-            ogUser: null
+            oocMessage: null,
+            ogUser: null,
+            showOOC: false
         }
     },
     firestore() {
@@ -117,10 +134,10 @@ export default {
                 thread: firebase.firestore.FieldValue.arrayUnion({
                     char: this.activeChar,
                     timestamp: Date.now(),
-                    post: this.$sanitize(this.newComment)
+                    post: this.checkSanitized(this.newComment),
+                    ooc: this.checkSanitized(this.oocMessage)
                 })
             }).then(() => {
-                console.log(this.user.data.displayName)
                 // send notification
                 if (this.ogUser !== this.user.data.displayName) {
                     this.$firestore.users.doc(this.ogUser).get().then(snapshot => {
@@ -138,6 +155,8 @@ export default {
 
                 this.getThread()
                 this.newComment = null
+                this.showOOC = false
+                this.oocMessage = null
             }).catch(err => {
                 console.log(err.message)
             })

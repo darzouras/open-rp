@@ -9,6 +9,8 @@
             <img v-if="charIcon" :src="charIcon" alt="" class="comment-icon"/>
             
             <pre v-html="comment.post" class="comment-body readable"></pre>
+
+            <SmallMessage class="comment-ooc" v-if="comment.ooc !== '' && comment.ooc !== undefined && comment.ooc !== null"><strong>OOC:</strong> <pre v-html="comment.ooc"></pre></SmallMessage>
         </span>
 
         <span v-else class="comment-deleted">
@@ -52,6 +54,15 @@
             margin: 0 0 .5rem .5rem;
         }
 
+        .comment-ooc {
+            clear: both;
+
+            strong:first-child {
+                display: block;
+                margin-bottom: .25rem;
+            }
+        }
+
         .comment-actions {
             margin-bottom: 0;
             text-align: center;
@@ -84,12 +95,14 @@ import { db } from '../firebase'
 import { mapGetters } from 'vuex'
 import BoxShadow from '@/components/BoxShadow.vue'
 import SmallTitle from '@/components/SmallTitle.vue'
+import SmallMessage from '@/components/SmallMessage.vue'
 
 export default {
     name: 'SingleComment',
     components: {
         BoxShadow,
-        SmallTitle
+        SmallTitle,
+        SmallMessage
     },
     data() {
         return {
