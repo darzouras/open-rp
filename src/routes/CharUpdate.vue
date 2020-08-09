@@ -25,6 +25,8 @@
 
             <Input label="Fandom Info URL" note="include http(s)://" type="url" name="fandomWiki" v-model="charData.fandomWiki" />
 
+            <Input label="Birthday" type="text" name="bday" v-model="charData.bday" />
+
             <Input label="Age" type="text" name="age" v-model="charData.age" />
 
             <Input label="Gender/Pronouns" type="text" name="gender" v-model="charData.gender" />
@@ -82,6 +84,7 @@ export default {
                 charWiki: '',
                 fandom: '',
                 fandomWiki: '',
+                bday: '',
                 age: '',
                 gender: '',
                 creature: '',
@@ -159,6 +162,7 @@ export default {
                 charWiki: this.charData.charWiki || '',
                 fandom: this.charData.fandom || '',
                 fandomWiki: this.charData.fandomWiki || '',
+                bday: this.charData.bday || '',
                 age: this.charData.age || '',
                 gender: this.charData.gender || '',
                 creature: this.charData.creature || '',
