@@ -5,10 +5,6 @@
                 <th scope="row">Alternative Names</th>
                 <td>{{ data.altNames }}</td>
             </tr>
-            <tr v-if="data.age">
-                <th>Age</th>
-                <td>{{ data.age }}</td>
-            </tr>
             <tr v-if="data.gender">
                 <th>Gender/Pronouns</th>
                 <td>{{ data.gender }}</td>
@@ -16,6 +12,14 @@
             <tr v-if="data.creature">
                 <th>Creature Type</th>
                 <td>{{ data.creature }}</td>
+            </tr>
+            <tr v-if="data.bday">
+                <th scope="row">Birthday</th>
+                <td>{{ data.bday }}</td>
+            </tr>
+            <tr v-if="data.age">
+                <th>Age</th>
+                <td>{{ data.age }}</td>
             </tr>
             <tr v-if="data.timeline">
                 <th>Timeline Info</th>
