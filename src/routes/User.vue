@@ -4,6 +4,8 @@
 
         <transition name="slide-fade">
             <section v-if="playerData">
+                <FriendActions v-if="user.loggedIn && player != user.data.displayName" :user="user.data.displayName" :player="player" :friends="playerData.friends" :friended="playerData.friended" />
+
                 <div class="top-flex">
                     <TitleMed type="h2">Player Info</TitleMed>
 
@@ -18,12 +20,14 @@
             </section>
         </transition>
 
-        <section>
+        <section v-if="playerData">
             <TitleMed type="h2">Characters</TitleMed>
 
             <CharacterList v-if="userChars.length > 0" :data="userChars" />
             <BigMessage v-else>This user hasn't created any characters yet</BigMessage>
         </section>
+
+        <Friends v-if="playerData && (playerData.friends || playerData.friended)" :friends="playerData.friends" :friended="playerData.friended" />
     </div>
 </template>
 
@@ -49,12 +53,15 @@
 
 <script>
 import { db } from '../firebase'
+import { mapGetters } from 'vuex'
 
 import Title from '@/components/Title.vue'
 import TitleMed from '@/components/TitleMed.vue'
 import CharacterList from '@/components/CharacterList.vue'
 import BigMessage from '@/components/BigMessage.vue'
 import PlayerInfo from '@/components/PlayerInfo.vue'
+import Friends from '@/components/Friends.vue'
+import FriendActions from '@/components/FriendActions.vue'
 
 export default {
     name: 'User',
@@ -63,22 +70,30 @@ export default {
         TitleMed,
         CharacterList,
         BigMessage,
-        PlayerInfo
+        PlayerInfo,
+        Friends,
+        FriendActions
     },
     data() {
         return {
             characters: [],
             userChars: [],
+            friends: [],
             player: this.$route.params.user.toLowerCase(),
-            playerData: null
+            playerData: null,
         }
     },
     firestore() {
         return {
             userChars: db.collection('characters').where('user', '==', this.player),
             characters: db.collection('characters'),
-            users: db.collection('users')
+            users: db.collection('users'),
         }
+    },
+    computed: {
+        ...mapGetters({
+            user: 'user',
+        })
     },
     watch: {
         $route(to) {

@@ -45,6 +45,8 @@
                 <p v-else>At this moment players are limited to four characters each. You will have to delete an old character if you would like to make a new one.</p>
             </div>
         </section>
+
+        <Friends v-if="playerData && (playerData.friends || playerData.friended)" :friends="playerData.friends" :friended="playerData.friended" />
     </div>
 </template>
 
@@ -102,6 +104,7 @@ import CharacterList from '@/components/CharacterList.vue'
 import BigMessage from '@/components/BigMessage.vue'
 import RouteButton from '@/components/RouteButton.vue'
 import PlayerInfo from '@/components/PlayerInfo.vue'
+import Friends from '@/components/Friends.vue'
 
 export default {
     name: 'Dashboard',
@@ -111,7 +114,8 @@ export default {
         CharacterList,
         BigMessage,
         RouteButton,
-        PlayerInfo
+        PlayerInfo,
+        Friends
     },
     data() {
         return {
