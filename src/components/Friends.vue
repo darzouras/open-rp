@@ -9,20 +9,29 @@
 
         <transition name="slide-fade">
             <div v-show="friendsExpanded" :aria-hidden="(!friendsExpanded).toString()">
-                <div v-if="friends && friends.length > 0" class="friends-group">
-                    <smallTitle type="h3">Friends</smallTitle>
+                <div v-if="mutuals && mutuals.length > 0" class="friends-group">
+                    <smallTitle type="h3">Mutuals</smallTitle>
                     <ul class="friends-list">
-                        <li class="friends-list-item" v-for="(friend, index) in friends" :key="index">
-                            <a :href="`/user/${friend}`">{{ friend }}</a><span v-if="index != friends.length - 1">, </span>
+                        <li class="friends-list-item" v-for="(friend, index) in mutuals" :key="index">
+                            <a :href="`/user/${friend}`">{{ friend }}</a><span v-if="index != mutuals.length - 1">, </span>
                         </li>
                     </ul>
                 </div>
 
-                <div v-if="friended && friended.length > 0" class="friends-group">
+                <div v-if="friendsCondensed && friendsCondensed.length > 0" class="friends-group">
+                    <smallTitle type="h3">Friends</smallTitle>
+                    <ul class="friends-list">
+                        <li class="friends-list-item" v-for="(friend, index) in friendsCondensed" :key="index">
+                            <a :href="`/user/${friend}`">{{ friend }}</a><span v-if="index != friendsCondensed.length - 1">, </span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div v-if="friendedCondensed && friendedCondensed.length > 0" class="friends-group">
                     <smallTitle type="h3">Friended by</smallTitle>
                     <ul class="friends-list">
-                        <li class="friends-list-item" v-for="(friend, index) in friended" :key="index">
-                            <a :href="`/user/${friend}`">{{ friend }}</a><span v-if="index != friended.length - 1">, </span>
+                        <li class="friends-list-item" v-for="(friend, index) in friendedCondensed" :key="index">
+                            <a :href="`/user/${friend}`">{{ friend }}</a><span v-if="index != friendedCondensed.length - 1">, </span>
                         </li>
                     </ul>
                 </div>
@@ -87,13 +96,37 @@ export default {
         SmallTitle,
     },
     props: {
-        friends: Array,
-        friended: Array,
+        friends: {
+            type: Array,
+            default: () => []
+        },
+        friended: {
+            type: Array,
+            default: () => []
+        },
     },
     data() {
         return {
             friendsExpanded: false,
+            mutuals: [],
+            friendsCondensed: [],
+            friendedCondensed: [],
         }
     },
+    mounted() {
+        this.friendsCondensed =  this.friends
+        this.friendedCondensed = this.friended
+        this.friendsCondensed.forEach((element) => {
+            if (this.friendedCondensed.includes(element)) {
+                this.friendedCondensed = this.friendedCondensed.filter((value) => { 
+                    return value != element
+                })
+                this.friendsCondensed = this.friendsCondensed.filter((value) => { 
+                    return value != element
+                })
+                this.mutuals.push(element)
+            }
+        })
+    }
 }
 </script>

@@ -40,8 +40,14 @@ export default {
     props: {
         player: String,
         user: String,
-        friends: Array,
-        friended: Array,
+        friends: {
+            type: Array,
+            default: () => []
+        },
+        friended: {
+            type: Array,
+            default: () => []
+        }
     },
     computed: {
         checkFriends: function() {
