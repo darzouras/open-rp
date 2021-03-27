@@ -4,6 +4,8 @@
 
         <transition name="slide-fade">
             <section v-if="playerData">
+                <FriendActions v-if="user.loggedIn && player != user.data.displayName" :user="user.data.displayName" :player="player" :friends="playerData.friends" :friended="playerData.friended" />
+
                 <div class="top-flex">
                     <TitleMed type="h2">Player Info</TitleMed>
 
@@ -51,6 +53,7 @@
 
 <script>
 import { db } from '../firebase'
+import { mapGetters } from 'vuex'
 
 import Title from '@/components/Title.vue'
 import TitleMed from '@/components/TitleMed.vue'
@@ -58,6 +61,7 @@ import CharacterList from '@/components/CharacterList.vue'
 import BigMessage from '@/components/BigMessage.vue'
 import PlayerInfo from '@/components/PlayerInfo.vue'
 import Friends from '@/components/Friends.vue'
+import FriendActions from '@/components/FriendActions.vue'
 
 export default {
     name: 'User',
@@ -67,7 +71,8 @@ export default {
         CharacterList,
         BigMessage,
         PlayerInfo,
-        Friends
+        Friends,
+        FriendActions
     },
     data() {
         return {
@@ -84,6 +89,11 @@ export default {
             characters: db.collection('characters'),
             users: db.collection('users'),
         }
+    },
+    computed: {
+        ...mapGetters({
+            user: 'user',
+        })
     },
     watch: {
         $route(to) {

@@ -50,6 +50,13 @@ body {
     }
 }
 
+.error {
+    color: $red;
+}
+.success {
+    color: $darkblue;
+}
+
 .spectral {
     font-family: 'Open Sans', serif;
 }

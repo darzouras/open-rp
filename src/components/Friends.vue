@@ -13,7 +13,7 @@
                     <smallTitle type="h3">Friends</smallTitle>
                     <ul class="friends-list">
                         <li class="friends-list-item" v-for="(friend, index) in friends" :key="index">
-                            <a :href="`/user/${friend}`">{{ friend }}</a><span v-if="index != friends.length - 1">,</span>
+                            <a :href="`/user/${friend}`">{{ friend }}</a><span v-if="index != friends.length - 1">, </span>
                         </li>
                     </ul>
                 </div>
@@ -22,7 +22,7 @@
                     <smallTitle type="h3">Friended by</smallTitle>
                     <ul class="friends-list">
                         <li class="friends-list-item" v-for="(friend, index) in friended" :key="index">
-                            <a :href="`/user/${friend}`">{{ friend }}</a><span v-if="index != friended.length - 1">,</span>
+                            <a :href="`/user/${friend}`">{{ friend }}</a><span v-if="index != friended.length - 1">, </span>
                         </li>
                     </ul>
                 </div>
@@ -71,7 +71,7 @@
 
     .friends-list-item {
         display: inline-block;
-        margin: 0;
+        margin-right: .25rem;
         padding: 0;
     }
 }
