@@ -18,12 +18,14 @@
             </section>
         </transition>
 
-        <section>
+        <section v-if="playerData">
             <TitleMed type="h2">Characters</TitleMed>
 
             <CharacterList v-if="userChars.length > 0" :data="userChars" />
             <BigMessage v-else>This user hasn't created any characters yet</BigMessage>
         </section>
+
+        <Friends v-if="playerData && (playerData.friends || playerData.friended)" :friends="playerData.friends" :friended="playerData.friended" />
     </div>
 </template>
 
@@ -55,6 +57,7 @@ import TitleMed from '@/components/TitleMed.vue'
 import CharacterList from '@/components/CharacterList.vue'
 import BigMessage from '@/components/BigMessage.vue'
 import PlayerInfo from '@/components/PlayerInfo.vue'
+import Friends from '@/components/Friends.vue'
 
 export default {
     name: 'User',
@@ -63,21 +66,23 @@ export default {
         TitleMed,
         CharacterList,
         BigMessage,
-        PlayerInfo
+        PlayerInfo,
+        Friends
     },
     data() {
         return {
             characters: [],
             userChars: [],
+            friends: [],
             player: this.$route.params.user.toLowerCase(),
-            playerData: null
+            playerData: null,
         }
     },
     firestore() {
         return {
             userChars: db.collection('characters').where('user', '==', this.player),
             characters: db.collection('characters'),
-            users: db.collection('users')
+            users: db.collection('users'),
         }
     },
     watch: {
